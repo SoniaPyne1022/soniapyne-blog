@@ -68,7 +68,7 @@ default_top_img: url("https://img.beyondwj.cc/soniapyne/C3.png")
 # default_top_img: "linear-gradient(to bottom, #ffc0cb 0%, #e6e6fa 100%)"
 
 # The banner image of index page
-index_img: url("https://img.beyondwj.cc/soniapyne/C2.png")
+index_img: 
 
 # The banner image of archive page
 archive_img:
@@ -95,7 +95,7 @@ footer_img: false
 # Website Background
 # Can set it to color, image URL or an array containing colors and/or image URLs
 # If an array is provided, a random background will be selected from the array on each load
-background: /img/cuicui2.png
+background: url("https://img.beyondwj.cc/soniapyne/C2.png")
 # background: "linear-gradient(135deg, #fbc2eb 0%, #a18cd1 100%)"
 
 cover:
