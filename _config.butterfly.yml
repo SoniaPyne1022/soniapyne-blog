@@ -18,7 +18,8 @@ nav:
   fixed: false
 
 menu:
-  # Home: / || fas fa-home
+  主页: / || fas fa-home
+  分类: /categories/ || fas fa-folder-open
   # List||fas fa-list:
   #   Music: /music/ || fas fa-music
   #   Movie: /movies/ || fas fa-video
