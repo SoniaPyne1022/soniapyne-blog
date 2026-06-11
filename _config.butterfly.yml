@@ -90,7 +90,8 @@ category_img:
 category_per_img:
 
 # The background image of footer
-footer_img: false
+footer_img: "linear-gradient(135deg, #fff5f5 0%, #ffe3e3 100%)"
+# footer_img: false
 
 # Website Background
 # Can set it to color, image URL or an array containing colors and/or image URLs
