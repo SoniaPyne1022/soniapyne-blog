@@ -90,7 +90,7 @@ category_img:
 category_per_img:
 
 # The background image of footer
-footer_img: "linear-gradient(to bottom, #ffffff 0%, #fff0f5 100%)"
+footer_img: "#FFC0CB"
 # footer_img: false
 
 # Website Background
