@@ -68,7 +68,7 @@ default_top_img: url("https://img.beyondwj.cc/soniapyne/C3.png")
 # default_top_img: "linear-gradient(to bottom, #ffc0cb 0%, #e6e6fa 100%)"
 
 # The banner image of index page
-index_img: /img/cuicui1.png
+index_img: url("https://img.beyondwj.cc/soniapyne/C2.png")
 
 # The banner image of archive page
 archive_img:
