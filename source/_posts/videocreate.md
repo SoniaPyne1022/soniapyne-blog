@@ -1,5 +1,5 @@
 ---
-title: 欢迎来到
+title:  视频字幕提取文本汇总（繁简对照版）
 date: 2026-06-01 20:53:03
 type: '小软件'
 orderby: name
