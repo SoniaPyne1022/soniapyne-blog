@@ -170,9 +170,9 @@ subtitle:
   source: false
   # If you close the typewriter effect, the subtitle will only show the first line of sub
   sub:
-      - "自小刺头深草里，而今渐觉出蓬蒿。"
-      - "欢迎来到我的数字花园 🌸"
-      - "保持热爱，奔赴山海。"
+      - "白鸥问我泊孤舟，是身留？是心留？"
+      - "知我者谓我心忧，不知我者谓我何求"
+      - "松竹翠萝寒，迟日江山暮"
 
 # Article layout on the homepage
 # 1: Cover on the left, info on the right
