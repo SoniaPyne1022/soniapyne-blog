@@ -153,6 +153,9 @@ subtitle:
   enable: true
   # Typewriter Effect
   effect: true
+  startDelay: 300 # 开始打字前的延迟时间
+  typeSpeed: 150   # 打字速度
+  backSpeed: 50    # 退格消字速度
   loop: true
   # Customize typed.js
   # https://github.com/mattboldt/typed.js/#customization
