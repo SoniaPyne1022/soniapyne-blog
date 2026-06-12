@@ -28,9 +28,9 @@ menu:
   home: / || fas fa-home
   categories: /categories/ || fas fa-folder-open
   archives: /archives/ || fas fa-hourglass-half
-  Language:
-    中文: / || fas fa-language
-    English: /en/ || fas fa-globe
+  language || fas fa-language:
+    chinese: / || fas fa-c
+    english: /en/ || fas fa-e
   # List||fas fa-list:
   #   Music: /music/ || fas fa-music
   #   Movie: /movies/ || fas fa-video
