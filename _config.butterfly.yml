@@ -789,22 +789,22 @@ site_verification:
 #   meta_theme_color_light: "ffffff"
 #   meta_theme_color_dark: "#0d0d0d"
 theme_color:
-enable: true
-main: '#ffb7c5'
-paginator: '#ff8da1'
-button_hover: '#ff5c7d'
-text_selection: '#ffd3dc'
-link_color: '#ffa2b6'
-meta_color: '#b5939a'
-hr_color: '#ffe0e6'
-code_foreground: '#ff4d6d'
-code_background: 'rgba(255, 183, 197, 0.15)'
-toc_color: '#ff758f'
-blockquote_padding_color: '#ffa6b9'
-blockquote_background_color: 'rgba(255, 240, 242, 0.6)'
-scrollbar_color: '#ffccd5'
-meta_theme_color_light: '#fff5f6'
-meta_theme_color_dark: '#1a1214'
+  enable: true
+  main: '#ffb7c5'
+  paginator: '#ff8da1'
+  button_hover: '#ff5c7d'
+  text_selection: '#ffd3dc'
+  link_color: '#ffa2b6'
+  meta_color: '#b5939a'
+  hr_color: '#ffe0e6'
+  code_foreground: '#ff4d6d'
+  code_background: 'rgba(255, 183, 197, 0.15)'
+  toc_color: '#ff758f'
+  blockquote_padding_color: '#ffa6b9'
+  blockquote_background_color: 'rgba(255, 240, 242, 0.6)'
+  scrollbar_color: '#ffccd5'
+  meta_theme_color_light: '#fff5f6'
+  meta_theme_color_dark: '#1a1214'
 # The user interface setting of category and tag page
 # Choose: index - same as Homepage UI / default - same as archives UI
 # leave it empty or index
