@@ -17,11 +17,18 @@ nav:
   # Whether to fix navigation bar
   fixed: false
 
+# menu:
+#   主页: / || fas fa-home
+#   分类: /categories/ || fas fa-folder-open
+#   时间轴: /archives/ || fas fa-hourglass-half
+#   语言:
+#     中文: / || fas fa-language
+#     English: /en/ || fas fa-globe
 menu:
-  主页: / || fas fa-home
-  分类: /categories/ || fas fa-folder-open
-  时间轴: /archives/ || fas fa-hourglass-half
-  Language:
+  home: / || fas fa-home
+  categories: /categories/ || fas fa-folder-open
+  archives: /archives/ || fas fa-hourglass-half
+  language:
     中文: / || fas fa-language
     English: /en/ || fas fa-globe
   # List||fas fa-list:
