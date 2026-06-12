@@ -21,12 +21,13 @@ menu:
   主页: / || fas fa-home
   # 分类: /categories/ || fas fa-folder-open
   页面 || fas fa-compass:
+    时间轴: /archives/ || fas fa-hourglass-half
     标签: /tags/ || fas fa-tags
     分类: /categories/ || fas fa-folder-open
     同人文: /categories/同人文/ || fas fa-book
     代码: /categories/代码/ || fas fa-code
-    学习手册: /handbook/ || fas fa-book-open        # 👈 成功归类到“页面”目录下
-  时间轴: /archives/ || fas fa-hourglass-half
+  学习手册: /handbook/ || fas fa-book-open        # 👈 成功归类到“页面”目录下
+
 
   # List||fas fa-list:
   #   Music: /music/ || fas fa-music
