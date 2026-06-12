@@ -3,8 +3,10 @@ title: 分子生物学复习手册
 date: 2026-05-12 12:10:00
 categories: [学习手册,生物学,分子生物学] 
 tags: 分子生物学
-orderby: name
+orderby: time
 ---
+
+
 
 ```latex
 \chapter{染色体与DNA}
