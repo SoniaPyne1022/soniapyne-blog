@@ -20,11 +20,9 @@ nav:
 menu:
   主页: / || fas fa-home
   # 分类: /categories/ || fas fa-folder-open
-  pages || fas fa-compass:
-    tags: /tags/ || fas fa-tags
-    分类: /categories/ || fas fa-folder-open
-    同人文: /categories/同人文/ || fas fa-book    # 👈 成功归类到“页面”目录下
-    代码: /categories/代码/ || fas fa-code        # 👈 成功归类到“页面”目录下
+  分类: /categories/ || fas fa-folder-open
+  同人文: /categories/同人文/ || fas fa-book    # 👈 成功归类到“页面”目录下
+  代码: /categories/代码/ || fas fa-code        # 👈 成功归类到“页面”目录下
   时间轴: /archives/ || fas fa-hourglass-half
 
   # List||fas fa-list:
