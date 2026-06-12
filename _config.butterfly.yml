@@ -20,6 +20,7 @@ nav:
 menu:
   主页: / || fas fa-home
   分类: /categories/ || fas fa-folder-open
+  时间轴: /archives/ || fas fa-hourglass-half
   # List||fas fa-list:
   #   Music: /music/ || fas fa-music
   #   Movie: /movies/ || fas fa-video
