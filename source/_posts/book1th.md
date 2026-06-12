@@ -2,7 +2,7 @@
 title: 全场都在助攻你俩作为当事人怎么一点反应都没有！
 date: 2026-06-12 12:10:00
 categories: [同人文,同寒] 
-tag: 同寒
+tags: 同寒
 orderby: name
 order: 3
 ---
