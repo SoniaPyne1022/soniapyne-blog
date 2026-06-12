@@ -25,9 +25,9 @@ nav:
 #     中文: / || fas fa-language
 #     English: /en/ || fas fa-globe
 menu:
-  Home: / || fas fa-home
-  Categories: /categories/ || fas fa-folder-open
-  Archives: /archives/ || fas fa-hourglass-half
+  home: / || fas fa-home
+  categories: /categories/ || fas fa-folder-open
+  archives: /archives/ || fas fa-hourglass-half
   Language:
     中文: / || fas fa-language
     English: /en/ || fas fa-globe
