@@ -18,9 +18,12 @@ nav:
   fixed: false
 
 menu:
-  主页: / || fas fa-home
-  分类: /categories/ || fas fa-folder-open
-  时间轴: /archives/ || fas fa-hourglass-half
+  Layout.主页: / || fas fa-home
+  Layout.分类: /categories/ || fas fa-folder-open
+  Layout.时间轴: /archives/ || fas fa-hourglass-half
+  Language:
+    中文: / || fas fa-language
+    English: /en/ || fas fa-globe
   # List||fas fa-list:
   #   Music: /music/ || fas fa-music
   #   Movie: /movies/ || fas fa-video

@@ -8,7 +8,10 @@ subtitle: ''
 description: ''
 keywords:
 author: Sonia Pyne
-language: zh-CN
+# language: zh-CN
+language:
+  - zh-CN
+  - en
 timezone: Asia/Shanghai
 
 # URL
@@ -102,3 +105,8 @@ theme: butterfly
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: ''
+
+
+i18n:
+  type: directory
+  generator: [index, archive, category, tag]
