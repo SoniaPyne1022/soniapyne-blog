@@ -1,13 +1,13 @@
 ---
 title: 分子生物学复习手册
 date: 2026-05-12 12:10:00
-categories: [学习手册，分子生物学] 
+categories: [学习手册,分子生物学] 
 tags: 分子生物学
 orderby: name
 ---
 
 ```latex
-
+\chapter{染色体与DNA}
 \section{名词解释}
 
 \textbf{**DNA的变性（Denaturation）**}：当DNA溶液温度接近沸点或者PH较高时，互补的两条链就可能分开，称为DNA的变性。
@@ -772,5 +772,6 @@ DNA的转座，或称移位(transposition)是由可移位因子(transposable ele
 
 SNP是继限制性片段长度多态性(RFLP)和微卫星标记(SSR)之后的第三代遗传标记。
 
-目前国际上最常见的方法：DNA 测序法```
+目前国际上最常见的方法：DNA 测序法
 ```
+
