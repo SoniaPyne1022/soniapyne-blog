@@ -25,10 +25,10 @@ nav:
 #     中文: / || fas fa-language
 #     English: /en/ || fas fa-globe
 menu:
-  home: / || fas fa-home
-  categories: /categories/ || fas fa-folder-open
-  archives: /archives/ || fas fa-hourglass-half
-  language:
+  Home: / || fas fa-home
+  Categories: /categories/ || fas fa-folder-open
+  Archives: /archives/ || fas fa-hourglass-half
+  Language:
     中文: / || fas fa-language
     English: /en/ || fas fa-globe
   # List||fas fa-list:
