@@ -20,8 +20,8 @@ nav:
 menu:
   主页: / || fas fa-home
   分类: /categories/ || fas fa-folder-open
-  同人文: /categories/同人文/ || fas fa-book
-  代码: /categories/代码/ || fas fa-code
+    -同人文: /categories/同人文/ || fas fa-book
+    -代码: /categories/代码/ || fas fa-code
   时间轴: /archives/ || fas fa-hourglass-half
 
   # List||fas fa-list:
