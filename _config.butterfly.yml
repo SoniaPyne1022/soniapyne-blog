@@ -120,6 +120,7 @@ cover:
   # When cover is not set, the default cover is displayed
   default_cover:
     # - xxx.jpg
+  position: both
 
 # Replace Broken Images
 error_img:
