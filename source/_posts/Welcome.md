@@ -5,8 +5,4 @@ tages: 杂谈
 orderby: name
 order: 1
 ---
-# 写在前面的话
-
-
-
 欢迎来到松茶小屋🌺！！
