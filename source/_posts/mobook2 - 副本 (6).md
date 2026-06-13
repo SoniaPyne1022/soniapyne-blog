@@ -6,6 +6,7 @@ tags: 分子生物学
 orderby: time
 cover: /img/ScreenShot_2026-06-13_195949_058.png
 ---
+第五章知识点总结
 
 ```latex
 \chapter{基因功能研究技术}

@@ -7,6 +7,10 @@ orderby: time
 cover: /img/ScreenShot_2026-06-13_195949_058.png
 ---
 
+
+第二章知识点总结
+
+
 ```latex
 \chapter{生物信息的传递：从DNA到RNA}
 基因表达包括转录(transcription)和翻译(translation)两个阶段。
