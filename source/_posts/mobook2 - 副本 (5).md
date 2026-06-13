@@ -6,7 +6,10 @@ tags: 分子生物学
 orderby: time
 cover: /img/ScreenShot_2026-06-13_195949_058.png
 ---
-第四章知识点总结
+分子生物学
+
+第五章知识点总结
+
 ```latex
 \chapter{DNA、RNA及蛋白质操作技术}
 
