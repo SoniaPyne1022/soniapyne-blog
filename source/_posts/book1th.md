@@ -4,6 +4,7 @@ date: 2026-06-12 12:10:00
 categories: [同人文,同寒] 
 tags: 同寒
 orderby: name
+cover: /img/a3ec5c29486c0b9cf39aa90d7dbde852(1).jpg
 ---
 玄膑最近发现一件很奇怪的事。
 
