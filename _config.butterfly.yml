@@ -649,7 +649,7 @@ facebook_comments:
 # Twikoo
 # https://github.com/imaegoo/twikoo
 twikoo:
-  envId: https://my-twikoo-comment.vercel.app/
+  envId: https://sonia-twikoo.netlify.app/.netlify/functions/twikoo
   # envId: 
   region:
   # Use Twikoo visitor count as the page view count
