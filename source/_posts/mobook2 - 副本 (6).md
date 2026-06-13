@@ -4,6 +4,7 @@ date: 2026-06-10 12:00:00
 categories: [学习手册,生物学,分子生物学] 
 tags: 分子生物学
 orderby: time
+cover: /img/ScreenShot_2026-06-13_195949_058.png
 ---
 
 ```latex
