@@ -1,9 +1,7 @@
 ---
 title:  视频字幕提取文本汇总（繁简对照版）
 date: 2026-06-01 20:53:03
-categories: 
-  - 代码
-  - Python
+categories: 代码
 tags: 代码
 orderby: name
 order: 2
