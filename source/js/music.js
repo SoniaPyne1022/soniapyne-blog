@@ -15,7 +15,7 @@ if (!window.aplayerInstance) {
       {
         name: '四时皆醉',
         artist: 'ROZA',
-        url: '/music/四时皆醉',       // 对应你放在 source/music/ 下的文件名
+        url: '/music/四时皆醉.mp3',       // 对应你放在 source/music/ 下的文件名
         // cover: '/music/cover1.jpg'     // 对应你的封面图，没有的话可以删掉这行
       },
     //   {
