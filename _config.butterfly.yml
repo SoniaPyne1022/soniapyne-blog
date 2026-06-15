@@ -1107,9 +1107,13 @@ css_prefix: true
 inject:
   head:
     # - <link rel="stylesheet" href="/xxx.css">
+    - <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+    - <link rel="stylesheet" href="/css/custom.css"> # 👈 精确对齐，加在这一行
   bottom:
     # - <script src="xxxx"></script>
     - <script src="/js/click_flower.js"></script>
+    - <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+    - <script src="/js/music.js"></script>
     - <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
     - <script src="/js/music.js"></script>
 # CDN Settings
@@ -1184,55 +1188,3 @@ CDN:
     # valine:
     # waline_css:
     # waline_js:
-custom_text: |
-  <div class="card-widget card-calendar">
-    <div class="item-headline"><i class="fas fa-calendar-alt"></i><span>日历</span></div>
-    <div id="calendar-container" style="padding: 10px 0;">
-      <table id="calendar-table" style="width:100%; text-align:center; border-collapse:collapse;">
-        <thead>
-          <tr style="color: var(--font-color); font-weight: bold;"><th colspan="7" id="calendar-title" style="padding-bottom:10px; font-size:1.1em;"></th></tr>
-          <tr style="color: var(--text-bg-hover); font-size:0.9em;"><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr>
-        </thead>
-        <tbody id="calendar-body" style="color: var(--font-color); font-size:0.95em;"></tbody>
-      </table>
-    </div>
-  </div>
-  <script>
-    (function() {
-      const date = new Date();
-      const year = date.getFullYear();
-      const month = date.getMonth();
-      const today = date.getDate();
-      const monthNames = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
-      const titleEl = document.getElementById("calendar-title");
-      if(titleEl) titleEl.innerText = year + "年 " + monthNames[month];
-      const firstDay = new Date(year, month, 1).getDay();
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
-      const tbody = document.getElementById("calendar-body");
-      if(!tbody) return;
-      let row = document.createElement("tr");
-      for (let i = 0; i < firstDay; i++) {
-        row.appendChild(document.createElement("td"));
-      }
-      for (let day = 1; day <= daysInMonth; day++) {
-        if (row.children.length === 7) {
-          tbody.appendChild(row);
-          row = document.createElement("tr");
-        }
-        let cell = document.createElement("td");
-        cell.innerText = day;
-        cell.style.padding = "6px 0";
-        if (day === today) {
-          cell.style.background = "var(--btn-bg)";
-          cell.style.color = "var(--btn-color)";
-          cell.style.borderRadius = "50px";
-          cell.style.fontWeight = "bold";
-        }
-        row.appendChild(cell);
-      }
-      while (row.children.length < 7 && row.children.length > 0) {
-        row.appendChild(document.createElement("td"));
-      }
-      tbody.appendChild(row);
-    })();
-  </script>
