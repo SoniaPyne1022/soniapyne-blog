@@ -52,8 +52,12 @@
 }
 
 /* 手机端屏幕太小时自动隐藏，防止挡住文字阅读 */
+/* 🟢 替换为这段新代码：让宠物在手机端完美显现 */
 @media screen and (max-width: 768px) {
   #custom-static-pet {
-    display: none !important;
+    display: block !important;    /* 确保在手机端正常显示 */
+    width: 50px;                  /* 💡 手机端等比例缩小到 50px（原电脑端是 90px） */
+    bottom: 80px;                 /* 💡 稍微往上挪一点，避开右下角的“返回顶部”和菜单按钮 */
+    right: 15px;                  /* 稍微靠边一点，给文字腾出空间 */
   }
 }
