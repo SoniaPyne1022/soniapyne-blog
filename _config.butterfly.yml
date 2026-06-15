@@ -1030,14 +1030,16 @@ note:
 
 # https://github.com/MoOx/pjax
 pjax:
-  enable: false
+  # enable: false
+  enable: true  
   # Exclude the specified pages from pjax, such as '/music/'
   exclude:
     # - /xxxxxx/
 
 # Inject the css and script (aplayer/meting)
 aplayerInject:
-  enable: false
+  # enable: false
+  enable: true
   per_page: true
 
 # Snackbar - Toast Notification
@@ -1108,7 +1110,7 @@ inject:
   bottom:
     # - <script src="xxxx"></script>
     - <script src="/js/click_flower.js"></script>
-
+    - <meting-js server="netease" type="playlist" id="2829883282" fixed="true" autoplay="true" theme="#49b1f5" order="random" volume="0.5"></meting-js>
 # CDN Settings
 # Don't modify the following settings unless you know how they work
 CDN:

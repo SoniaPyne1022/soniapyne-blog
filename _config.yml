@@ -110,3 +110,7 @@ deploy:
 i18n:
   type: directory
   generator: [index, archive, category, tag]
+
+aplayer:
+  meting: true
+  asset_inject: false
