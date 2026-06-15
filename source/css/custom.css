@@ -21,7 +21,7 @@
   position: fixed;
   bottom: 40px;      /* 距离底部的高度，可以根据需要调整 */
   right: 30px;       /* 距离右侧的距离 */
-  width: 90px;       /* 宠物显示的宽度，可以根据你的图片比例调整大小 */
+  width: 190px;       /* 宠物显示的宽度，可以根据你的图片比例调整大小 */
   z-index: 99;       /* 确保显示在网页最上层 */
   cursor: pointer;
   pointer-events: auto;
