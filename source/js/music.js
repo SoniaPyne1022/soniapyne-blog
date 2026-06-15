@@ -10,7 +10,7 @@ if (!window.aplayerInstance) {
     container: document.getElementById('aplayer'),
     fixed: true,      // 吸底挂件模式
     autoplay: true,   // 自动播放
-    volume: 1000,      // 默认音量
+    volume: 0.5,      // 默认音量
     audio: [
       {
         name: '蝴蝶',
