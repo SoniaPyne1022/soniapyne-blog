@@ -15,3 +15,45 @@
 [data-theme="dark"] #category {
   background: rgba(24, 24, 24, 0.7) !important;    /* 夜间模式下的透明黑底 */
 }
+
+/* 右下角静态宠物挂件样式 */
+#custom-static-pet {
+  position: fixed;
+  bottom: 40px;      /* 距离底部的高度，可以根据需要调整 */
+  right: 30px;       /* 距离右侧的距离 */
+  width: 90px;       /* 宠物显示的宽度，可以根据你的图片比例调整大小 */
+  z-index: 99;       /* 确保显示在网页最上层 */
+  cursor: pointer;
+  pointer-events: auto;
+  
+  /* 绑定上下浮动的呼吸动画，4秒一个周期，无限循环 */
+  animation: petFloat 4s ease-in-out infinite;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* 鼠标放上去时的互动效果：放大并微微发光 */
+#custom-static-pet:hover {
+  transform: scale(1.15); 
+  filter: drop-shadow(0 0 8px rgba(135, 206, 235, 0.8)); /* 悬停时的小高光 */
+  animation-play-state: paused; /* 鼠标放上去时暂停浮动，方便看清 */
+}
+
+/* 定义上下浮动的呼吸动画 */
+@keyframes petFloat {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px); /* 最高向上浮动 8 像素 */
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* 手机端屏幕太小时自动隐藏，防止挡住文字阅读 */
+@media screen and (max-width: 768px) {
+  #custom-static-pet {
+    display: none !important;
+  }
+}
