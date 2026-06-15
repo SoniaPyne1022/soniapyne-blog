@@ -1110,7 +1110,8 @@ inject:
   bottom:
     # - <script src="xxxx"></script>
     - <script src="/js/click_flower.js"></script>
-    - <meting-js server="netease" type="playlist" id="17640699873" fixed="true" autoplay="true" theme="#49b1f5" order="random" volume="0.5"></meting-js>
+    - <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+    - <script src="/js/music.js"></script>
 # CDN Settings
 # Don't modify the following settings unless you know how they work
 CDN:
