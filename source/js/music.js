@@ -10,9 +10,15 @@ if (!window.aplayerInstance) {
     container: document.getElementById('aplayer'),
     fixed: true,      // 吸底挂件模式
     autoplay: true,   // 自动播放
-    volume: 0.6,      // 默认音量
+    volume: 0.5,      // 默认音量
     audio: [
-      {
+      // {
+      //   name: '歌曲名字 1',
+      //   artist: '歌手 1',
+      //   url: '/music/song1.mp3',       // 对应你放在 source/music/ 下的文件名
+      //   cover: '/music/cover1.jpg'     // 对应你的封面图，没有的话可以删掉这行
+      // },
+       {
         name: 'Stardust (New Ver.)',
         artist: 'Dan Bravo',
         url: '/music/M500000stOq706xU4a.mp3',
