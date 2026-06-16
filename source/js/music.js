@@ -22,7 +22,7 @@ if (!window.aplayerInstance) {
         name: 'Stardust (New Ver.)',
         artist: 'Dan Bravo',
         url: '/music/M500000stOq706xU4a.mp3',
-        cover: '/music/微信图片_20260615162246_689_60.jpg'
+        // cover: '/music/微信图片_20260615162246_689_60.jpg'
         // cover: '/music/微信图片_20260615162246_689_60.jpg'
       }
     ]

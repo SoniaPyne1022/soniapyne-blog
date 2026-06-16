@@ -23,7 +23,7 @@ if exist "C:\Program Files\Git\bin\bash.exe" (
         bash -l -c "git add . && git commit -m update && git push"
     ) else (
         echo [提示] 未在默认路径找到 Git Bash，正在尝试直接使用系统 Git 执行...
-        git add . && git commit -m update && git push
+        git add . && git commit -m update && git push && hexo clean && hexo g && hexo d
     )
 )
 
