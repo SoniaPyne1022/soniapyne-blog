@@ -64,75 +64,155 @@
   }
 }
 
-/* ==================== 古朴典雅右侧挂件式字幕栏 ==================== */
-#custom-lyric-bar {
-  position: relative;
-  margin: 0 0 20px 0;            /* 距离下方第一篇文章 20px 间距 */
-  width: 100%;                   /* 自动填满右侧整栏，长度自然缩短 */
+/* ==================== 音乐全局双网格并排容器 ==================== */
+#custom-music-wrapper {
+  display: flex;
+  gap: 15px;                     /* 播放器与歌词条之间的间距 */
+  width: 100%;
+  margin: 0 0 20px 0;            /* 距离下方第一篇文章的间距 */
   box-sizing: border-box;
-  
-  /* 视觉风格：半透明宣纸墨砚底色 + 精致古典鎏金全框线 */
+  align-items: center;
+}
+
+/* ==================== 组件A（左）：古典迷你播放卡片 ==================== */
+#custom-mini-player {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 56px !important;       /* 高度与右侧完全对齐 */
+  padding: 0 18px !important;
+  background: rgba(36, 33, 30, 0.75) !important; /* 砚墨底色 */
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.25); /* 鎏金边框线 */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  min-width: 250px;              /* 锁定左侧控制器最小宽度 */
+  box-sizing: border-box;
+}
+
+/* 圆形唱片封面旋转容器 */
+.cover-box {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#custom-player-cover {
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 50% !important;  /* 完美的古风黑胶小唱片圆形 */
+  object-fit: cover !important;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  margin: 0 !important;
+}
+/* 音乐播放时的唱片平滑旋转动画 */
+.spinning {
+  animation: discRotate 15s linear infinite;
+}
+@keyframes discRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 遥控器文字与按钮排版 */
+.player-meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  overflow: hidden;
+}
+#custom-player-title {
+  font-family: "Kaiti", "STKaiti", serif !important;
+  color: #f3ebd4 !important;     /* 丝绢古白 */
+  font-size: 14px !important;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+  margin-bottom: 2px;
+}
+.player-btns {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  color: rgba(212, 175, 55, 0.55);
+}
+.player-btns i {
+  cursor: pointer;
+  font-size: 12px;
+  transition: color 0.2s ease, transform 0.1s ease;
+}
+.player-btns i:hover {
+  color: #f3ebd4;                /* 鼠标悬停高亮 */
+}
+.player-btns i:active {
+  transform: scale(0.9);         /* 按下时微小的物理反馈 */
+}
+
+/* ==================== 组件B（右）：古朴大字号字幕栏 ==================== */
+#custom-lyric-bar {
+  flex: 1;                       /* 🟢 核心：自动拉伸占满右侧剩下的所有宽度 */
+  height: 56px !important;
+  padding: 0 30px !important;
   background: rgba(36, 33, 30, 0.75) !important; 
   backdrop-filter: blur(8px);
-  border-radius: 8px;            /* 完美的 8px 圆角，与下方的文章卡片弧度完美呼应 */
+  border-radius: 8px;
   border: 1px solid rgba(212, 175, 55, 0.25); 
-  
-  /* 尺寸微调：上下宽度（高度）变长变厚，整体更充实 */
-  padding: 10px 30px !important;   
-  height: 56px !important;       /* 高度从 42px 拓宽到 56px */
-  
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 10;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
 }
 
-/* 左侧传统菱形星芒装饰点 */
 .lyric-dots {
   color: rgba(212, 175, 55, 0.4);
-  font-size: 14px;
+  font-size: 12px;
   letter-spacing: 4px;
   user-select: none;
 }
 
-/* 中间主文字：字号明显加大，古典楷体 */
 #lyric-text {
   font-family: "Kaiti", "STKaiti", "Noto Serif SC", "SimSun", serif !important;
-  color: #f3ebd4 !important;     /* 古典象牙绢白 */
-  font-size: 22px !important;    /* 🟢 字号加大到 22px，更加清朗醒目 */
+  color: #f3ebd4 !important;
+  font-size: 22px !important;    /* 保持你喜欢的大字号 */
   font-weight: 500;
   text-align: center;
   flex: 1;
   padding: 0 20px;
-  line-height: 36px !important;  /* 配合高度调整行高 */
+  line-height: 36px !important;
   height: 36px !important;
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
 }
 
-/* 右侧古典折扇图标 */
 .lyric-icon {
   color: rgba(212, 175, 55, 0.5);
-  font-size: 16px;
+  font-size: 14px;
 }
 
-/* 隐藏原生重影 */
+/* 强行抹除任何重叠干扰 */
 .aplayer-lrc {
   display: none !important;
 }
 
-/* ==================== 手机端自动回弹适配 ==================== */
+/* ==================== 手机端自适应流式回弹 ==================== */
 @media screen and (max-width: 768px) {
-  #custom-lyric-bar {
-    width: 100%;
+  #custom-music-wrapper {
+    flex-direction: column;      /* 手机端宽度不够时，自动优雅变成上下两行叠放 */
+    gap: 10px;
     margin: 0 0 15px 0;
-    padding: 8px 15px !important;
-    height: 48px !important;     /* 手机端自动缩小高度，防止占地方 */
+  }
+  #custom-mini-player, #custom-lyric-bar {
+    width: 100% !important;      /* 手机端各自撑满屏幕宽度 */
+    height: 48px !important;     /* 稍微变薄一点防止臃肿 */
   }
   #lyric-text {
-    font-size: 16px !important;  
+    font-size: 16px !important;  /* 移动端字号自动缩放 */
     line-height: 30px !important;
     height: 30px !important;
   }
