@@ -15,14 +15,14 @@ if exist "C:\Program Files\Git\bin\bash.exe" (
 )
 
 :: [Line 1] Execute Git Workflow via Git Bash (Add -> Commit -> Push)
-echo [Step 1/2] Executing Git commit and push...
-"%MY_BASH%" -c "git add . && git commit -m 'update' && git push"
+echo [Step 1/2] Executing Hexo clean, generate, and deploy...
+"%MY_BASH%" -c "hexo clean && hexo g && hexo d"
 
 echo.
 
 :: [Line 2] Execute Hexo Workflow via Git Bash (Clean -> Generate -> Deploy)
-echo [Step 2/2] Executing Hexo clean, generate, and deploy...
-"%MY_BASH%" -c "hexo clean && hexo g && hexo d"
+echo [Step 2/2] Executing Git commit and push...
+"%MY_BASH%" -c "git add . && git commit -m 'update' && git push"
 
 echo ====================================================================
 echo All steps have been executed sequentially!
