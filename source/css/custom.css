@@ -64,159 +64,132 @@
   }
 }
 
-/* ==================== 音乐全局双网格并排容器 ==================== */
+/* ==================== 极简古风双生并排音乐条 ==================== */
 #custom-music-wrapper {
   display: flex;
-  gap: 15px;                     /* 播放器与歌词条之间的间距 */
+  gap: 12px;
   width: 100%;
-  margin: 0 0 20px 0;            /* 距离下方第一篇文章的间距 */
+  margin: 0 0 18px 0;
   box-sizing: border-box;
   align-items: center;
 }
 
-/* ==================== 组件A（左）：古典迷你播放卡片 ==================== */
+/* ==================== 【左】：单行精致播放器 ==================== */
 #custom-mini-player {
   display: flex;
   align-items: center;
-  gap: 14px;
-  height: 56px !important;       /* 高度与右侧完全对齐 */
-  padding: 0 18px !important;
+  height: 42px !important;       /* 高度显著收缩，显得极为清爽 */
+  padding: 0 14px !important;
   background: rgba(36, 33, 30, 0.75) !important; /* 砚墨底色 */
   backdrop-filter: blur(8px);
-  border-radius: 8px;
-  border: 1px solid rgba(212, 175, 55, 0.25); /* 鎏金边框线 */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-  min-width: 250px;              /* 锁定左侧控制器最小宽度 */
+  border-radius: 6px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   box-sizing: border-box;
 }
 
-/* 圆形唱片封面旋转容器 */
-.cover-box {
-  width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+/* 极小微型歌曲封面 */
 #custom-player-cover {
-  width: 38px !important;
-  height: 38px !important;
-  border-radius: 50% !important;  /* 完美的古风黑胶小唱片圆形 */
+  width: 24px !important;
+  height: 24px !important;
+  border-radius: 4px !important;
   object-fit: cover !important;
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  margin: 0 !important;
-}
-/* 音乐播放时的唱片平滑旋转动画 */
-.spinning {
-  animation: discRotate 15s linear infinite;
-}
-@keyframes discRotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  margin: 0 10px 0 0 !important;
 }
 
-/* 遥控器文字与按钮排版 */
-.player-meta {
+/* 歌曲名与歌手单行并排 */
+.player-info {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex: 1;
-  overflow: hidden;
-}
-#custom-player-title {
+  align-items: center;
   font-family: "Kaiti", "STKaiti", serif !important;
-  color: #f3ebd4 !important;     /* 丝绢古白 */
-  font-size: 14px !important;
-  font-weight: bold;
-  white-space: nowrap;
+  font-size: 13px !important;
+  color: #f3ebd4 !important;
+  max-width: 140px;
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
-  line-height: 1.4;
-  margin-bottom: 2px;
+  margin-right: 15px;
 }
+.player-splitter {
+  margin: 0 4px;
+  opacity: 0.5;
+}
+#custom-player-artist {
+  opacity: 0.8;
+}
+
+/* 紧凑型控制按钮 */
 .player-btns {
   display: flex;
-  gap: 18px;
+  gap: 14px;
   align-items: center;
-  color: rgba(212, 175, 55, 0.55);
+  color: rgba(212, 175, 55, 0.6);
 }
 .player-btns i {
   cursor: pointer;
-  font-size: 12px;
-  transition: color 0.2s ease, transform 0.1s ease;
+  font-size: 11px;
+  transition: color 0.2s ease;
 }
 .player-btns i:hover {
-  color: #f3ebd4;                /* 鼠标悬停高亮 */
-}
-.player-btns i:active {
-  transform: scale(0.9);         /* 按下时微小的物理反馈 */
+  color: #f3ebd4;
 }
 
-/* ==================== 组件B（右）：古朴大字号字幕栏 ==================== */
+/* ==================== 【右】：秀气古典歌词栏 ==================== */
 #custom-lyric-bar {
-  flex: 1;                       /* 🟢 核心：自动拉伸占满右侧剩下的所有宽度 */
-  height: 56px !important;
-  padding: 0 30px !important;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 42px !important;       /* 高度与左边完美平齐 */
+  padding: 0 20px !important;
   background: rgba(36, 33, 30, 0.75) !important; 
   backdrop-filter: blur(8px);
-  border-radius: 8px;
+  border-radius: 6px;
   border: 1px solid rgba(212, 175, 55, 0.25); 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   box-sizing: border-box;
+  overflow: hidden;
 }
 
-.lyric-dots {
-  color: rgba(212, 175, 55, 0.4);
-  font-size: 12px;
-  letter-spacing: 4px;
-  user-select: none;
-}
-
+/* 歌词主文本：大小适中，典雅清朗 */
 #lyric-text {
-  font-family: "Kaiti", "STKaiti", "Noto Serif SC", "SimSun", serif !important;
+  font-family: "Kaiti", "STKaiti", "Noto Serif SC", serif !important;
   color: #f3ebd4 !important;
-  font-size: 22px !important;    /* 保持你喜欢的大字号 */
+  font-size: 16px !important;    /* 🟢 从笨重的 22px 优化为清秀易读的 16px */
   font-weight: 500;
   text-align: center;
   flex: 1;
-  padding: 0 20px;
-  line-height: 36px !important;
-  height: 36px !important;
+  line-height: 40px !important;  /* 垂直完美居中 */
+  height: 40px !important;
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
 }
 
 .lyric-icon {
-  color: rgba(212, 175, 55, 0.5);
-  font-size: 14px;
+  color: rgba(212, 175, 55, 0.4);
+  font-size: 12px;
 }
 
-/* 强行抹除任何重叠干扰 */
+/* 彻底屏蔽原生歌词干扰 */
 .aplayer-lrc {
   display: none !important;
 }
 
-/* ==================== 手机端自适应流式回弹 ==================== */
+/* ==================== 移动端流式单行回弹 ==================== */
 @media screen and (max-width: 768px) {
   #custom-music-wrapper {
-    flex-direction: column;      /* 手机端宽度不够时，自动优雅变成上下两行叠放 */
-    gap: 10px;
-    margin: 0 0 15px 0;
+    flex-direction: column;
+    gap: 8px;
   }
   #custom-mini-player, #custom-lyric-bar {
-    width: 100% !important;      /* 手机端各自撑满屏幕宽度 */
-    height: 48px !important;     /* 稍微变薄一点防止臃肿 */
+    width: 100% !important;
+    height: 38px !important;
   }
   #lyric-text {
-    font-size: 16px !important;  /* 移动端字号自动缩放 */
-    line-height: 30px !important;
-    height: 30px !important;
-  }
-  .lyric-dots {
-    display: none;
+    font-size: 14px !important;  
+    line-height: 36px !important;
+    height: 36px !important;
   }
 }
