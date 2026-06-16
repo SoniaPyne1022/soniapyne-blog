@@ -193,3 +193,7 @@
     height: 36px !important;
   }
 }
+/* 彻底隐藏左下角原生的吸底播放器小圆圈与挂件 */
+.aplayer.aplayer-fixed {
+  display: none !important;
+}
