@@ -57,9 +57,82 @@
   #custom-static-pet {
     display: block !important;       /* 强行显示 */
     visibility: visible !important;  /* 强行可见 */
-    width: 200px !important;          /* 手机端大小 */
+    width: 50px !important;          /* 手机端大小 */
     bottom: 140px !important;        /* 👈 显著往上挪高，彻底避开手机端右下角的右侧悬浮菜单 */
     right: 10px !important;          /* 靠边 */
     z-index: 999999 !important;      /* 👈 将层级拉到无限大，确保没有任何东西能挡住它 */
+  }
+}
+
+/* ==================== 全局悬浮歌词字幕栏 (完美复刻 image_4c6161.png) ==================== */
+#custom-lyric-bar {
+  position: fixed;
+  bottom: 15px;                  /* 距离网页最底部的距离 */
+  left: 50%;
+  transform: translateX(-50%);   /* 居中对齐 */
+  width: 90%;
+  max-width: 1200px;             /* 保持合理的超长条横宽 */
+  background: rgba(10, 13, 22, 0.85) !important; /* 极具高级感的深色半透明背景 */
+  backdrop-filter: blur(12px);   /* 磨砂毛玻璃效果 */
+  border-radius: 30px;           /* 胶囊圆角 */
+  padding: 12px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 98;                   /* 稍微低于宠物层级，高于普通内容 */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); /* 底部外阴影 */
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.3s ease;
+}
+
+/* 左侧装饰点 */
+.lyric-dots {
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 16px;
+  letter-spacing: 3px;
+  user-select: none;
+}
+
+/* 中间滚动的动态字幕主文本 */
+#lyric-text {
+  color: #ffffff !important;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  flex: 1;
+  padding: 0 25px;
+  /* 👈 核心：复刻图片中的白色文字霓虹高光发光效果 */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.65), 0 0 4px rgba(255, 255, 255, 0.4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;       /* 歌词太长时自动变省略号 */
+  transition: text-shadow 0.3s ease;
+}
+
+/* 右侧音符图标 */
+.lyric-icon {
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 15px;
+  animation: lyricIconSpin 5s linear infinite; /* 让小音符自己轻轻转动 */
+}
+
+@keyframes lyricIconSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ==================== 手机移动端完美适配 ==================== */
+@media screen and (max-width: 768px) {
+  #custom-lyric-bar {
+    width: 95%;                  /* 手机端拉宽一点 */
+    bottom: 8px;                 /* 紧贴底部 */
+    padding: 8px 15px;
+  }
+  #lyric-text {
+    font-size: 13px;             /* 手机端字号调小，防止字溢出 */
+    padding: 0 10px;
+  }
+  .lyric-dots {
+    display: none;               /* 手机端隐藏左边无用的小点，留出空间 */
   }
 }
