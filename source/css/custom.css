@@ -64,7 +64,7 @@
   }
 }
 
-/* ==================== 极简古风双生并排音乐条（典雅适中版） ==================== */
+/* ==================== 极简古风双生并排音乐条 ==================== */
 #custom-music-wrapper {
   display: flex;
   gap: 12px;
@@ -74,11 +74,11 @@
   align-items: center;
 }
 
-/* ==================== 【左】：单行精致播放器 ==================== */
+/* ==================== 【左】：集成进度条的古典播放器 ==================== */
 #custom-mini-player {
   display: flex;
   align-items: center;
-  height: 48px !important;       /* 💡 从 42px 优雅放大到 48px */
+  height: 48px !important;       /* 保持 48px 舒适框体 */
   padding: 0 16px !important;
   background: rgba(36, 33, 30, 0.75) !important; /* 砚墨底色 */
   backdrop-filter: blur(8px);
@@ -86,37 +86,85 @@
   border: 1px solid rgba(212, 175, 55, 0.25);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   box-sizing: border-box;
+  min-width: 360px;              /* 💡 锁定左侧基础宽度，给进度条留出开阔空间 */
 }
 
-/* 歌曲封面：同步放大 */
+/* 歌曲封面 */
 #custom-player-cover {
-  width: 30px !important;        /* 💡 从 24px 放大到 30px */
+  width: 30px !important;
   height: 30px !important;
   border-radius: 4px !important;
   object-fit: cover !important;
   border: 1px solid rgba(212, 175, 55, 0.2);
   margin: 0 12px 0 0 !important;
+  flex-shrink: 0;
 }
 
-/* 歌曲名与歌手文本 */
+/* 歌曲名与歌手 */
 .player-info {
   display: flex;
   align-items: center;
   font-family: "Kaiti", "STKaiti", serif !important;
-  font-size: 20px !important;    /* 💡 字号微调加大 */
+  font-size: 20px !important;
   color: #f3ebd4 !important;
-  max-width: 180px;              /* 💡 拓宽文本显示区域 */
+  max-width: 110px;              /* 适当缩减文本最大宽，防止推挤进度条 */
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  margin-right: 15px;
+  flex-shrink: 0;
 }
 .player-splitter {
-  margin: 0 5px;
+  margin: 0 4px;
   opacity: 0.5;
 }
 #custom-player-artist {
   opacity: 0.8;
+}
+
+/* 🟢 核心新增：细鎏金可拖拽进度条样式 */
+.player-progress-wrapper {
+  flex: 1;                       /* 自动伸缩填满中间的空隙 */
+  height: 14px;                  /* 拓宽鼠标易点按的隐形热区 */
+  display: flex;
+  align-items: center;
+  margin: 0 14px;
+  cursor: pointer;
+  position: relative;
+}
+/* 进度条未播放轨道底色 */
+.player-progress-wrapper::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 4px;                   /* 真实的细线条高度 */
+  background: rgba(212, 175, 55, 0.15);
+  border-radius: 2px;
+}
+/* 已播放进度条深浅鎏金填充 */
+.player-progress-played {
+  height: 4px;
+  background: #f3ebd4;           /* 经典古风丝绢白 */
+  border-radius: 2px;
+  width: 0%;
+  position: relative;
+  z-index: 2;
+}
+/* 进度条末端的小滑块（滑过时平滑浮现） */
+.player-progress-dot {
+  position: absolute;
+  right: -5px;
+  top: -3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #f3ebd4;
+  box-shadow: 0 0 6px rgba(212, 175, 55, 0.8);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+/* 当鼠标移入进度条区域时，小圆点滑块显现出来，提示可以拖动 */
+.player-progress-wrapper:hover .player-progress-dot {
+  opacity: 1;
 }
 
 /* 控制按钮 */
@@ -125,10 +173,11 @@
   gap: 14px;
   align-items: center;
   color: rgba(212, 175, 55, 0.6);
+  flex-shrink: 0;
 }
 .player-btns i {
   cursor: pointer;
-  font-size: 13px;               /* 💡 按钮图标放大 */
+  font-size: 13px;
   transition: color 0.2s ease;
 }
 .player-btns i:hover {
@@ -141,7 +190,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 48px !important;       /* 💡 高度与左边 48px 完美平齐 */
+  height: 48px !important;
   padding: 0 24px !important;
   background: rgba(36, 33, 30, 0.75) !important; 
   backdrop-filter: blur(8px);
@@ -152,15 +201,15 @@
   overflow: hidden;
 }
 
-/* 歌词主文本：大小适中，清朗大气 */
+/* 歌词主文本：18px 大气易读 */
 #lyric-text {
   font-family: "Kaiti", "STKaiti", "Noto Serif SC", serif !important;
   color: #f3ebd4 !important;
-  font-size: 24px !important;    /* 💡 从局促的 16px 放大到舒展的 18px */
+  font-size: 24px !important;
   font-weight: 500;
   text-align: center;
   flex: 1;
-  line-height: 46px !important;  /* 垂直完美居中 */
+  line-height: 46px !important;
   height: 46px !important;
   white-space: nowrap !important;
   overflow: hidden !important;
@@ -169,20 +218,15 @@
 
 .lyric-icon {
   color: rgba(212, 175, 55, 0.4);
-  font-size: 14px;               /* 小风扇图标微放大 */
+  font-size: 14px;
 }
 
-/* 彻底屏蔽原生歌词干扰 */
-.aplayer-lrc {
+/* 彻底关闭任何重叠干扰与左下角原挂件 */
+.aplayer-lrc, .aplayer.aplayer-fixed {
   display: none !important;
 }
 
-/* 彻底隐藏左下角原生的吸底播放器小圆圈与挂件 */
-.aplayer.aplayer-fixed {
-  display: none !important;
-}
-
-/* ==================== 移动端自适应 ==================== */
+/* ==================== 移动端自适应回弹 ==================== */
 @media screen and (max-width: 768px) {
   #custom-music-wrapper {
     flex-direction: column;
@@ -190,11 +234,15 @@
   }
   #custom-mini-player, #custom-lyric-bar {
     width: 100% !important;
+    min-width: 100% !important;
     height: 42px !important;
   }
   #lyric-text {
     font-size: 15px !important;  
     line-height: 40px !important;
     height: 40px !important;
+  }
+  .player-progress-wrapper {
+    margin: 0 8px;
   }
 }

@@ -22,16 +22,25 @@ if (!window.aplayerInstance) {
     ]
   });
 
-  // 核心事件监听：实时同步歌词到右侧字幕栏
+  // 核心事件监听：实时同步歌词 与 进度条位置
   window.aplayerInstance.on('timeupdate', function () {
+    // 【同步歌词】
     const currentLyric = document.querySelector('.aplayer-lrc-current');
     const lyricTextEl = document.getElementById('lyric-text');
     if (currentLyric && lyricTextEl && lyricTextEl.innerText !== currentLyric.innerText) {
       lyricTextEl.innerText = currentLyric.innerText;
     }
+
+    // 【同步进度条】
+    const audio = window.aplayerInstance.audio;
+    const progressPlayed = document.getElementById('custom-player-progress-played');
+    if (audio && audio.duration && progressPlayed) {
+      const percentage = (audio.currentTime / audio.duration) * 100;
+      progressPlayed.style.width = percentage + '%';
+    }
   });
 
-  // 监听播放状态更新按钮图标
+  // 监听播放状态更新控制台
   window.aplayerInstance.on('play', function () {
     const toggleBtn = document.getElementById('custom-btn-toggle');
     if (toggleBtn) { toggleBtn.classList.remove('fa-play'); toggleBtn.classList.add('fa-pause'); }
@@ -46,7 +55,6 @@ if (!window.aplayerInstance) {
     if (lyricTextEl) lyricTextEl.innerText = '📜 弦音暂歇';
   });
 
-  // 切歌时同步更新控制器的文本与封面
   window.aplayerInstance.on('listswitch', function (data) {
     const titleEl = document.getElementById('custom-player-title');
     const artistEl = document.getElementById('custom-player-artist');
@@ -57,7 +65,7 @@ if (!window.aplayerInstance) {
   });
 }
 
-// 2. 桌面精细并排组件生成逻辑
+// 2. 桌面组件生成与拖拽核心逻辑
 function injectCustomMusicUI() {
   const recentPosts = document.getElementById('recent-posts');
   if (!recentPosts || document.getElementById('custom-music-wrapper')) return;
@@ -75,6 +83,13 @@ function injectCustomMusicUI() {
         <span class="player-splitter">-</span>
         <span id="custom-player-artist">${currentTrack.artist || ''}</span>
       </div>
+      
+      <div id="custom-player-progress-wrapper" class="player-progress-wrapper">
+        <div id="custom-player-progress-played" class="player-progress-played">
+          <div class="player-progress-dot"></div>
+        </div>
+      </div>
+
       <div class="player-btns">
         <i id="custom-btn-prev" class="fas fa-step-backward"></i>
         <i id="custom-btn-toggle" class="fas ${isPaused ? 'fa-play' : 'fa-pause'}"></i>
@@ -90,10 +105,49 @@ function injectCustomMusicUI() {
 
   recentPosts.insertBefore(wrapper, recentPosts.firstChild);
 
-  // 绑定事件
+  // 绑定常规按钮切歌/暂停事件
   document.getElementById('custom-btn-toggle').addEventListener('click', () => window.aplayerInstance.toggle());
   document.getElementById('custom-btn-prev').addEventListener('click', () => window.aplayerInstance.skipBack());
   document.getElementById('custom-btn-next').addEventListener('click', () => window.aplayerInstance.skipForward());
+
+  // 🟢 核心算法：进度条点击与拖拽跳转逻辑
+  const progressWrapper = document.getElementById('custom-player-progress-wrapper');
+  if (progressWrapper) {
+    let isDragging = false;
+
+    const handleSeek = (e) => {
+      const rect = progressWrapper.getBoundingClientRect();
+      // 兼容鼠标点击与手机触屏多端坐标
+      const clientX = e.clientX !== undefined ? e.clientX : (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+      let clickX = clientX - rect.left;
+      let percentage = clickX / rect.width;
+      
+      if (percentage < 0) percentage = 0;
+      if (percentage > 1) percentage = 1;
+      
+      const duration = window.aplayerInstance.audio.duration;
+      if (duration) {
+        // 更新本地视觉样式，防止拖拽时出现明显的断点卡顿
+        const progressPlayed = document.getElementById('custom-player-progress-played');
+        if (progressPlayed) progressPlayed.style.width = (percentage * 100) + '%';
+        // 让底层核心 APlayer 跳转到指定时间
+        window.aplayerInstance.seek(percentage * duration);
+      }
+    };
+
+    // 鼠标点击跳转
+    progressWrapper.addEventListener('click', handleSeek);
+
+    // 鼠标按住拖拽
+    progressWrapper.addEventListener('mousedown', () => { isDragging = true; });
+    window.addEventListener('mousemove', (e) => { if (isDragging) handleSeek(e); });
+    window.addEventListener('mouseup', () => { isDragging = false; });
+
+    // 移动端手指触屏拖拽
+    progressWrapper.addEventListener('touchstart', () => { isDragging = true; });
+    window.addEventListener('touchmove', (e) => { if (isDragging) { e.preventDefault(); handleSeek(e); } }, { passive: false });
+    window.addEventListener('touchend', () => { isDragging = false; });
+  }
 }
 
 injectCustomMusicUI();
