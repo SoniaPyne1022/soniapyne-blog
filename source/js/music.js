@@ -10,14 +10,8 @@ if (!window.aplayerInstance) {
     container: document.getElementById('aplayer'),
     fixed: true,      // 吸底挂件模式
     autoplay: true,   // 自动播放
-    volume: 0.5,      // 默认音量
+    volume: 0.6,      // 默认音量
     audio: [
-      {
-        // name: '歌曲名字 2',
-    //     artist: '歌手 2',
-    //     url: '/music/song2.mp3',
-    //     cover: '/music/cover2.jpg'
-      },
       {
         name: '一枕秋山',
         artist: '松茶',
