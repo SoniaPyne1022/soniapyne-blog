@@ -64,78 +64,79 @@
   }
 }
 
-/* ==================== 古朴典雅挂件式字幕栏 ==================== */
+/* ==================== 古朴典雅右侧挂件式字幕栏 ==================== */
 #custom-lyric-bar {
-  position: relative;            /* 切换为相对定位，使其自然留在图示空隙中 */
-  margin: 0 auto 25px auto;      /* 居中对齐，并与下方主页内容保持 25px 优雅间距 */
-  width: 100%;
-  max-width: 1200px;             /* 完美对齐你的博客主体宽度 */
+  position: relative;
+  margin: 0 0 20px 0;            /* 距离下方第一篇文章 20px 间距 */
+  width: 100%;                   /* 自动填满右侧整栏，长度自然缩短 */
+  box-sizing: border-box;
   
-  /* 颜值视觉：半透明宣纸墨砚底色 + 浅淡古风鎏金上下边框 */
+  /* 视觉风格：半透明宣纸墨砚底色 + 精致古典鎏金全框线 */
   background: rgba(36, 33, 30, 0.75) !important; 
   backdrop-filter: blur(8px);
-  border-radius: 4px;            /* 传统的直角长条条幅设计 */
-  border-top: 1px solid rgba(212, 175, 55, 0.25);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 8px;            /* 完美的 8px 圆角，与下方的文章卡片弧度完美呼应 */
+  border: 1px solid rgba(212, 175, 55, 0.25); 
   
-  /* 尺寸收窄：高度压缩，精致内衬 */
-  padding: 6px 30px !important;   
-  height: 42px !important;
+  /* 尺寸微调：上下宽度（高度）变长变厚，整体更充实 */
+  padding: 10px 30px !important;   
+  height: 56px !important;       /* 高度从 42px 拓宽到 56px */
   
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 10;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-  box-sizing: border-box;
 }
 
 /* 左侧传统菱形星芒装饰点 */
 .lyric-dots {
   color: rgba(212, 175, 55, 0.4);
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 4px;
   user-select: none;
 }
 
-/* 中间主文字：字号加大，强制传统楷体 */
+/* 中间主文字：字号明显加大，古典楷体 */
 #lyric-text {
-  font-family: "Kaiti", "STKaiti", "Noto Serif SC", "SimSun", serif !important; /* 优先调用精美中式楷体/衬线体 */
-  color: #f3ebd4 !important;     /* 柔和的仿古古典丝绢/象牙白 */
-  font-size: 19px !important;    /* 显眼的大字号 */
+  font-family: "Kaiti", "STKaiti", "Noto Serif SC", "SimSun", serif !important;
+  color: #f3ebd4 !important;     /* 古典象牙绢白 */
+  font-size: 22px !important;    /* 🟢 字号加大到 22px，更加清朗醒目 */
   font-weight: 500;
   text-align: center;
   flex: 1;
   padding: 0 20px;
-  line-height: 30px !important;
-  height: 30px !important;
+  line-height: 36px !important;  /* 配合高度调整行高 */
+  height: 36px !important;
   white-space: nowrap !important;
   overflow: hidden !important;
-  text-overflow: ellipsis !important; /* 歌词过长自动接 ... */
+  text-overflow: ellipsis !important;
 }
 
-/* 右侧古典折扇/折风图标 */
+/* 右侧古典折扇图标 */
 .lyric-icon {
   color: rgba(212, 175, 55, 0.5);
-  font-size: 14px;
+  font-size: 16px;
 }
 
-/* 斩草除根：彻底屏蔽原生播放器在页面上重叠产生的重影 */
+/* 隐藏原生重影 */
 .aplayer-lrc {
   display: none !important;
 }
 
-/* ==================== 手机端响应式优化 ==================== */
+/* ==================== 手机端自动回弹适配 ==================== */
 @media screen and (max-width: 768px) {
   #custom-lyric-bar {
-    width: 92%;
-    margin: 0 auto 15px auto;
-    padding: 6px 15px !important;
+    width: 100%;
+    margin: 0 0 15px 0;
+    padding: 8px 15px !important;
+    height: 48px !important;     /* 手机端自动缩小高度，防止占地方 */
   }
   #lyric-text {
-    font-size: 15px !important;  /* 手机端自动缩小字号，防止塞不下 */
+    font-size: 16px !important;  
+    line-height: 30px !important;
+    height: 30px !important;
   }
   .lyric-dots {
-    display: none;               /* 手机端隐藏左边小点留出空间 */
+    display: none;
   }
 }

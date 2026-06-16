@@ -14,22 +14,24 @@ if (!window.aplayerInstance) {
     <div class="lyric-icon"><i class="fas fa-fan"></i></div>
   `;
 
-  // 3. 精准布局注入器：把字幕栏精准塞进你截图里标注的空白处
-  const contentInner = document.getElementById('content-inner');
-  if (contentInner) {
-    contentInner.parentNode.insertBefore(lyricBar, contentInner);
+  // 3. 精准布局注入器：直接塞进右侧文章列表（#recent-posts）的最顶部，完美实现图示对齐
+  const recentPosts = document.getElementById('recent-posts');
+  if (recentPosts) {
+    recentPosts.insertBefore(lyricBar, recentPosts.firstChild);
   } else {
-    document.body.appendChild(lyricBar); // 如果找不到布局，则备用兜底挂在最底部
+    // 兜底方案：如果不在首页，则塞入主互动区
+    const contentInner = document.getElementById('content-inner');
+    if (contentInner) contentInner.parentNode.insertBefore(lyricBar, contentInner);
   }
 
   // 4. 初始化 APlayer
   window.aplayerInstance = new APlayer({
     container: document.getElementById('aplayer'),
-    fixed: true,      // 吸底挂件模式
-    autoplay: true,   // 自动播放
-    volume: 0.6,      // 默认音量
-    lrcType: 3,       // 开启外部 LRC 歌词文件支持
-    order: 'list',    // 列表循环顺序播放
+    fixed: true,      
+    autoplay: true,   
+    volume: 0.6,      
+    lrcType: 3,       
+    order: 'list',    
     audio: [
       {
         name: '一枕秋山',
@@ -41,7 +43,7 @@ if (!window.aplayerInstance) {
     ]
   });
 
-  // 5. 实时监听播放进度，将歌词同步镜像到古典字幕栏中
+  // 5. 实时监听播放进度
   window.aplayerInstance.on('timeupdate', function () {
     const currentLyric = document.querySelector('.aplayer-lrc-current');
     const lyricTextEl = document.getElementById('lyric-text');
@@ -52,7 +54,6 @@ if (!window.aplayerInstance) {
     }
   });
   
-  // 暂停时状态提示
   window.aplayerInstance.on('pause', function () {
     const lyricTextEl = document.getElementById('lyric-text');
     if (lyricTextEl) lyricTextEl.innerText = '📜 弦音暂歇';
