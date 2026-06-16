@@ -55,9 +55,11 @@
 /* 🟢 替换为这段新代码：让宠物在手机端完美显现 */
 @media screen and (max-width: 768px) {
   #custom-static-pet {
-    display: block !important;    /* 确保在手机端正常显示 */
-    width: 50px;                  /* 💡 手机端等比例缩小到 50px（原电脑端是 90px） */
-    bottom: 80px;                 /* 💡 稍微往上挪一点，避开右下角的“返回顶部”和菜单按钮 */
-    right: 15px;                  /* 稍微靠边一点，给文字腾出空间 */
+    display: block !important;       /* 强行显示 */
+    visibility: visible !important;  /* 强行可见 */
+    width: 55px !important;          /* 手机端大小 */
+    bottom: 140px !important;        /* 👈 显著往上挪高，彻底避开手机端右下角的右侧悬浮菜单 */
+    right: 10px !important;          /* 靠边 */
+    z-index: 999999 !important;      /* 👈 将层级拉到无限大，确保没有任何东西能挡住它 */
   }
 }

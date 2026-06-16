@@ -13,10 +13,10 @@ if (!window.aplayerInstance) {
     volume: 0.5,      // 默认音量
     audio: [
       {
-        name: '蝴蝶',
-        artist: '洛天依',
-        url: '/music/洛天依Official - 蝴蝶.mp3',       // 对应你放在 source/music/ 下的文件名
-        cover: '/music/微信图片_20260615162246_689_60.jpg'     // 对应你的封面图，没有的话可以删掉这行
+        name: '一枕秋山',
+        artist: '松茶',
+        url: '/music/一枕秋山.mp3',       // 对应你放在 source/music/ 下的文件名
+        cover: '/music/4d5a70b253581fa22d8c8187c6f6cd3c.jpg'     // 对应你的封面图，没有的话可以删掉这行
       },
     //   {
     //     name: '歌曲名字 2',
