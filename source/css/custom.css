@@ -64,75 +64,78 @@
   }
 }
 
-/* ==================== 全局悬浮歌词字幕栏 (完美复刻 image_4c6161.png) ==================== */
+/* ==================== 古朴典雅挂件式字幕栏 ==================== */
 #custom-lyric-bar {
-  position: fixed;
-  bottom: 15px;                  /* 距离网页最底部的距离 */
-  left: 50%;
-  transform: translateX(-50%);   /* 居中对齐 */
-  width: 90%;
-  max-width: 1200px;             /* 保持合理的超长条横宽 */
-  background: rgba(10, 13, 22, 0.85) !important; /* 极具高级感的深色半透明背景 */
-  backdrop-filter: blur(12px);   /* 磨砂毛玻璃效果 */
-  border-radius: 30px;           /* 胶囊圆角 */
-  padding: 12px 30px;
+  position: relative;            /* 切换为相对定位，使其自然留在图示空隙中 */
+  margin: 0 auto 25px auto;      /* 居中对齐，并与下方主页内容保持 25px 优雅间距 */
+  width: 100%;
+  max-width: 1200px;             /* 完美对齐你的博客主体宽度 */
+  
+  /* 颜值视觉：半透明宣纸墨砚底色 + 浅淡古风鎏金上下边框 */
+  background: rgba(36, 33, 30, 0.75) !important; 
+  backdrop-filter: blur(8px);
+  border-radius: 4px;            /* 传统的直角长条条幅设计 */
+  border-top: 1px solid rgba(212, 175, 55, 0.25);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+  
+  /* 尺寸收窄：高度压缩，精致内衬 */
+  padding: 6px 30px !important;   
+  height: 42px !important;
+  
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 98;                   /* 稍微低于宠物层级，高于普通内容 */
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); /* 底部外阴影 */
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: all 0.3s ease;
+  z-index: 10;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
 }
 
-/* 左侧装饰点 */
+/* 左侧传统菱形星芒装饰点 */
 .lyric-dots {
-  color: rgba(255, 255, 255, 0.25);
-  font-size: 16px;
-  letter-spacing: 3px;
+  color: rgba(212, 175, 55, 0.4);
+  font-size: 12px;
+  letter-spacing: 4px;
   user-select: none;
 }
 
-/* 中间滚动的动态字幕主文本 */
+/* 中间主文字：字号加大，强制传统楷体 */
 #lyric-text {
-  color: #ffffff !important;
-  font-weight: bold;
-  font-size: 16px;
+  font-family: "Kaiti", "STKaiti", "Noto Serif SC", "SimSun", serif !important; /* 优先调用精美中式楷体/衬线体 */
+  color: #f3ebd4 !important;     /* 柔和的仿古古典丝绢/象牙白 */
+  font-size: 19px !important;    /* 显眼的大字号 */
+  font-weight: 500;
   text-align: center;
   flex: 1;
-  padding: 0 25px;
-  /* 👈 核心：复刻图片中的白色文字霓虹高光发光效果 */
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.65), 0 0 4px rgba(255, 255, 255, 0.4);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;       /* 歌词太长时自动变省略号 */
-  transition: text-shadow 0.3s ease;
+  padding: 0 20px;
+  line-height: 30px !important;
+  height: 30px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important; /* 歌词过长自动接 ... */
 }
 
-/* 右侧音符图标 */
+/* 右侧古典折扇/折风图标 */
 .lyric-icon {
-  color: rgba(255, 255, 255, 0.35);
-  font-size: 15px;
-  animation: lyricIconSpin 5s linear infinite; /* 让小音符自己轻轻转动 */
+  color: rgba(212, 175, 55, 0.5);
+  font-size: 14px;
 }
 
-@keyframes lyricIconSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+/* 斩草除根：彻底屏蔽原生播放器在页面上重叠产生的重影 */
+.aplayer-lrc {
+  display: none !important;
 }
 
-/* ==================== 手机移动端完美适配 ==================== */
+/* ==================== 手机端响应式优化 ==================== */
 @media screen and (max-width: 768px) {
   #custom-lyric-bar {
-    width: 95%;                  /* 手机端拉宽一点 */
-    bottom: 8px;                 /* 紧贴底部 */
-    padding: 8px 15px;
+    width: 92%;
+    margin: 0 auto 15px auto;
+    padding: 6px 15px !important;
   }
   #lyric-text {
-    font-size: 13px;             /* 手机端字号调小，防止字溢出 */
-    padding: 0 10px;
+    font-size: 15px !important;  /* 手机端自动缩小字号，防止塞不下 */
   }
   .lyric-dots {
-    display: none;               /* 手机端隐藏左边无用的小点，留出空间 */
+    display: none;               /* 手机端隐藏左边小点留出空间 */
   }
 }
