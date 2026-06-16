@@ -12,17 +12,17 @@ if (!window.aplayerInstance) {
     autoplay: true,   // 自动播放
     volume: 0.5,      // 默认音量
     audio: [
-      // {
-      //   name: '歌曲名字 1',
-      //   artist: '歌手 1',
-      //   url: '/music/song1.mp3',       // 对应你放在 source/music/ 下的文件名
-      //   cover: '/music/cover1.jpg'     // 对应你的封面图，没有的话可以删掉这行
-      // },
+      {
+        name: '一枕秋山',
+        artist: 'sc',
+        url: '/music/一枕秋山.mp3',       // 对应你放在 source/music/ 下的文件名
+        cover: '/music/4d5a70b253581fa22d8c8187c6f6cd3c.jpg'     // 对应你的封面图，没有的话可以删掉这行
+      },
        {
-        name: 'Stardust (New Ver.)',
-        artist: 'Dan Bravo',
-        url: '/music/M500000stOq706xU4a.mp3',
-        // cover: '/music/微信图片_20260615162246_689_60.jpg'
+        name: 'Helpless',
+        artist: 'Phillipa Soo&Original Broadway Cast of Hamilton',
+        url: '/music/M500000pLr4E2onwxU.mp3',
+        cover: '/music/汉密尔顿.jpg'
         // cover: '/music/微信图片_20260615162246_689_60.jpg'
       }
     ]
