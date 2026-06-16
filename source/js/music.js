@@ -16,7 +16,7 @@ if (!window.aplayerInstance) {
         name: '一枕秋山',
         artist: '松茶',
         url: '/music/一枕秋山.mp3',
-        cover: '/music/4d5a70b253581fa22d8c8187c6f6cd3c.jpg'
+        // cover: '/music/微信图片_20260615162246_689_60.jpg'
       }
     ]
   });
