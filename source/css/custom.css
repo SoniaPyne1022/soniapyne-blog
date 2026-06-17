@@ -66,31 +66,36 @@
 
 
 /* ============== 🟢 紧接其后新增：古典宣纸砚墨风对话气泡 ============== */
-/* ============== 🟢 完美复刻：古典横排、保留标点、诗集居中版气泡样式 ============== */
+/* ============== 🟢 替换为这段：大尺寸、智能收拢、8字封顶的诗集气泡 ============== */
 #pet-bubble {
   position: fixed;
   transform: translateX(-50%) scale(0.8);      /* 初始微缩，用于弹跳动画 */
   background: rgba(36, 33, 30, 0.94) !important; /* 墨砚黑底色 */
   backdrop-filter: blur(8px);
   border: 1px solid rgba(212, 175, 55, 0.35);   /* 鎏金细边线 */
-  border-radius: 6px;                           /* 优雅的微圆角 */
+  border-radius: 8px;                           /* 典雅微圆角 */
   
-  /* 尺寸与内衬：恢复横排舒适比例 */
-  padding: 12px 18px !important;                /* 增加上下左右内衬，让文字不拥挤 */
-  font-size: 15px !important;                   /* 💡 字号微调回 15px，横排阅读最舒适 */
+  /* 空间放大器：保持大气、饱满的视觉感 */
+  padding: 16px 24px !important;                /* 上下 16px，左右 24px 内衬 */
+  font-size: 18px !important;                   /* 字号保持 18px 大气易读 */
   color: #f3ebd4 !important;                    /* 仿古丝绢白 */
   font-family: "Kaiti", "STKaiti", "Noto Serif SC", serif !important; /* 典雅中式楷体 */
   
-  /* 🟢 恢复横排配置 */
-  white-space: pre-wrap !important;             /* 完美读取并渲染换行符 */
-  max-width: 280px !important;                  /* 💡 严格限制横向最大宽度，防止太长冲出屏幕 */
-  line-height: 1.6 !important;                  /* 舒适的行高 */
-  text-align: center !important;                /* 💡 核心：文字横向居中对齐，排出来的句子非常对称漂亮 */
+  /* 🟢 核心修复：从“固定 8 字”改为“智能弹性伸缩，8 字封顶” */
+  box-sizing: content-box !important;           /* 确保高宽只计算文字区域，不被 padding 干扰 */
+  max-width: 8em !important;                    /* 💡 核心：一行最多容纳 8 个字，超出了才硬性换行 */
+  min-width: 5em !important;                    /* 💡 兜底：字数极少时气泡也至少保持 5 个字的宽度，显得大气 */
+  
+  /* 换行与对齐 */
+  white-space: pre-wrap !important;             /* 完美读取并渲染脚本传来的标点换行 */
+  word-break: break-all !important;             /* 满 8 个字无条件硬性断行 */
+  line-height: 1.8 !important;                  /* 舒适的行高 */
+  text-align: center !important;                /* 文字水平居中对齐 */
   
   z-index: 1000000 !important;                  /* 确保层级在最顶层 */
   opacity: 0;
   pointer-events: none;                         /* 鼠标穿透 */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);   /* 立体悬浮阴影 */
   
   /* 贝塞尔曲线微弹动画 */
   transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -100,11 +105,11 @@
 #pet-bubble::after {
   content: '';
   position: absolute;
-  bottom: -5px;
+  bottom: -6px;
   left: 50%;
   transform: translateX(-50%) rotate(45deg);
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   background: rgba(36, 33, 30, 0.94);
   border-right: 1px solid rgba(212, 175, 55, 0.35);
   border-bottom: 1px solid rgba(212, 175, 55, 0.35);
