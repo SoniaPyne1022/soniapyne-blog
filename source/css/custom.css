@@ -304,48 +304,45 @@
 }
 
 @media screen and (min-width: 1300px) {
-  /* 1. 让主容器保持一行展示，并留出左右两侧的整体空间 */
+  /* 1. 让主容器变成三栏布局，并调大最大宽度 */
   #content-inner {
     display: flex !important;
     justify-content: center !important;
     align-items: flex-start !important;
-    position: relative !important;
-    padding-left: 280px !important;  /* 给左侧腾出空间 */
-    padding-right: 280px !important; /* 给右侧腾出空间 */
-    max-width: 1500px !important;    /* 放大最大宽度 */
+    max-width: 1500px !important; 
     margin: 0 auto !important;
   }
 
-  /* 2. 锁定中间文章栏的宽度 */
+  /* 2. 中间文章栏：设置合理的宽度，并用 order: 2 强行挤到中间 */
   #recent-posts, #page, #post {
-    width: 100% !important;
+    width: 60% !important; /* 或者 flex: 1 */
     flex: 1 !important;
+    order: 2 !important;   /* 序号2，在正中间 */
+    margin: 0 20px !important; /* 给左右两边留出等距空隙 */
   }
 
-  /* 3. 锁定原生侧边栏作为【右侧栏】 */
+  /* 3. 原生侧边栏容器：解除限制，让里面的卡片能各奔东西 */
   #aside-content {
-    width: 260px !important;
-    margin-left: 20px !important;
     display: flex !important;
-    flex-direction: column !important;
+    flex-direction: row !important; /* 允许左右分流 */
+    width: auto !important;
+    max-width: none !important;
   }
 
-  /* 4. 强行抓取特定的卡片，把它们“瞬移”到【左侧栏】位置 */
-  /* 这里以个人信息（.card-info）和公告（.card-announcement）为例 */
+  /* 4. 左侧栏布局：把个人信息和公告打包放到最左边 */
   #aside-content .card-info,
   #aside-content .card-announcement {
-    position: absolute !important;
-    left: 0 !important;
+    order: 1 !important;   /* 序号1，去最左边 */
     width: 260px !important;
+    position: static !important; /* 清除上一次的绝对定位 */
   }
 
-  /* 5. 修正左侧卡片的高度堆叠，避免它们自己重叠在一起 */
-  #aside-content .card-info {
-    top: 0 !important;
-  }
-  
-  #aside-content .card-announcement {
-    /* 这里的 top 值需要根据你个人信息卡片的高度来微调，通常 360px 左右刚好 */
-    top: 360px !important; 
+  /* 让左边的公告乖乖排在个人信息下面 */
+  #aside-content {
+    display: grid !important;
+    grid-template-columns: 260px 260px !important; /* 左栏宽度 和 右栏宽度 */
+    column-gap: 1000px !important; /* 这个间距会被中间的文章栏填满，不用担心 */
   }
 }
+
+/* 👆 上面的 Grid 组合如果有些复杂，我们换用最稳妥的【分流法】，请直接使用下方精简版 CSS： */
