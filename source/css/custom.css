@@ -16,7 +16,7 @@
   background: rgba(24, 24, 24, 0.7) !important;    /* 夜间模式下的透明黑底 */
 }
 
-/* 右下角静态宠物挂件样式 */
+/* ==================== 右下角静态宠物挂件样式（完全保留你的原本代码） ==================== */
 #custom-static-pet {
   position: fixed;
   bottom: 40px;      /* 距离底部的高度，可以根据需要调整 */
@@ -62,6 +62,49 @@
     right: 10px !important;          /* 靠边 */
     z-index: 999999 !important;      /* 👈 将层级拉到无限大，确保没有任何东西能挡住它 */
   }
+}
+
+
+/* ============== 🟢 紧接其后新增：古典宣纸砚墨风对话气泡 ============== */
+#pet-bubble {
+  position: fixed;
+  transform: translateX(-50%) scale(0.8);      /* 初始缩小，用于弹跳动画 */
+  background: rgba(36, 33, 30, 0.92) !important; /* 砚墨底色 */
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(212, 175, 55, 0.35);   /* 鎏金细边线 */
+  border-radius: 6px;
+  padding: 8px 14px;
+  color: #f3ebd4 !important;                    /* 仿古丝绢白文字 */
+  font-family: "Kaiti", "STKaiti", serif !important; /* 典雅楷体 */
+  font-size: 14px;
+  white-space: nowrap;                          /* 保证文字单行不换行 */
+  z-index: 1000000 !important;                  /* 💡 核心：层级必须压过手机端的 999999，确保不被小人挡住 */
+  opacity: 0;
+  pointer-events: none;                         /* 允许鼠标穿透气泡，绝不阻挡背后网页的点击 */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  
+  /* 贝塞尔曲线微弹动画 */
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 气泡下方的指向小箭头 */
+#pet-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 8px;
+  height: 8px;
+  background: rgba(36, 33, 30, 0.92);
+  border-right: 1px solid rgba(212, 175, 55, 0.35);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.35);
+}
+
+/* 唤醒气泡时的显示类 */
+#pet-bubble.show {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);        /* 放大回原样，产生气泡弹出的质感 */
 }
 
 /* ==================== 极简古风双生并排音乐条 ==================== */
@@ -245,46 +288,4 @@
   .player-progress-wrapper {
     margin: 0 8px;
   }
-}
-
-/* ==================== 右下角像素小人古典对话气泡 ==================== */
-#pet-bubble {
-  position: fixed;
-  transform: translateX(-50%) scale(0.8);      /* 初始缩小，用于弹跳动画 */
-  background: rgba(36, 33, 30, 0.9) !important; /* 砚墨底色，略微加深确保文字清晰 */
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(212, 175, 55, 0.35);   /* 鎏金细边 */
-  border-radius: 6px;
-  padding: 8px 14px;
-  color: #f3ebd4 !important;                    /* 仿古丝绢白文字 */
-  font-family: "Kaiti", "STKaiti", serif !important; /* 典雅楷体 */
-  font-size: 14px;
-  white-space: nowrap;                          /* 保证文字单行不换行 */
-  z-index: 99999;                               /* 确保图层在最顶层，不被任何卡片遮挡 */
-  opacity: 0;
-  pointer-events: none;                         /* 核心：允许鼠标穿透气泡，防止挡住后面的点击 */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  
-  /* 优雅的贝塞尔曲线弹跳过渡动画 */
-  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-/* 气泡底部向下的小箭头 */
-#pet-bubble::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 50%;
-  transform: translateX(-50%) rotate(45deg);
-  width: 8px;
-  height: 8px;
-  background: rgba(36, 33, 30, 0.9);
-  border-right: 1px solid rgba(212, 175, 55, 0.35);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.35);
-}
-
-/* 气泡唤醒显示状态 */
-#pet-bubble.show {
-  opacity: 1;
-  transform: translateX(-50%) scale(1);        /* 恢复正常大小，形成微弹效果 */
 }
