@@ -304,54 +304,54 @@
 }
 
 @media screen and (min-width: 1200px) {
-  /* 1. 全局主容器：严格的三栏网格布局 */
-  #content-inner {
+  /* 1. 全局主容器：强行开启严格的三栏网格 */
+  html body #body-wrap #content-inner {
     display: grid !important;
-    grid-template-columns: 280px 1fr 280px !important; /* 左栏宽度 | 中栏自适应 | 右栏宽度 */
-    column-gap: 25px !important;                       /* 栏与栏之间的横向间距 */
-    row-gap: 20px !important;                          /* 卡片与卡片之间的上下间距 */
-    max-width: 1450px !important;                      /* 整体页面最大宽度 */
+    grid-template-columns: 280px 1fr 280px !important; /* 左栏 | 中栏自适应 | 右栏 */
+    column-gap: 26px !important;                       /* 左右栏与文章的间距 */
+    row-gap: 20px !important;                          /* 卡片上下的间距 */
+    max-width: 1450px !important;                      /* 网页最大宽度 */
     margin: 0 auto !important;
     align-items: start !important;
   }
 
-  /* 2. 中间文章栏：纵向跨越所有行，强行独占中路 */
-  #recent-posts, #page, #post {
-    grid-column: 2 / 3 !important; 
-    grid-row: 1 / 35 !important;   /* 纵向高度跨越，防止右侧卡片掉到底部 */
+  /* 2. 中间文章栏：纵向跨越，强行占领中路 */
+  html body #body-wrap #content-inner #recent-posts,
+  html body #body-wrap #content-inner #page,
+  html body #body-wrap #content-inner #post {
+    grid-column: 2 / 3 !important; /* 锁死在中间 */
+    grid-row: 1 / 50 !important;   /* 纵向无限跨越，绝不给右侧卡片掉下去的机会 */
     width: 100% !important;
-    margin: 0 !important;          
+    margin: 0 !important;          /* 消除原生边距干扰 */
   }
 
-  /* 3. 打散侧边栏原生包裹 */
-  #aside-content {
+  /* 3. 强行打散侧边栏原生包裹限制 */
+  html body #body-wrap #content-inner #aside-content {
     display: contents !important;
   }
 
   /* ==================== 4. 左侧栏布局 (第一列) ==================== */
   
-  /* 个人信息 - 左侧第 1 行 */
-  #aside-content .card-info {
+  /* 个人信息 - 顶端 */
+  html body #body-wrap #content-inner #aside-content .card-info {
     grid-column: 1 / 2 !important;
     grid-row: 1 !important;
   }
   
-  /* 公告 - 左侧第 2 行 */
-  #aside-content .card-announcement {
+  /* 公告 - 第二位 */
+  html body #body-wrap #content-inner #aside-content .card-announcement {
     grid-column: 1 / 2 !important;
     grid-row: 2 !important;
   }
   
-  /* 【模糊匹配】分类卡片 - 强行锁定在左侧第 3 行 */
-  #aside-content [class*="category"],
-  #aside-content .card-categories {
+  /* 分类 - 第三位（强行拉到左边） */
+  html body #body-wrap #content-inner #aside-content .card-categories {
     grid-column: 1 / 2 !important;
     grid-row: 3 !important;
   }
   
-  /* 【模糊匹配】标签墙卡片 - 强行锁定在左侧第 4 行 */
-  #aside-content [class*="tag"],
-  #aside-content .card-tags {
+  /* 标签墙 - 第四位（强行拉到左边） */
+  html body #body-wrap #content-inner #aside-content .card-tags {
     grid-column: 1 / 2 !important;
     grid-row: 4 !important;
   }
@@ -359,29 +359,26 @@
 
   /* ==================== 5. 右侧栏布局 (第三列) ==================== */
   
-  /* 最新文章 - 右侧第 1 行 */
-  #aside-content .card-recent-post,
-  #aside-content [class*="recent-post"] {
+  /* 最新文章 - 右侧顶端 */
+  html body #body-wrap #content-inner #aside-content .card-recent-post {
     grid-column: 3 / 4 !important;
     grid-row: 1 !important;
   }
   
-  /* 归档 - 右侧第 2 行 */
-  #aside-content .card-archives,
-  #aside-content [class*="archive"] {
+  /* 归档 - 右侧第二位 */
+  html body #body-wrap #content-inner #aside-content .card-archives {
     grid-column: 3 / 4 !important;
     grid-row: 2 !important;
   }
   
-  /* 网站统计 - 右侧第 3 行 */
-  #aside-content .card-webinfo,
-  #aside-content [class*="webinfo"] {
+  /* 网站统计 - 右侧第三位 */
+  html body #body-wrap #content-inner #aside-content .card-webinfo {
     grid-column: 3 / 4 !important;
     grid-row: 3 !important;
   }
 
-  /* ==================== 6. 兜底样式修正 ==================== */
-  #aside-content .card-widget {
+  /* ==================== 6. 统一卡片宽度兜底 ==================== */
+  html body #body-wrap #content-inner #aside-content .card-widget {
     width: 100% !important;
   }
 }
