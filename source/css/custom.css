@@ -303,46 +303,74 @@
   }
 }
 
-@media screen and (min-width: 1250px) {
-  /* 1. 将主容器定义为严格的三栏网格 */
+@media screen and (min-width: 1200px) {
+  /* 1. 主容器：严格定义三栏网格 */
   #content-inner {
     display: grid !important;
-    /* 左栏 280px | 中间文章自适应 | 右栏 280px */
-    grid-template-columns: 280px 1fr 280px !important; 
-    /* 栏与栏之间的间距，可自行调整 */
-    column-gap: 24px !important; 
-    row-gap: 20px !important;
-    max-width: 1450px !important;
+    grid-template-columns: 280px 1fr 280px !important; /* 左栏宽度 | 中栏自适应 | 右栏宽度 */
+    column-gap: 24px !important;                       /* 栏与栏之间的横向间距 */
+    row-gap: 20px !important;                          /* 卡片与卡片之间的上下间距 */
+    max-width: 1450px !important;                      /* 整体页面最大宽度 */
     margin: 0 auto !important;
     align-items: start !important;
   }
 
-  /* 2. 让文章栏稳稳占据中间（第二栏） */
+  /* 2. 核心突破：让中间的文章栏从第 1 行一直纵向跨越到第 20 行
+     这样右侧和左侧的卡片就可以自由在它身边叠放，绝对不会被挤到网页底部 */
   #recent-posts, #page, #post {
-    grid-column: 2 / 3 !important;
+    grid-column: 2 / 3 !important; /* 锁定在正中间 */
+    grid-row: 1 / 20 !important;   /* 纵向跨越，打破行高限制 */
     width: 100% !important;
-    margin: 0 !important; /* 清除多余的边距干扰 */
+    margin: 0 !important;
   }
 
-  /* 3. 彻底打散侧边栏包裹，让其内部卡片直接变成网格的子元素 */
+  /* 3. 打散侧边栏包裹，释放内部所有卡片组件 */
   #aside-content {
     display: contents !important;
   }
 
-  /* 4. 创建左侧垂直容器列，并将“个人信息”和“公告”丢进去 */
-  #aside-content .card-info,
+  /* ==================== 4. 左侧栏布局 (Column 1) ==================== */
+  /* 个人信息卡片：放在左侧第 1 行 */
+  #aside-content .card-info {
+    grid-column: 1 / 2 !important;
+    grid-row: 1 !important;
+  }
+  /* 公告卡片：放在左侧第 2 行 */
   #aside-content .card-announcement {
-    grid-column: 1 / 2 !important; /* 锁定在第一栏（最左边） */
+    grid-column: 1 / 2 !important;
+    grid-row: 2 !important;
   }
 
-  /* 5. 创建右侧垂直容器列，把“最新文章”和“分类”等其余所有卡片丢进去 */
-  #aside-content .card-widget:not(.card-info):not(.card-announcement) {
-    grid-column: 3 / 4 !important; /* 锁定在第三栏（最右边） */
+
+  /* ==================== 5. 右侧栏布局 (Column 3) ==================== */
+  /* 最新文章卡片：放在右侧第 1 行（完美对应图二） */
+  #aside-content .card-recent-post {
+    grid-column: 3 / 4 !important;
+    grid-row: 1 !important;
+  }
+  /* 分类卡片：放在右侧第 2 行 */
+  #aside-content .card-categories {
+    grid-column: 3 / 4 !important;
+    grid-row: 2 !important;
+  }
+  /* 标签墙卡片：放在右侧第 3 行（如果有开启的话） */
+  #aside-content .card-tags {
+    grid-column: 3 / 4 !important;
+    grid-row: 3 !important;
+  }
+  /* 归档卡片：放在右侧第 4 行（如果有开启的话） */
+  #aside-content .card-archives {
+    grid-column: 3 / 4 !important;
+    grid-row: 4 !important;
+  }
+  /* 网站统计卡片：放在右侧第 5 行（如果有开启的话） */
+  #aside-content .card-webinfo {
+    grid-column: 3 / 4 !important;
+    grid-row: 5 !important;
   }
 
-  /* 6. 统一修正所有卡片的上下间距，实现类似图二的呼吸感 */
+  /* 6. 统一所有卡片的横向宽度为 100% 撑满各自的格子 */
   #aside-content .card-widget {
     width: 100% !important;
-    margin-bottom: 20px !important; /* 让同一栏的卡片上下叠放时有间距 */
   }
 }
