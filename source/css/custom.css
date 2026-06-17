@@ -303,42 +303,49 @@
   }
 }
 
-@media screen and (min-width: 1200px) {
-  /* 1. 将主容器改为三栏网格布局 */
+@media screen and (min-width: 1300px) {
+  /* 1. 让主容器保持一行展示，并留出左右两侧的整体空间 */
   #content-inner {
-    display: grid !important;
-    grid-template-columns: 260px 1fr 260px !important; /* 左栏 宽度, 中栏 自动, 右栏 宽度 */
-    gap: 20px;
-    max-width: 1400px; /* 适当调大页面最大宽度以容纳三栏 */
-    margin: 0 auto;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    position: relative !important;
+    padding-left: 280px !important;  /* 给左侧腾出空间 */
+    padding-right: 280px !important; /* 给右侧腾出空间 */
+    max-width: 1500px !important;    /* 放大最大宽度 */
+    margin: 0 auto !important;
   }
 
-  /* 2. 让文章主栏占据中间位置 */
+  /* 2. 锁定中间文章栏的宽度 */
   #recent-posts, #page, #post {
-    grid-column: 2 / 3 !important;
     width: 100% !important;
+    flex: 1 !important;
   }
 
-  /* 3. 魔改侧边栏容器：让它变成一个可以跨越两边的网格 */
+  /* 3. 锁定原生侧边栏作为【右侧栏】 */
   #aside-content {
-    display: contents !important; /* 关键：解除父级限制，让内部卡片直接参与三栏网格排版 */
+    width: 260px !important;
+    margin-left: 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
 
-  /* 4. 分流卡片：指定哪些卡片去左边，哪些去右边 */
-  
-  /* 【左侧栏】比如：把个人信息卡片和公告卡片放到第一栏（左侧） */
+  /* 4. 强行抓取特定的卡片，把它们“瞬移”到【左侧栏】位置 */
+  /* 这里以个人信息（.card-info）和公告（.card-announcement）为例 */
   #aside-content .card-info,
   #aside-content .card-announcement {
-    grid-column: 1 / 2 !important;
-    grid-row: auto !important;
+    position: absolute !important;
+    left: 0 !important;
+    width: 260px !important;
   }
 
-  /* 【右侧栏】比如：把最新文章、分类、标签墙放到第三栏（右侧） */
-  #aside-content .card-recent-post,
-  #aside-content .card-categories,
-  #aside-content .card-tags,
-  #aside-content .card-archives {
-    grid-column: 3 / 4 !important;
-    grid-row: auto !important;
+  /* 5. 修正左侧卡片的高度堆叠，避免它们自己重叠在一起 */
+  #aside-content .card-info {
+    top: 0 !important;
+  }
+  
+  #aside-content .card-announcement {
+    /* 这里的 top 值需要根据你个人信息卡片的高度来微调，通常 360px 左右刚好 */
+    top: 360px !important; 
   }
 }
