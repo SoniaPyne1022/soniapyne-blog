@@ -154,21 +154,29 @@ injectCustomMusicUI();
 document.addEventListener('pjax:complete', injectCustomMusicUI);
 
 
-// ==================== 右下角静态宠物悬浮互动挂件（鼠标放上去触发） ====================
-function initPetInteraction() {
-  // 精准锁定你提供的宠物 ID
-  const pet = document.getElementById('custom-static-pet');
-  if (!pet) return;
+// ==================== 右下角静态宠物悬浮互动挂件（超强健全局代理版） ====================
+(function() {
+  let timer = null;
 
-  // 检查并创建唯一的对话气泡，防止页面堆积
-  let bubble = document.getElementById('pet-bubble');
-  if (!bubble) {
-    bubble = document.createElement('div');
-    bubble.id = 'pet-bubble';
-    document.body.appendChild(bubble);
+  // 动态获取或创建气泡的内部函数
+  function getBubble() {
+    let bubble = document.getElementById('pet-bubble');
+    if (!bubble) {
+      bubble = document.createElement('div');
+      bubble.id = 'pet-bubble';
+      document.body.appendChild(bubble);
+    }
+    return bubble;
   }
 
-  // 📜 独家定制的古典话术池
+  // 精准计算并定位气泡位置
+  function positionBubble(pet, bubble) {
+    const rect = pet.getBoundingClientRect();
+    bubble.style.left = (rect.left + rect.width / 2) + 'px';
+    bubble.style.bottom = (window.innerHeight - rect.top + 12) + 'px'; // 距离头顶 12px 间隙
+  }
+
+  // 专属话术池
   const messages = [
     "戳我做什么？莫非是想听曲了？唱片正转着呢~",
     "就让自己的胸襟，不止是一潭水，而是一座湖泊，一片海阔天空，你的眼界，就会更阔。✨",
@@ -178,47 +186,52 @@ function initPetInteraction() {
     "弦音未绝，侠骨香飘。今天也要开开心心哦！"
   ];
 
-  let timer = null;
+  // 🟢 核心黑科技：全局重力感应代理，管你小人什么时候加载出来，碰到了就绝对能触发！
+  document.addEventListener('mouseover', function (e) {
+    // 检查鼠标当前碰到的元素是不是小人，或者是不是小人内部的图层
+    const pet = e.target.closest('#custom-static-pet');
+    if (!pet) return;
 
-  // 📐 核心定位算法：计算小人位置并把气泡钉在头顶正中间
-  function positionBubble() {
-    const rect = pet.getBoundingClientRect();
-    bubble.style.left = (rect.left + rect.width / 2) + 'px';
-    bubble.style.bottom = (window.innerHeight - rect.top + 12) + 'px'; /* 12px 为距离头顶的间隙 */
-  }
+    clearTimeout(timer);
+    const bubble = getBubble();
 
-  // 🟢 1. 鼠标移入（Hover）效果
-  pet.addEventListener('mouseenter', function (e) {
-    clearTimeout(timer); // 清除上一次的隐藏定时器
+    // 如果气泡当前是隐藏的，则随机换词并展现
+    if (!bubble.classList.contains('show')) {
+      const randomText = messages[Math.floor(Math.random() * messages.length)];
+      bubble.innerText = randomText;
+      positionBubble(pet, bubble);
+      bubble.classList.add('show');
+    } else {
+      // 如果气泡本来就醒着（比如在小人身上微挪鼠标），实时修正位置防止漂移
+      positionBubble(pet, bubble);
+    }
 
-    // 随机抽一句古典台词
-    const randomText = messages[Math.floor(Math.random() * messages.length)];
-    bubble.innerText = randomText;
-
-    // 实时定位并显示
-    positionBubble();
-    bubble.classList.add('show');
-
-    // 【手机端/特殊情况安全兜底】：如果用户一直把鼠标放在上面或在手机端点击，4秒后也会自动气泡消失
+    // 4秒防常亮安全断电保护
     timer = setTimeout(() => {
       bubble.classList.remove('show');
     }, 4000);
-  });
+  }, true);
 
-  // 🟢 2. 鼠标移出（Leave）效果：电脑端鼠标一移开，气泡瞬间消失
-  pet.addEventListener('mouseleave', function () {
+  // 🟢 鼠标移出全局代理
+  document.addEventListener('mouseout', function (e) {
+    const pet = e.target.closest('#custom-static-pet');
+    if (!pet) return;
+
+    // 确保鼠标是真正离开了小人的身体边界，而不是在小人内部元素间晃悠
+    const relatedTarget = e.relatedTarget;
+    if (relatedTarget && pet.contains(relatedTarget)) return;
+
     clearTimeout(timer);
+    const bubble = getBubble();
     bubble.classList.remove('show');
-  });
+  }, true);
 
-  // 滚动页面时，如果气泡醒着，自动实时修正位置防止气泡飘走
+  // 页面滚动时，如果气泡显示着，同步联动位移
   window.addEventListener('scroll', function () {
-    if (bubble.classList.contains('show')) {
-      positionBubble();
+    const bubble = document.getElementById('pet-bubble');
+    const pet = document.getElementById('custom-static-pet');
+    if (bubble && bubble.classList.contains('show') && pet) {
+      positionBubble(pet, bubble);
     }
   });
-}
-
-// 确保首次加载和执行 PJAX 异步切换页面时，悬停交互都能完美绑定
-initPetInteraction();
-document.addEventListener('pjax:complete', initPetInteraction);
+})();

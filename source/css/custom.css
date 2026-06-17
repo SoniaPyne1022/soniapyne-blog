@@ -101,10 +101,11 @@
   border-bottom: 1px solid rgba(212, 175, 55, 0.35);
 }
 
-/* 唤醒气泡时的显示类 */
+
+/* 唤醒气泡时的显示类（追加重要级，防止被样式污染抗衡） */
 #pet-bubble.show {
-  opacity: 1;
-  transform: translateX(-50%) scale(1);        /* 放大回原样，产生气泡弹出的质感 */
+  opacity: 1 !important;
+  transform: translateX(-50%) scale(1) !important; /* 放大回原样 */
 }
 
 /* ==================== 极简古风双生并排音乐条 ==================== */
