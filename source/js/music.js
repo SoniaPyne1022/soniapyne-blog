@@ -152,3 +152,61 @@ function injectCustomMusicUI() {
 
 injectCustomMusicUI();
 document.addEventListener('pjax:complete', injectCustomMusicUI);
+
+
+// ==================== 右下角小人点击互动挂件（支持 PJAX） ====================
+function initPetInteraction() {
+  // 🔍 核心定位：请确保你的右下角小人图片或容器带有一个类名或ID
+  // 这里默认尝试抓取常见的 class，如果你知道它的确切 id，可以改成 document.getElementById('你的ID')
+  const pet = document.querySelector('.custom-pet') || document.querySelector('[class*="pet"]') || document.querySelector('[id*="pet"]');
+  
+  if (!pet) return; // 如果在当前页面没找到小人，则静默退出
+
+  // 检查并创建全局唯一的对话气泡，防止 PJAX 刷新导致重复生成
+  let bubble = document.getElementById('pet-bubble');
+  if (!bubble) {
+    bubble = document.createElement('div');
+    bubble.id = 'pet-bubble';
+    document.body.appendChild(bubble);
+  }
+
+  // 📜 独家定制的典雅话术库（每次点击随机展示一句）
+  const messages = [
+    "戳我做什么？莫非是想听曲了？唱片正转着呢~",
+    "就让自己的胸襟，不止是一潭水，而是一座湖泊，一片海阔天空，你的眼界，就会更阔。✨",
+    "清风拂兮竹心涤，明眸盼兮秋水离，美人坐兮抚弦音，有客来兮寥听意。🍃",
+    "韶华不负，今日也是元气满满的一天呀！",
+    "浮生若梦，何妨在此一歇，看看文章？📜",
+    "弦音未绝，侠骨香飘。今天也要开开心心哦！"
+  ];
+
+  let timer = null;
+  pet.style.cursor = 'pointer'; // 鼠标移上去自动变成“小手”形状，提示可点击
+
+  // 绑定点击事件
+  pet.addEventListener('click', function (e) {
+    e.stopPropagation(); // 阻止事件冒泡
+
+    // 随机抽取一句台词
+    const randomText = messages[Math.floor(Math.random() * messages.length)];
+    bubble.innerText = randomText;
+
+    // 📐 核心算法：实时动态计算小人当前在屏幕上的绝对位置，把气泡完美钉在小人头顶正中间
+    const rect = pet.getBoundingClientRect();
+    bubble.style.left = (rect.left + rect.width / 2) + 'px';
+    bubble.style.bottom = (window.innerHeight - rect.top + 12) + 'px'; /* 12px 为距离头顶的间隙 */
+
+    // 弹出气泡
+    bubble.classList.add('show');
+
+    // 4秒后气泡自动平滑隐去
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      bubble.classList.remove('show');
+    }, 4000);
+  });
+}
+
+// 确保首次进入网页和执行 PJAX 异步切换页面时，互动都能百分之百完美绑定
+initPetInteraction();
+document.addEventListener('pjax:complete', initPetInteraction);
