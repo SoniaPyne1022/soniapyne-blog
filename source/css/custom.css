@@ -304,45 +304,39 @@
 }
 
 @media screen and (min-width: 1300px) {
-  /* 1. 让主容器变成三栏布局，并调大最大宽度 */
+  /* 1. 主容器：两端对齐 */
   #content-inner {
     display: flex !important;
-    justify-content: center !important;
+    justify-content: space-between !important;
     align-items: flex-start !important;
-    max-width: 1500px !important; 
+    max-width: 1550px !important;
     margin: 0 auto !important;
   }
 
-  /* 2. 中间文章栏：设置合理的宽度，并用 order: 2 强行挤到中间 */
+  /* 2. 中间文章栏 */
   #recent-posts, #page, #post {
-    width: 60% !important; /* 或者 flex: 1 */
     flex: 1 !important;
-    order: 2 !important;   /* 序号2，在正中间 */
-    margin: 0 20px !important; /* 给左右两边留出等距空隙 */
+    order: 2 !important; /* 居中 */
+    margin: 0 25px !important;
   }
 
-  /* 3. 原生侧边栏容器：解除限制，让里面的卡片能各奔东西 */
+  /* 3. 侧边栏打散，变成两根独立的柱子 */
   #aside-content {
-    display: flex !important;
-    flex-direction: row !important; /* 允许左右分流 */
-    width: auto !important;
-    max-width: none !important;
+    display: contents !important; /* 让子卡片直接参与外部的 Flex 排序 */
   }
 
-  /* 4. 左侧栏布局：把个人信息和公告打包放到最左边 */
+  /* 4. 【左侧栏内容】个人信息和公告 */
   #aside-content .card-info,
   #aside-content .card-announcement {
-    order: 1 !important;   /* 序号1，去最左边 */
-    width: 260px !important;
-    position: static !important; /* 清除上一次的绝对定位 */
+    order: 1 !important; /* 移到最左边 */
+    width: 280px !important;
+    margin-right: 0 !important;
   }
 
-  /* 让左边的公告乖乖排在个人信息下面 */
-  #aside-content {
-    display: grid !important;
-    grid-template-columns: 260px 260px !important; /* 左栏宽度 和 右栏宽度 */
-    column-gap: 1000px !important; /* 这个间距会被中间的文章栏填满，不用担心 */
+  /* 5. 【右侧栏内容】红框里的最新文章、分类等其他所有卡片 */
+  #aside-content .card-widget:not(.card-info):not(.card-announcement) {
+    order: 3 !important; /* 移到最右边 */
+    width: 280px !important;
+    margin-left: 0 !important;
   }
 }
-
-/* 👆 上面的 Grid 组合如果有些复杂，我们换用最稳妥的【分流法】，请直接使用下方精简版 CSS： */
