@@ -154,11 +154,11 @@ injectCustomMusicUI();
 document.addEventListener('pjax:complete', injectCustomMusicUI);
 
 
-// ==================== 右下角静态宠物悬浮互动挂件（超强健全局代理版） ====================
+/// ==================== 右下角静态宠物悬浮互动挂件（逗号自动换行版） ====================
 (function() {
   let timer = null;
 
-  // 动态获取或创建气泡的内部函数
+  // 动态获取或创建气泡
   function getBubble() {
     let bubble = document.getElementById('pet-bubble');
     if (!bubble) {
@@ -186,38 +186,38 @@ document.addEventListener('pjax:complete', injectCustomMusicUI);
     "弦音未绝，侠骨香飘。今天也要开开心心哦！"
   ];
 
-  // 🟢 核心黑科技：全局重力感应代理，管你小人什么时候加载出来，碰到了就绝对能触发！
+  // 全局代理监听
   document.addEventListener('mouseover', function (e) {
-    // 检查鼠标当前碰到的元素是不是小人，或者是不是小人内部的图层
     const pet = e.target.closest('#custom-static-pet');
     if (!pet) return;
 
     clearTimeout(timer);
     const bubble = getBubble();
 
-    // 如果气泡当前是隐藏的，则随机换词并展现
     if (!bubble.classList.contains('show')) {
       const randomText = messages[Math.floor(Math.random() * messages.length)];
-      bubble.innerText = randomText;
+      
+      // 🟢 核心黑科技：通过正则表达式，把台词里所有的中英文逗号，后面全部强制加上换行符 \n
+      const formattedText = randomText.replace(/，/g, '，\n').replace(/,/g, ',\n');
+      bubble.innerText = formattedText;
+      
       positionBubble(pet, bubble);
       bubble.classList.add('show');
     } else {
-      // 如果气泡本来就醒着（比如在小人身上微挪鼠标），实时修正位置防止漂移
       positionBubble(pet, bubble);
     }
 
-    // 4秒防常亮安全断电保护
+    // 4秒防常亮保护
     timer = setTimeout(() => {
       bubble.classList.remove('show');
     }, 4000);
   }, true);
 
-  // 🟢 鼠标移出全局代理
+  // 鼠标移出代理
   document.addEventListener('mouseout', function (e) {
     const pet = e.target.closest('#custom-static-pet');
     if (!pet) return;
 
-    // 确保鼠标是真正离开了小人的身体边界，而不是在小人内部元素间晃悠
     const relatedTarget = e.relatedTarget;
     if (relatedTarget && pet.contains(relatedTarget)) return;
 
@@ -226,7 +226,7 @@ document.addEventListener('pjax:complete', injectCustomMusicUI);
     bubble.classList.remove('show');
   }, true);
 
-  // 页面滚动时，如果气泡显示着，同步联动位移
+  // 页面滚动时联动位移
   window.addEventListener('scroll', function () {
     const bubble = document.getElementById('pet-bubble');
     const pet = document.getElementById('custom-static-pet');

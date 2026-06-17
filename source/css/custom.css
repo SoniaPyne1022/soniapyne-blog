@@ -66,27 +66,26 @@
 
 
 /* ============== 🟢 紧接其后新增：古典宣纸砚墨风对话气泡 ============== */
-/* ============== 🟢 替换为这段完美的古典自动换行气泡样式 ============== */
+/* ============== 🟢 替换为这段完美的古典诗集居中换行气泡样式 ============== */
 #pet-bubble {
   position: fixed;
-  transform: translateX(-50%) scale(0.8);      /* 初始缩小，用于弹跳动画 */
-  background: rgba(36, 33, 30, 0.94) !important; /* 砚墨底色，微调加深确保多行文字的清晰度 */
+  transform: translateX(-50%) scale(0.8);      /* 初始缩小 */
+  background: rgba(36, 33, 30, 0.94) !important; /* 砚墨底色 */
   backdrop-filter: blur(6px);
   border: 1px solid rgba(212, 175, 55, 0.35);   /* 鎏金细边线 */
   border-radius: 6px;
-  padding: 10px 15px !important;                /* 💡 稍微加宽内衬，多行排版视觉上更舒服 */
-  color: #f3ebd4 !important;                    /* 仿古丝绢白文字 */
+  padding: 12px 18px !important;                /* 适当扩大内衬，多行排版更优雅 */
+  color: #f3ebd4 !important;                    /* 仿古丝绢白 */
   font-family: "Kaiti", "STKaiti", serif !important; /* 典雅楷体 */
   font-size: 14px;
   
-  /* 🟢 核心修复：开启自动换行与宽度限制，防止文字冲出屏幕右侧 */
-  white-space: normal !important;               /* 允许文字自动换行 */
-  word-break: break-all !important;             /* 允许在任意字符间断行，防止标点符号撑破布局 */
-  max-width: 220px !important;                  /* 💡 严格限制最大宽度。配合小人位置，刚好贴紧屏幕右边缘而绝不裁剪 */
-  line-height: 1.6 !important;                  /* 💡 舒适的行高，让多行散文诗呈现出线装书的排版美感 */
-  text-align: justify;                          /* 文字左右两端对齐，排版更整齐 */
+  /* 🟢 核心修复：开启古典诗集排版 */
+  white-space: pre-wrap !important;             /* 💡 核心：完美识别脚本传过来的 \n 逗号换行 */
+  max-width: 320px !important;                  /* 💡 拓宽最大宽度，让单句里的文字绝对不被挤断 */
+  line-height: 1.6 !important;                  /* 舒适的行高 */
+  text-align: center !important;                /* 💡 核心：文字全部居中对齐，排出来的诗句非常对称漂亮 */
   
-  z-index: 1000000 !important;                  /* 层级必须压过手机端的 999999 */
+  z-index: 1000000 !important;                  /* 层级压过手机端 */
   opacity: 0;
   pointer-events: none;                         /* 允许鼠标穿透 */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -112,7 +111,7 @@
 /* 唤醒气泡时的显示类 */
 #pet-bubble.show {
   opacity: 1 !important;
-  transform: translateX(-50%) scale(1) !important; /* 放大回原样 */
+  transform: translateX(-50%) scale(1) !important;
 }
 
 /* ==================== 极简古风双生并排音乐条 ==================== */
