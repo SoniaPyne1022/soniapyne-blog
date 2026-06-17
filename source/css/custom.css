@@ -303,94 +303,19 @@
   }
 }
 
-/* ==================== 1. Fuwari 风格头像卡片美化 ==================== */
-/* 增加内边距 */
-#aside-content .card-info {
-  padding: 22px !important;
+/* ==================== 1. 纯粹头像变方（精准锁定） ==================== */
+/* 直接抓取个人信息卡片里的头像图片，强行破除原生的圆形裁剪 */
+#aside-content .card-info .avatar-img,
+#aside-content .card-info img {
+  border-radius: 16px !important; /* 核心：变成方正圆角。数值越小越方，16px 视觉效果最好 */
+  animation: none !important;     /* 强行关闭原生的圆形旋转动画（方形旋转会切边，非常丑） */
+  transition: transform 0.3s ease-in-out !important;
 }
 
-/* 强行将圆形头像拉伸为大面积的直角圆边大方块 */
-#aside-content .card-info .card-info-avatar {
-  display: block !important;
-  margin: 0 auto 12px auto !important;
-  width: 100% !important;
-  text-align: center !important;
-  border-radius: 16px !important; /* 核心修正：破除外层容器的原生圆形裁剪 */
-  overflow: hidden !important;
-}
-
-#aside-content .card-info .card-info-avatar .avatar-img {
-  border-radius: 16px !important; /* 复刻大方块圆角 */
-  width: 100% !important;
-  height: auto !important;
-  max-width: 100% !important;
-  aspect-ratio: 1 / 1 !important; /* 锁定正方形比例 */
-  object-fit: cover !important;
-  transition: all 0.28s ease-in-out !important;
-}
-
-/* 修正鼠标悬浮动画：关闭原生恶性旋转，改为高雅的轻微放大 */
-#aside-content .card-info .card-info-avatar .avatar-img:hover {
-  transform: scale(1.05) !important;
-  animation: none !important; /* 强行关闭原生旋转动效 */
-}
-
-/* 完美隐藏原生的文章/标签/分类数字栏 */
-#aside-content .card-info .card-info-data,
-.card-info-data {
-  display: none !important;
-}
-
-/* 名字加粗增大，并追加底部粉色小短线 */
-#aside-content .card-info .author-info__name {
-  font-size: 1.35rem !important;
-  font-weight: 700 !important;
-  margin-top: 8px !important;
-}
-
-#aside-content .card-info .author-info__name::after {
-  content: "" !important;
-  display: block !important;
-  width: 20px !important;
-  height: 3px !important;
-  background-color: #ff758f !important; /* 樱粉色小短线 */
-  margin: 8px auto 0 auto !important;
-  border-radius: 4px !important;
-}
-
-/* 个人简介修饰 */
-#aside-content .card-info .author-info__description {
-  margin-top: 10px !important;
-  font-size: 0.88rem !important;
-  color: #555 !important;
-}
-
-/* 底部并排的社交小方块按钮 */
-#aside-content .card-info .card-info-social-icons {
-  margin-top: 15px !important;
-  display: flex !important;
-  justify-content: center !important;
-  gap: 10px !important;
-}
-
-#aside-content .card-info .card-info-social-icons .social-icon {
-  background-color: rgba(255, 183, 197, 0.18) !important; /* 淡粉色方块底色 */
-  color: #ff758f !important;
-  width: 38px !important;
-  height: 38px !important;
-  line-height: 38px !important;
-  border-radius: 10px !important; /* 圆角小方块 */
-  font-size: 1.1rem !important;
-  margin: 0 !important;
-  display: inline-block !important;
-  text-align: center !important;
-  transition: all 0.25s ease-in-out !important;
-}
-
-#aside-content .card-info .card-info-social-icons .social-icon:hover {
-  background-color: #ff758f !important;
-  color: #fff !important;
-  transform: translateY(-2px) !important;
+/* 鼠标悬浮在头像上时，由原生的旋转改为优雅的轻微放大 */
+#aside-content .card-info .avatar-img:hover,
+#aside-content .card-info img:hover {
+  transform: scale(1.06) !important; /* 放大 6% */
 }
 
 
