@@ -315,6 +315,8 @@
   margin: 0 auto 12px auto !important;
   width: 100% !important;
   text-align: center !important;
+  border-radius: 16px !important; /* 核心修正：破除外层容器的原生圆形裁剪 */
+  overflow: hidden !important;
 }
 
 #aside-content .card-info .card-info-avatar .avatar-img {
@@ -324,6 +326,13 @@
   max-width: 100% !important;
   aspect-ratio: 1 / 1 !important; /* 锁定正方形比例 */
   object-fit: cover !important;
+  transition: all 0.28s ease-in-out !important;
+}
+
+/* 修正鼠标悬浮动画：关闭原生恶性旋转，改为高雅的轻微放大 */
+#aside-content .card-info .card-info-avatar .avatar-img:hover {
+  transform: scale(1.05) !important;
+  animation: none !important; /* 强行关闭原生旋转动效 */
 }
 
 /* 完美隐藏原生的文章/标签/分类数字栏 */
