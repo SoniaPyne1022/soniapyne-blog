@@ -304,13 +304,13 @@
 }
 
 @media screen and (min-width: 1200px) {
-  /* 1. 全局主容器：强行开启严格的三栏网格 */
+  /* 1. 强制主容器启用严格的三栏网格 */
   html body #body-wrap #content-inner {
     display: grid !important;
     grid-template-columns: 280px 1fr 280px !important; /* 左栏 | 中栏自适应 | 右栏 */
-    column-gap: 26px !important;                       /* 左右栏与文章的间距 */
-    row-gap: 20px !important;                          /* 卡片上下的间距 */
-    max-width: 1450px !important;                      /* 网页最大宽度 */
+    column-gap: 24px !important;                       /* 栏目之间的横向间距 */
+    row-gap: 20px !important;                          /* 卡片之间的上下间距 */
+    max-width: 1450px !important;                      /* 整体最大宽度 */
     margin: 0 auto !important;
     align-items: start !important;
   }
@@ -331,47 +331,39 @@
   }
 
   /* ==================== 4. 左侧栏布局 (第一列) ==================== */
-  
-  /* 个人信息 - 顶端 */
+  /* 个人信息 */
   html body #body-wrap #content-inner #aside-content .card-info {
     grid-column: 1 / 2 !important;
     grid-row: 1 !important;
   }
-  
-  /* 公告 - 第二位 */
+  /* 公告 */
   html body #body-wrap #content-inner #aside-content .card-announcement {
     grid-column: 1 / 2 !important;
     grid-row: 2 !important;
   }
-  
-  /* 分类 - 第三位（强行拉到左边） */
+  /* 分类 - 强行拉到左边 */
   html body #body-wrap #content-inner #aside-content .card-categories {
     grid-column: 1 / 2 !important;
     grid-row: 3 !important;
   }
-  
-  /* 标签墙 - 第四位（强行拉到左边） */
+  /* 标签墙 - 强行拉到左边 */
   html body #body-wrap #content-inner #aside-content .card-tags {
     grid-column: 1 / 2 !important;
     grid-row: 4 !important;
   }
 
-
   /* ==================== 5. 右侧栏布局 (第三列) ==================== */
-  
-  /* 最新文章 - 右侧顶端 */
+  /* 最新文章 */
   html body #body-wrap #content-inner #aside-content .card-recent-post {
     grid-column: 3 / 4 !important;
     grid-row: 1 !important;
   }
-  
-  /* 归档 - 右侧第二位 */
+  /* 归档 */
   html body #body-wrap #content-inner #aside-content .card-archives {
     grid-column: 3 / 4 !important;
     grid-row: 2 !important;
   }
-  
-  /* 网站统计 - 右侧第三位 */
+  /* 网站统计 */
   html body #body-wrap #content-inner #aside-content .card-webinfo {
     grid-column: 3 / 4 !important;
     grid-row: 3 !important;
