@@ -154,7 +154,7 @@ injectCustomMusicUI();
 document.addEventListener('pjax:complete', injectCustomMusicUI);
 
 
-/// ==================== 右下角静态宠物悬浮互动挂件（逗号自动换行版） ====================
+/// ==================== 右下角静态宠物悬浮互动挂件（标点纯净断句版） ====================
 (function() {
   let timer = null;
 
@@ -173,7 +173,7 @@ document.addEventListener('pjax:complete', injectCustomMusicUI);
   function positionBubble(pet, bubble) {
     const rect = pet.getBoundingClientRect();
     bubble.style.left = (rect.left + rect.width / 2) + 'px';
-    bubble.style.bottom = (window.innerHeight - rect.top + 12) + 'px'; // 距离头顶 12px 间隙
+    bubble.style.bottom = (window.innerHeight - rect.top + 15) + 'px'; // 距离头顶 15px 间隙
   }
 
   // 专属话术池
@@ -186,7 +186,7 @@ document.addEventListener('pjax:complete', injectCustomMusicUI);
     "弦音未绝，侠骨香飘。今天也要开开心心哦！"
   ];
 
-  // 全局代理监听
+  // 全局代理监听移入
   document.addEventListener('mouseover', function (e) {
     const pet = e.target.closest('#custom-static-pet');
     if (!pet) return;
@@ -197,8 +197,15 @@ document.addEventListener('pjax:complete', injectCustomMusicUI);
     if (!bubble.classList.contains('show')) {
       const randomText = messages[Math.floor(Math.random() * messages.length)];
       
-      // 🟢 核心黑科技：通过正则表达式，把台词里所有的中英文逗号，后面全部强制加上换行符 \n
-      const formattedText = randomText.replace(/，/g, '，\n').replace(/,/g, ',\n');
+      // 🟢 核心黑科技：利用正则匹配所有中英文【，。？、！,.\?!~】，直接作为断句符换行
+      // 同时通过 filter 清理掉多余空行，实现标点符号本身在气泡中彻底隐形
+      const formattedText = randomText
+        .replace(/[，。？、！,.\?!~]/g, '\n')
+        .split('\n')
+        .map(line => line.trim())
+        .filter(line => line.length > 0)
+        .join('\n');
+        
       bubble.innerText = formattedText;
       
       positionBubble(pet, bubble);
@@ -207,13 +214,13 @@ document.addEventListener('pjax:complete', injectCustomMusicUI);
       positionBubble(pet, bubble);
     }
 
-    // 4秒防常亮保护
+    // 4秒防常亮安全隐去
     timer = setTimeout(() => {
       bubble.classList.remove('show');
     }, 4000);
   }, true);
 
-  // 鼠标移出代理
+  // 全局代理监听移出
   document.addEventListener('mouseout', function (e) {
     const pet = e.target.closest('#custom-static-pet');
     if (!pet) return;
@@ -226,7 +233,7 @@ document.addEventListener('pjax:complete', injectCustomMusicUI);
     bubble.classList.remove('show');
   }, true);
 
-  // 页面滚动时联动位移
+  // 滚动时跟随位移
   window.addEventListener('scroll', function () {
     const bubble = document.getElementById('pet-bubble');
     const pet = document.getElementById('custom-static-pet');

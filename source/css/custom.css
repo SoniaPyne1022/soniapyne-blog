@@ -66,49 +66,57 @@
 
 
 /* ============== 🟢 紧接其后新增：古典宣纸砚墨风对话气泡 ============== */
-/* ============== 🟢 替换为这段完美的古典诗集居中换行气泡样式 ============== */
+/* ============== 🟢 完美复刻：古典竖排、由左至右、大尺寸气泡样式 ============== */
 #pet-bubble {
   position: fixed;
-  transform: translateX(-50%) scale(0.8);      /* 初始缩小 */
-  background: rgba(36, 33, 30, 0.94) !important; /* 砚墨底色 */
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(212, 175, 55, 0.35);   /* 鎏金细边线 */
-  border-radius: 6px;
-  padding: 12px 18px !important;                /* 适当扩大内衬，多行排版更优雅 */
+  transform: translateX(-50%) scale(0.8);      /* 初始微缩，用于弹跳动画 */
+  background: rgba(36, 33, 30, 0.95) !important; /* 墨砚黑底色，稍微加深确保古典多行质感 */
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 175, 55, 0.4);    /* 略微加强的鎏金细边线 */
+  border-radius: 4px;                           /* 更坚挺的古典直角/微圆角 */
+  
+  /* 尺寸与内衬：大一点的气泡 */
+  padding: 18px 16px !important;                /* 💡 增加上下内衬，让竖排诗句有呼吸感 */
+  font-size: 17px !important;                   /* 💡 🟢 字体整体调大，清晰大气 */
   color: #f3ebd4 !important;                    /* 仿古丝绢白 */
-  font-family: "Kaiti", "STKaiti", serif !important; /* 典雅楷体 */
-  font-size: 14px;
+  font-family: "Kaiti", "STKaiti", "Noto Serif SC", serif !important; /* 典雅中式楷体 */
   
-  /* 🟢 核心修复：开启古典诗集排版 */
-  white-space: pre-wrap !important;             /* 💡 核心：完美识别脚本传过来的 \n 逗号换行 */
-  max-width: 320px !important;                  /* 💡 拓宽最大宽度，让单句里的文字绝对不被挤断 */
-  line-height: 1.6 !important;                  /* 舒适的行高 */
-  text-align: center !important;                /* 💡 核心：文字全部居中对齐，排出来的诗句非常对称漂亮 */
+  /* 🟢 核心黑科技：开启竖向排版，并且从左往右读 */
+  writing-mode: vertical-lr !important;         /* 💡 竖排文字，新行（列）自动向右延伸 */
+  text-orientation: mixed !important;           /* 自动纠正标点和英文方向 */
+  white-space: pre-wrap !important;             /* 完美读取并渲染换行符 */
   
-  z-index: 1000000 !important;                  /* 层级压过手机端 */
+  /* 空间精调 */
+  min-height: 140px !important;                 /* 💡 锁定最小高度，保证竹简条幅的挺拔感 */
+  max-height: 280px !important;                 /* 💡 限制最大高度，防止单列太长撑破网页 */
+  letter-spacing: 4px !important;               /* 💡 每一个汉字之间的竖向间距 */
+  line-height: 2.0 !important;                  /* 💡 核心：每一垂直列（行）之间的横向距离 */
+  text-align: center !important;                /* 字在垂直方向居中对齐 */
+  
+  z-index: 1000000 !important;                  /* 确保层级在最顶层 */
   opacity: 0;
-  pointer-events: none;                         /* 允许鼠标穿透 */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  pointer-events: none;                         /* 鼠标穿透 */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
   
   /* 贝塞尔曲线微弹动画 */
   transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* 气泡下方的指向小箭头 */
+/* 气泡下方的指向小箭头（由于气泡变大，稍微加粗显得更协调） */
 #pet-bubble::after {
   content: '';
   position: absolute;
-  bottom: -5px;
+  bottom: -6px;
   left: 50%;
   transform: translateX(-50%) rotate(45deg);
-  width: 8px;
-  height: 8px;
-  background: rgba(36, 33, 30, 0.94);
-  border-right: 1px solid rgba(212, 175, 55, 0.35);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.35);
+  width: 10px;
+  height: 10px;
+  background: rgba(36, 33, 30, 0.95);
+  border-right: 1px solid rgba(212, 175, 55, 0.4);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.4);
 }
 
-/* 唤醒气泡时的显示类 */
+/* 唤醒气泡时的显示状态 */
 #pet-bubble.show {
   opacity: 1 !important;
   transform: translateX(-50%) scale(1) !important;
