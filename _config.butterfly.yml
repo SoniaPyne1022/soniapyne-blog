@@ -311,7 +311,7 @@ aside:
     category: true
   card_author:
     enable: true
-    description:
+    description: 几时归去，作个闲人，对一张琴，一壶酒，一溪云。
     button:
       enable: false
       icon: fab fa-github
