@@ -66,50 +66,49 @@
 
 
 /* ============== 🟢 紧接其后新增：古典宣纸砚墨风对话气泡 ============== */
-/* ============== 🟢 替换为这段：大尺寸、智能收拢、8字封顶的诗集气泡 ============== */
+/* ============== 🟢 完美复刻：大方自适应、严格按标点单行排版的气泡 ============== */
 #pet-bubble {
   position: fixed;
   transform: translateX(-50%) scale(0.8);      /* 初始微缩，用于弹跳动画 */
   background: rgba(36, 33, 30, 0.94) !important; /* 墨砚黑底色 */
   backdrop-filter: blur(8px);
   border: 1px solid rgba(212, 175, 55, 0.35);   /* 鎏金细边线 */
-  border-radius: 8px;                           /* 典雅微圆角 */
+  border-radius: 6px;                           /* 优雅的微圆角 */
   
-  /* 空间放大器：保持大气、饱满的视觉感 */
-  padding: 16px 24px !important;                /* 上下 16px，左右 24px 内衬 */
-  font-size: 18px !important;                   /* 字号保持 18px 大气易读 */
-  color: #f3ebd4 !important;                    /* 仿古丝绢白 */
+  /* 空间精调：保持大气、饱满的古典书卷感 */
+  padding: 12px 20px !important;                /* 上下 12px 留白，左右 20px 舒适大衬里 */
+  font-size: 16px !important;                   /* 字号微调至极为精致易读的 16px */
+  color: #f3ebd4 !important;                    /* 仿古丝绢白文字 */
   font-family: "Kaiti", "STKaiti", "Noto Serif SC", serif !important; /* 典雅中式楷体 */
   
-  /* 🟢 核心修复：从“固定 8 字”改为“智能弹性伸缩，8 字封顶” */
-  box-sizing: content-box !important;           /* 确保高宽只计算文字区域，不被 padding 干扰 */
-  max-width: 8em !important;                    /* 💡 核心：一行最多容纳 8 个字，超出了才硬性换行 */
-  min-width: 5em !important;                    /* 💡 兜底：字数极少时气泡也至少保持 5 个字的宽度，显得大气 */
+  /* 🟢 核心修复：彻底扔掉固定宽度，改为由最长的一句话来决定气泡宽度 */
+  box-sizing: border-box !important;
+  width: max-content !important;                 /* 💡 核心：自动匹配最长那一行的真实宽度，气泡不再干瘪 */
+  max-width: 360px !important;                  /* 💡 设定一个安全的自适应最大上限 */
   
-  /* 换行与对齐 */
-  white-space: pre-wrap !important;             /* 完美读取并渲染脚本传来的标点换行 */
-  word-break: break-all !important;             /* 满 8 个字无条件硬性断行 */
-  line-height: 1.8 !important;                  /* 舒适的行高 */
-  text-align: center !important;                /* 文字水平居中对齐 */
+  /* 🟢 核心铁律：句子内部绝对不准任何捏造的断行 */
+  white-space: pre !important;                  /* 💡 核心：严格只认 JS 传入的 \n 换行，句子内部绝对不准私自折行！ */
+  line-height: 1.7 !important;                  /* 舒适的诗集行高 */
+  text-align: center !important;                /* 每一行文字水平居中对齐，非常整齐 */
   
-  z-index: 1000000 !important;                  /* 确保层级在最顶层 */
+  z-index: 1000000 !important;                  /* 确保图层压过一切组件 */
   opacity: 0;
   pointer-events: none;                         /* 鼠标穿透 */
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);   /* 立体悬浮阴影 */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);   /* 悬浮立体阴影 */
   
   /* 贝塞尔曲线微弹动画 */
   transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* 气泡下方的指向小箭头 */
+/* 气泡下方的指向小箭头（同步精细化对齐） */
 #pet-bubble::after {
   content: '';
   position: absolute;
-  bottom: -6px;
+  bottom: -5px;
   left: 50%;
   transform: translateX(-50%) rotate(45deg);
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   background: rgba(36, 33, 30, 0.94);
   border-right: 1px solid rgba(212, 175, 55, 0.35);
   border-bottom: 1px solid rgba(212, 175, 55, 0.35);

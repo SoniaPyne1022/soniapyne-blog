@@ -154,11 +154,11 @@ injectCustomMusicUI();
 document.addEventListener('pjax:complete', injectCustomMusicUI);
 
 
-/// ==================== 右下角静态宠物悬浮互动挂件（标点纯净断句版） ====================
+// ==================== 右下角静态宠物悬浮互动挂件（智能标点精准断行版） ====================
 (function() {
   let timer = null;
 
-  // 动态获取或创建气泡
+  // 获取或创建气泡
   function getBubble() {
     let bubble = document.getElementById('pet-bubble');
     if (!bubble) {
@@ -173,7 +173,7 @@ document.addEventListener('pjax:complete', injectCustomMusicUI);
   function positionBubble(pet, bubble) {
     const rect = pet.getBoundingClientRect();
     bubble.style.left = (rect.left + rect.width / 2) + 'px';
-    bubble.style.bottom = (window.innerHeight - rect.top + 15) + 'px'; // 距离头顶 15px 间隙
+    bubble.style.bottom = (window.innerHeight - rect.top + 12) + 'px'; // 距离头顶 12px 间隙
   }
 
   // 专属话术池
@@ -182,7 +182,7 @@ document.addEventListener('pjax:complete', injectCustomMusicUI);
     "就让自己的胸襟，不止是一潭水，而是一座湖泊，一片海阔天空，你的眼界，就会更阔。✨",
     "清风拂兮竹心涤，明眸盼兮秋水离，美人坐兮抚弦音，有客来兮寥听意。🍃",
     "浮生若梦，何妨在此一歇，看看文章？📜",
-    "弦音未绝，侠骨香飘。"
+    "弦音未绝，侠骨香飘。今天也要开心哦！"
   ];
 
   // 全局代理监听移入
@@ -196,14 +196,15 @@ document.addEventListener('pjax:complete', injectCustomMusicUI);
     if (!bubble.classList.contains('show')) {
       const randomText = messages[Math.floor(Math.random() * messages.length)];
       
-      // 🟢 核心黑科技：利用正则匹配所有中英文【，。？、！,.\?!~】，直接作为断句符换行
-      // 同时通过 filter 清理掉多余空行，实现标点符号本身在气泡中彻底隐形
+      // 🟢 核心黑科技：智能断句与表情保护算法
+      // 1. 中英文逗号（，,）属于句中停顿，直接在后面切断换行。
+      // 2. 句号、问号、叹号、波浪号（。？！~），只有当后面还紧跟着正常的中文字符或英文字母时（(?=[\u4e00-\u9fa5\w])）才触发换行。
+      // 这样可以完美确保每句话都在同一行里，且末尾的 ✨、🍃、📜 等表情绝对不会被孤零零地踹到下一行。
       const formattedText = randomText
-        .replace(/[，。？、！,.\?!~]/g, '\n')
-        .split('\n')
-        .map(line => line.trim())
-        .filter(line => line.length > 0)
-        .join('\n');
+        .replace(/，/g, '，\n')
+        .replace(/,/g, ',\n')
+        .replace(/([。？！~])(?=[\u4e00-\u9fa5\w])/g, '$1\n')
+        .trim();
         
       bubble.innerText = formattedText;
       
