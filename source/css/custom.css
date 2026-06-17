@@ -304,7 +304,7 @@
 }
 
 @media screen and (min-width: 1200px) {
-  /* 1. 主容器：严格定义三栏网格 */
+  /* 1. 全局主容器：严格的三栏网格布局 */
   #content-inner {
     display: grid !important;
     grid-template-columns: 280px 1fr 280px !important; /* 左栏宽度 | 中栏自适应 | 右栏宽度 */
@@ -315,61 +315,66 @@
     align-items: start !important;
   }
 
-  /* 2. 核心突破：让中间的文章栏从第 1 行一直纵向跨越到第 20 行
-     这样右侧和左侧的卡片就可以自由在它身边叠放，绝对不会被挤到网页底部 */
+  /* 2. 中间文章栏：纵向跨越所有行，确保两边的卡片在两旁整齐堆叠，绝不被挤到网页底部 */
   #recent-posts, #page, #post {
-    grid-column: 2 / 3 !important; /* 锁定在正中间 */
-    grid-row: 1 / 20 !important;   /* 纵向跨越，打破行高限制 */
+    grid-column: 2 / 3 !important; /* 锁定在正中间（第二列） */
+    grid-row: 1 / 25 !important;   /* 纵向高度跨越，打破原生的行限制 */
     width: 100% !important;
-    margin: 0 !important;
+    margin: 0 !important;          /* 移除原有边距干扰 */
   }
 
-  /* 3. 打散侧边栏包裹，释放内部所有卡片组件 */
+  /* 3. 打散侧边栏原生包裹：让内部的每一个卡片组件直接作为网格的子元素参与排版 */
   #aside-content {
     display: contents !important;
   }
 
-  /* ==================== 4. 左侧栏布局 (Column 1) ==================== */
-  /* 个人信息卡片：放在左侧第 1 行 */
+  /* ==================== 4. 左侧栏布局 (第一列) ==================== */
+  /* 个人信息卡片 - 放置在左侧第 1 行 */
   #aside-content .card-info {
     grid-column: 1 / 2 !important;
     grid-row: 1 !important;
   }
-  /* 公告卡片：放在左侧第 2 行 */
+  
+  /* 公告卡片 - 放置在左侧第 2 行 */
   #aside-content .card-announcement {
     grid-column: 1 / 2 !important;
     grid-row: 2 !important;
   }
+  
+  /* 分类卡片 - 放置在左侧第 3 行 */
+  #aside-content .card-categories {
+    grid-column: 1 / 2 !important;
+    grid-row: 3 !important;
+  }
+  
+  /* 标签墙卡片 - 放置在左侧第 4 行 */
+  #aside-content .card-tags {
+    grid-column: 1 / 2 !important;
+    grid-row: 4 !important;
+  }
 
 
-  /* ==================== 5. 右侧栏布局 (Column 3) ==================== */
-  /* 最新文章卡片：放在右侧第 1 行（完美对应图二） */
+  /* ==================== 5. 右侧栏布局 (第三列) ==================== */
+  /* 最新文章卡片 - 放置在右侧第 1 行 */
   #aside-content .card-recent-post {
     grid-column: 3 / 4 !important;
     grid-row: 1 !important;
   }
-  /* 分类卡片：放在右侧第 2 行 */
-  #aside-content .card-categories {
+  
+  /* 归档卡片 - 放置在右侧第 2 行 */
+  #aside-content .card-archives {
     grid-column: 3 / 4 !important;
     grid-row: 2 !important;
   }
-  /* 标签墙卡片：放在右侧第 3 行（如果有开启的话） */
-  #aside-content .card-tags {
+  
+  /* 网站统计卡片 - 放置在右侧第 3 行 */
+  #aside-content .card-webinfo {
     grid-column: 3 / 4 !important;
     grid-row: 3 !important;
   }
-  /* 归档卡片：放在右侧第 4 行（如果有开启的话） */
-  #aside-content .card-archives {
-    grid-column: 3 / 4 !important;
-    grid-row: 4 !important;
-  }
-  /* 网站统计卡片：放在右侧第 5 行（如果有开启的话） */
-  #aside-content .card-webinfo {
-    grid-column: 3 / 4 !important;
-    grid-row: 5 !important;
-  }
 
-  /* 6. 统一所有卡片的横向宽度为 100% 撑满各自的格子 */
+  /* ==================== 6. 卡片细节修正 ==================== */
+  /* 确保所有卡片组件的横向宽度 100% 撑满各自的栏目格子 */
   #aside-content .card-widget {
     width: 100% !important;
   }
