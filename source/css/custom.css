@@ -303,40 +303,46 @@
   }
 }
 
-@media screen and (min-width: 1300px) {
-  /* 1. 主容器：两端对齐 */
+@media screen and (min-width: 1250px) {
+  /* 1. 将主容器定义为严格的三栏网格 */
   #content-inner {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: flex-start !important;
-    max-width: 1550px !important;
+    display: grid !important;
+    /* 左栏 280px | 中间文章自适应 | 右栏 280px */
+    grid-template-columns: 280px 1fr 280px !important; 
+    /* 栏与栏之间的间距，可自行调整 */
+    column-gap: 24px !important; 
+    row-gap: 20px !important;
+    max-width: 1450px !important;
     margin: 0 auto !important;
+    align-items: start !important;
   }
 
-  /* 2. 中间文章栏 */
+  /* 2. 让文章栏稳稳占据中间（第二栏） */
   #recent-posts, #page, #post {
-    flex: 1 !important;
-    order: 2 !important; /* 居中 */
-    margin: 0 25px !important;
+    grid-column: 2 / 3 !important;
+    width: 100% !important;
+    margin: 0 !important; /* 清除多余的边距干扰 */
   }
 
-  /* 3. 侧边栏打散，变成两根独立的柱子 */
+  /* 3. 彻底打散侧边栏包裹，让其内部卡片直接变成网格的子元素 */
   #aside-content {
-    display: contents !important; /* 让子卡片直接参与外部的 Flex 排序 */
+    display: contents !important;
   }
 
-  /* 4. 【左侧栏内容】个人信息和公告 */
+  /* 4. 创建左侧垂直容器列，并将“个人信息”和“公告”丢进去 */
   #aside-content .card-info,
   #aside-content .card-announcement {
-    order: 1 !important; /* 移到最左边 */
-    width: 280px !important;
-    margin-right: 0 !important;
+    grid-column: 1 / 2 !important; /* 锁定在第一栏（最左边） */
   }
 
-  /* 5. 【右侧栏内容】红框里的最新文章、分类等其他所有卡片 */
+  /* 5. 创建右侧垂直容器列，把“最新文章”和“分类”等其余所有卡片丢进去 */
   #aside-content .card-widget:not(.card-info):not(.card-announcement) {
-    order: 3 !important; /* 移到最右边 */
-    width: 280px !important;
-    margin-left: 0 !important;
+    grid-column: 3 / 4 !important; /* 锁定在第三栏（最右边） */
+  }
+
+  /* 6. 统一修正所有卡片的上下间距，实现类似图二的呼吸感 */
+  #aside-content .card-widget {
+    width: 100% !important;
+    margin-bottom: 20px !important; /* 让同一栏的卡片上下叠放时有间距 */
   }
 }
