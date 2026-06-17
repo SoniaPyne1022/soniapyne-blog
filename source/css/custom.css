@@ -303,19 +303,103 @@
   }
 }
 
-/* ==================== 1. 纯粹头像变方（精准锁定） ==================== */
-/* 直接抓取个人信息卡片里的头像图片，强行破除原生的圆形裁剪 */
+/* ==================== 1. 完全复刻 Fuwari 个人信息卡片 ==================== */
+
+/* 统一卡片的内边距与圆角 */
+#aside-content .card-info {
+  padding: 20px !important;
+  border-radius: 16px !important;
+}
+
+/* 核心修改：让头像不再缩在中间，而是 100% 填满整个卡片的可用横向宽度 */
 #aside-content .card-info .avatar-img,
 #aside-content .card-info img {
-  border-radius: 16px !important; /* 核心：变成方正圆角。数值越小越方，16px 视觉效果最好 */
-  animation: none !important;     /* 强行关闭原生的圆形旋转动画（方形旋转会切边，非常丑） */
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 1 / 1 !important; /* 强制锁死 1:1 正方形 */
+  border-radius: 12px !important;  /* 完美对齐图中的方块大圆角 */
+  margin: 0 auto 15px auto !important;
+  display: block !important;
+  object-fit: cover !important;
+  animation: none !important;      /* 强行关闭原生的圆形旋转动画 */
   transition: transform 0.3s ease-in-out !important;
 }
 
-/* 鼠标悬浮在头像上时，由原生的旋转改为优雅的轻微放大 */
+/* 鼠标悬浮在头像上时，改为平滑的轻微放大 */
 #aside-content .card-info .avatar-img:hover,
 #aside-content .card-info img:hover {
-  transform: scale(1.06) !important; /* 放大 6% */
+  transform: scale(1.03) !important;
+}
+
+/* 👈 核心修改：无条件隐藏原生的“文章/标签/分类”数字统计栏 */
+#aside-content .card-info .card-info-data,
+#aside-content .card-info .site-data,
+.card-info-data,
+.site-data {
+  display: none !important;
+}
+
+/* 👈 核心修改：彻底斩断并隐藏原生的信封按钮或 Follow Me 巨大的粉色按钮 */
+#aside-content .card-info #author-info__button,
+#aside-content .card-info .author-info__button,
+#aside-content .card-info i.fa-envelope,
+#aside-content .card-info a[href^="mailto:"] {
+  display: none !important;
+}
+
+/* 名字排版调整 */
+#aside-content .card-info .author-info__name {
+  font-size: 1.3rem !important;
+  font-weight: 700 !important;
+  margin: 10px 0 8px 0 !important;
+  text-align: center !important;
+}
+
+/* 完美复刻名字下方那根精致的极简粉色短线 */
+#aside-content .card-info .author-info__name::after {
+  content: "" !important;
+  display: block !important;
+  width: 18px !important;
+  height: 3px !important;
+  background-color: #ff758f !important; /* 迎合主题的樱粉色小短线 */
+  margin: 6px auto 0 auto !important;
+  border-radius: 4px !important;
+}
+
+/* 个人简介样式微调 */
+#aside-content .card-info .author-info__description {
+  text-align: center !important;
+  font-size: 0.85rem !important;
+  color: #666 !important;
+  margin-bottom: 15px !important;
+}
+
+/* 👈 完美复刻底部并排的社交小方块按钮（如果在 _config 开启了 social 就会在这里显示） */
+#aside-content .card-info .card-info-social-icons {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  margin-top: 10px !important;
+}
+
+#aside-content .card-info .card-info-social-icons .social-icon {
+  background-color: rgba(255, 183, 197, 0.15) !important; /* 方块淡粉底色 */
+  color: #ff758f !important; /* 图标樱粉色 */
+  width: 36px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+  border-radius: 8px !important;  /* 圆角小方块 */
+  font-size: 1.05rem !important;
+  margin: 0 !important;
+  display: inline-block !important;
+  text-align: center !important;
+  transition: all 0.2s ease !important;
+}
+
+#aside-content .card-info .card-info-social-icons .social-icon:hover {
+  background-color: #ff758f !important;
+  color: #fff !important;
+  transform: translateY(-2px) !important;
 }
 
 
@@ -348,7 +432,7 @@
   border-radius: 4px !important;
 }
 
-/* 统一卡片垂直间距 */
+/* 统一全站卡片垂直间距 */
 #aside-content .card-widget {
   margin-bottom: 20px !important;
 }
