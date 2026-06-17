@@ -303,41 +303,13 @@
   }
 }
 
-@media screen and (min-width: 992px) {
-  /* ==================== 1. 全局标准双栏网格框架 ==================== */
-  html body #body-wrap #content-inner {
-    display: grid !important;
-    grid-template-columns: 280px 1fr !important; /* 左侧栏固定 280px | 右侧文章栏自适应 */
-    column-gap: 26px !important;                 /* 两栏之间的横向间距 */
-    max-width: 1250px !important;                /* 双栏不需要太宽，1250px 视觉比例最完美 */
-    margin: 0 auto !important;
-    align-items: start !important;
-  }
-
-  /* 侧边栏锁定在左侧（第一列） */
-  html body #body-wrap #content-inner #aside-content {
-    grid-column: 1 !important;
-    width: 100% !important;
-  }
-
-  /* 文章栏锁定在右侧（第二列） */
-  html body #body-wrap #content-inner #recent-posts,
-  html body #body-wrap #content-inner #page,
-  html body #body-wrap #content-inner #post {
-    grid-column: 2 !important;
-    width: 100% !important;
-    margin: 0 !important;                        /* 消除原生边距干扰 */
-  }
-}
-
-/* ==================== 2. Fuwari 风格卡片高级美化 ==================== */
-
-/* 【头像卡片改造】 */
+/* ==================== 1. Fuwari 风格头像卡片美化 ==================== */
+/* 增加内边距 */
 #aside-content .card-info {
   padding: 22px !important;
 }
 
-/* 强行将圆形头像拉伸为充满上方的直角圆边大方块 */
+/* 强行将圆形头像拉伸为大面积的直角圆边大方块 */
 #aside-content .card-info .card-info-avatar {
   display: block !important;
   margin: 0 auto 12px auto !important;
@@ -346,16 +318,17 @@
 }
 
 #aside-content .card-info .card-info-avatar .avatar-img {
-  border-radius: 16px !important;               /* 复刻大方块圆角 */
+  border-radius: 16px !important; /* 复刻大方块圆角 */
   width: 100% !important;
   height: auto !important;
   max-width: 100% !important;
-  aspect-ratio: 1 / 1 !important;               /* 锁定正方形比例 */
+  aspect-ratio: 1 / 1 !important; /* 锁定正方形比例 */
   object-fit: cover !important;
 }
 
 /* 完美隐藏原生的文章/标签/分类数字栏 */
-#aside-content .card-info .card-info-data {
+#aside-content .card-info .card-info-data,
+.card-info-data {
   display: none !important;
 }
 
@@ -371,7 +344,7 @@
   display: block !important;
   width: 20px !important;
   height: 3px !important;
-  background-color: #ff758f !important;         /* 樱粉色小短线 */
+  background-color: #ff758f !important; /* 樱粉色小短线 */
   margin: 8px auto 0 auto !important;
   border-radius: 4px !important;
 }
@@ -383,7 +356,7 @@
   color: #555 !important;
 }
 
-/* 【社交图标改造】底部并排的小方块按钮 */
+/* 底部并排的社交小方块按钮 */
 #aside-content .card-info .card-info-social-icons {
   margin-top: 15px !important;
   display: flex !important;
@@ -397,7 +370,7 @@
   width: 38px !important;
   height: 38px !important;
   line-height: 38px !important;
-  border-radius: 10px !important;               /* 圆角小方块 */
+  border-radius: 10px !important; /* 圆角小方块 */
   font-size: 1.1rem !important;
   margin: 0 !important;
   display: inline-block !important;
@@ -411,7 +384,8 @@
   transform: translateY(-2px) !important;
 }
 
-/* 【全站卡片标题改造】全面复刻 Fuwari 侧边精致竖线设计 */
+
+/* ==================== 2. 全站卡片标题美化（粉色侧边竖线） ==================== */
 #aside-content .card-widget .item-headline {
   display: flex !important;
   align-items: center !important;
@@ -436,12 +410,11 @@
   top: 15% !important;
   width: 4px !important;
   height: 70% !important;
-  background-color: #ff758f !important;         /* 极简粉色竖线 */
+  background-color: #ff758f !important; /* 极简粉色竖线 */
   border-radius: 4px !important;
 }
 
-/* 【统一卡片间距】 */
+/* 统一卡片垂直间距 */
 #aside-content .card-widget {
-  margin-bottom: 20px !important;               /* 卡片垂直堆叠时的上下间距 */
-  width: 100% !important;
+  margin-bottom: 20px !important;
 }
