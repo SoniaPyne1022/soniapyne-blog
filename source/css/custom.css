@@ -302,3 +302,43 @@
     margin: 0 8px;
   }
 }
+
+@media screen and (min-width: 1200px) {
+  /* 1. 将主容器改为三栏网格布局 */
+  #content-inner {
+    display: grid !important;
+    grid-template-columns: 260px 1fr 260px !important; /* 左栏 宽度, 中栏 自动, 右栏 宽度 */
+    gap: 20px;
+    max-width: 1400px; /* 适当调大页面最大宽度以容纳三栏 */
+    margin: 0 auto;
+  }
+
+  /* 2. 让文章主栏占据中间位置 */
+  #recent-posts, #page, #post {
+    grid-column: 2 / 3 !important;
+    width: 100% !important;
+  }
+
+  /* 3. 魔改侧边栏容器：让它变成一个可以跨越两边的网格 */
+  #aside-content {
+    display: contents !important; /* 关键：解除父级限制，让内部卡片直接参与三栏网格排版 */
+  }
+
+  /* 4. 分流卡片：指定哪些卡片去左边，哪些去右边 */
+  
+  /* 【左侧栏】比如：把个人信息卡片和公告卡片放到第一栏（左侧） */
+  #aside-content .card-info,
+  #aside-content .card-announcement {
+    grid-column: 1 / 2 !important;
+    grid-row: auto !important;
+  }
+
+  /* 【右侧栏】比如：把最新文章、分类、标签墙放到第三栏（右侧） */
+  #aside-content .card-recent-post,
+  #aside-content .card-categories,
+  #aside-content .card-tags,
+  #aside-content .card-archives {
+    grid-column: 3 / 4 !important;
+    grid-row: auto !important;
+  }
+}
