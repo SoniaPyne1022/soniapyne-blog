@@ -303,3 +303,153 @@
   }
 }
 
+@media screen and (min-width: 1200px) {
+  /* ==================== 1. 全局三栏网格框架 ==================== */
+  html body #body-wrap #content-inner {
+    display: grid !important;
+    grid-template-columns: 280px 1fr 280px !important;
+    column-gap: 24px !important;
+    row-gap: 20px !important;
+    max-width: 1450px !important;
+    margin: 0 auto !important;
+    align-items: start !important;
+  }
+
+  /* 中间文章栏锁定与纵向跨越 */
+  html body #body-wrap #content-inner #recent-posts,
+  html body #body-wrap #content-inner #page,
+  html body #body-wrap #content-inner #post {
+    grid-column: 2 / 3 !important;
+    grid-row: 1 / 50 !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* 打散原生侧边栏容器 */
+  html body #body-wrap #content-inner #aside-content {
+    display: contents !important;
+  }
+
+  /* 分配左侧栏组件 (第一列) */
+  html body #body-wrap #content-inner #aside-content .card-info { grid-column: 1 !important; grid-row: 1 !important; }
+  html body #body-wrap #content-inner #aside-content .card-announcement { grid-column: 1 !important; grid-row: 2 !important; }
+  html body #body-wrap #content-inner #aside-content .card-categories { grid-column: 1 !important; grid-row: 3 !important; }
+  html body #body-wrap #content-inner #aside-content .card-tags { grid-column: 1 !important; grid-row: 4 !important; }
+
+  /* 分配右侧栏组件 (第三列) */
+  html body #body-wrap #content-inner #aside-content .card-recent-post { grid-column: 3 !important; grid-row: 1 !important; }
+  html body #body-wrap #content-inner #aside-content .card-archives { grid-column: 3 !important; grid-row: 2 !important; }
+  html body #body-wrap #content-inner #aside-content .card-webinfo { grid-column: 3 !important; grid-row: 3 !important; }
+
+  html body #body-wrap #content-inner #aside-content .card-widget { width: 100% !important; }
+}
+
+/* ==================== 2. Fuwari 风格卡片高级美化 ==================== */
+
+/* 【头像卡片改造】 */
+#aside-content .card-info {
+  padding: 22px !important;
+}
+
+/* 强行将圆形头像拉伸为充满上方的直角圆边大方块 */
+#aside-content .card-info .card-info-avatar {
+  display: block !important;
+  margin: 0 auto 12px auto !important;
+  width: 100% !important;
+  text-align: center !important;
+}
+
+#aside-content .card-info .card-info-avatar .avatar-img {
+  border-radius: 16px !important; /* 核心：复刻图二的大方块圆角 */
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+  aspect-ratio: 1 / 1 !important; /* 锁定正方形比例 */
+  object-fit: cover !important;
+}
+
+/* 完美隐藏原生的文章/标签/分类数字栏 */
+#aside-content .card-info .card-info-data {
+  display: none !important;
+}
+
+/* 名字加粗增大，并追加 Fuwari 特色的精细底部小短线 */
+#aside-content .card-info .author-info__name {
+  font-size: 1.35rem !important;
+  font-weight: 700 !important;
+  margin-top: 8px !important;
+}
+
+#aside-content .card-info .author-info__name::after {
+  content: "" !important;
+  display: block !important;
+  width: 20px !important;
+  height: 3px !important;
+  background-color: #ff758f !important; /* 迎合你主题的樱粉色小短线 */
+  margin: 8px auto 0 auto !important;
+  border-radius: 4px !important;
+}
+
+/* 个人简介修饰 */
+#aside-content .card-info .author-info__description {
+  margin-top: 10px !important;
+  font-size: 0.88rem !important;
+  color: #555 !important;
+}
+
+/* 【社交图标改造】复刻图二底部并排的小方块按钮 */
+#aside-content .card-info .card-info-social-icons {
+  margin-top: 15px !important;
+  display: flex !important;
+  justify-content: center !important;
+  gap: 10px !important;
+}
+
+#aside-content .card-info .card-info-social-icons .social-icon {
+  background-color: rgba(255, 183, 197, 0.18) !important; /* 淡粉色方块底色 */
+  color: #ff758f !important;
+  width: 38px !important;
+  height: 38px !important;
+  line-height: 38px !important;
+  border-radius: 10px !important; /* 圆角小方块 */
+  font-size: 1.1rem !important;
+  margin: 0 !important;
+  display: inline-block !important;
+  text-align: center !important;
+  transition: all 0.25s ease-in-out !important;
+}
+
+#aside-content .card-info .card-info-social-icons .social-icon:hover {
+  background-color: #ff758f !important;
+  color: #fff !important;
+  transform: translateY(-2px) !important;
+}
+
+/* 【公告及全站卡片标题改造】全面复刻 Fuwari 侧边精致竖线设计 */
+#aside-content .card-widget .item-headline {
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* 移除原本各色各样的 FontAwesome 小图标 */
+#aside-content .card-widget .item-headline i {
+  display: none !important;
+}
+
+/* 为标题文字左侧强行灌注精细的竖直装饰线条 */
+#aside-content .card-widget .item-headline span {
+  position: relative !important;
+  padding-left: 14px !important;
+  font-weight: 700 !important;
+}
+
+#aside-content .card-widget .item-headline span::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 15% !important;
+  width: 4px !important;
+  height: 70% !important;
+  background-color: #ff758f !important; /* 极简粉色竖线 */
+  border-radius: 4px !important;
+}
