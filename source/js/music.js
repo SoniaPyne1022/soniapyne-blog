@@ -154,13 +154,13 @@ injectCustomMusicUI();
 document.addEventListener('pjax:complete', injectCustomMusicUI);
 
 
-// ==================== 右下角静态宠物点击互动挂件（精准适配 #custom-static-pet） ====================
+// ==================== 右下角静态宠物悬浮互动挂件（鼠标放上去触发） ====================
 function initPetInteraction() {
-  // 精准锁定你刚才提供样式的宠物 ID 挂件
+  // 精准锁定你提供的宠物 ID
   const pet = document.getElementById('custom-static-pet');
   if (!pet) return;
 
-  // 检查并创建唯一的对话气泡，防止 PJAX 刷新导致页面里堆积出多个气泡
+  // 检查并创建唯一的对话气泡，防止页面堆积
   let bubble = document.getElementById('pet-bubble');
   if (!bubble) {
     bubble = document.createElement('div');
@@ -180,30 +180,45 @@ function initPetInteraction() {
 
   let timer = null;
 
-  // 绑定真实的点击监听
-  pet.addEventListener('click', function (e) {
-    e.stopPropagation(); // 阻止点击事件向上冒泡，防止误触页面其他卡片
+  // 📐 核心定位算法：计算小人位置并把气泡钉在头顶正中间
+  function positionBubble() {
+    const rect = pet.getBoundingClientRect();
+    bubble.style.left = (rect.left + rect.width / 2) + 'px';
+    bubble.style.bottom = (window.innerHeight - rect.top + 12) + 'px'; /* 12px 为距离头顶的间隙 */
+  }
+
+  // 🟢 1. 鼠标移入（Hover）效果
+  pet.addEventListener('mouseenter', function (e) {
+    clearTimeout(timer); // 清除上一次的隐藏定时器
 
     // 随机抽一句古典台词
     const randomText = messages[Math.floor(Math.random() * messages.length)];
     bubble.innerText = randomText;
 
-    // 📐 核心算法：实时动态计算小人当前在屏幕上的绝对位置，把气泡完美顶在小人头顶正中间
-    const rect = pet.getBoundingClientRect();
-    bubble.style.left = (rect.left + rect.width / 2) + 'px';
-    bubble.style.bottom = (window.innerHeight - rect.top + 12) + 'px'; /* 12px 为距离头顶的舒适间隙 */
-
-    // 弹出气泡
+    // 实时定位并显示
+    positionBubble();
     bubble.classList.add('show');
 
-    // 4秒后气泡自动平滑收回隐藏
-    clearTimeout(timer);
+    // 【手机端/特殊情况安全兜底】：如果用户一直把鼠标放在上面或在手机端点击，4秒后也会自动气泡消失
     timer = setTimeout(() => {
       bubble.classList.remove('show');
     }, 4000);
   });
+
+  // 🟢 2. 鼠标移出（Leave）效果：电脑端鼠标一移开，气泡瞬间消失
+  pet.addEventListener('mouseleave', function () {
+    clearTimeout(timer);
+    bubble.classList.remove('show');
+  });
+
+  // 滚动页面时，如果气泡醒着，自动实时修正位置防止气泡飘走
+  window.addEventListener('scroll', function () {
+    if (bubble.classList.contains('show')) {
+      positionBubble();
+    }
+  });
 }
 
-// 确保首次加载和执行 PJAX 异步切换页面时，小人都能完美认得主人点击
+// 确保首次加载和执行 PJAX 异步切换页面时，悬停交互都能完美绑定
 initPetInteraction();
 document.addEventListener('pjax:complete', initPetInteraction);
