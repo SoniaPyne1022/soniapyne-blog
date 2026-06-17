@@ -303,73 +303,50 @@
   }
 }
 
-@media screen and (min-width: 1200px) {
-  /* 1. 强制主容器启用严格的三栏网格 */
+@media screen and (min-width: 992px) {
+  /* 1. 强制主容器启用现代网格，并允许卡片自动紧凑填补空隙 */
   html body #body-wrap #content-inner {
     display: grid !important;
     grid-template-columns: 280px 1fr 280px !important; /* 左栏 | 中栏自适应 | 右栏 */
-    column-gap: 24px !important;                       /* 栏目之间的横向间距 */
-    row-gap: 20px !important;                          /* 卡片之间的上下间距 */
-    max-width: 1450px !important;                      /* 整体最大宽度 */
+    grid-auto-flow: row dense !important;             /* 核心大招：自动紧凑填补，卡片绝不掉队 */
+    column-gap: 24px !important;
+    row-gap: 20px !important;
+    max-width: 1450px !important;
     margin: 0 auto !important;
     align-items: start !important;
   }
 
-  /* 2. 中间文章栏：纵向跨越，强行占领中路 */
+  /* 2. 中间文章栏：锁死在第二列，并强制纵向跨越足够多的虚拟格子 */
   html body #body-wrap #content-inner #recent-posts,
   html body #body-wrap #content-inner #page,
   html body #body-wrap #content-inner #post {
-    grid-column: 2 / 3 !important; /* 锁死在中间 */
-    grid-row: 1 / 50 !important;   /* 纵向无限跨越，绝不给右侧卡片掉下去的机会 */
+    grid-column: 2 !important;
+    grid-row: 1 / span 30 !important; /* 纵向跨越 30 行，给两边的卡片留出充足的堆叠空间 */
     width: 100% !important;
-    margin: 0 !important;          /* 消除原生边距干扰 */
+    margin: 0 !important;
   }
 
-  /* 3. 强行打散侧边栏原生包裹限制 */
+  /* 3. 打散侧边栏原生包裹限制 */
   html body #body-wrap #content-inner #aside-content {
     display: contents !important;
   }
 
-  /* ==================== 4. 左侧栏布局 (第一列) ==================== */
-  /* 个人信息 */
-  html body #body-wrap #content-inner #aside-content .card-info {
-    grid-column: 1 / 2 !important;
-    grid-row: 1 !important;
-  }
-  /* 公告 */
-  html body #body-wrap #content-inner #aside-content .card-announcement {
-    grid-column: 1 / 2 !important;
-    grid-row: 2 !important;
-  }
-  /* 分类 - 强行拉到左边 */
-  html body #body-wrap #content-inner #aside-content .card-categories {
-    grid-column: 1 / 2 !important;
-    grid-row: 3 !important;
-  }
-  /* 标签墙 - 强行拉到左边 */
+  /* ==================== 4. 左侧栏挂件 (指定到第 1 列) ==================== */
+  html body #body-wrap #content-inner #aside-content .card-info,
+  html body #body-wrap #content-inner #aside-content .card-announcement,
+  html body #body-wrap #content-inner #aside-content .card-categories,
   html body #body-wrap #content-inner #aside-content .card-tags {
-    grid-column: 1 / 2 !important;
-    grid-row: 4 !important;
+    grid-column: 1 !important;
   }
 
-  /* ==================== 5. 右侧栏布局 (第三列) ==================== */
-  /* 最新文章 */
-  html body #body-wrap #content-inner #aside-content .card-recent-post {
-    grid-column: 3 / 4 !important;
-    grid-row: 1 !important;
-  }
-  /* 归档 */
-  html body #body-wrap #content-inner #aside-content .card-archives {
-    grid-column: 3 / 4 !important;
-    grid-row: 2 !important;
-  }
-  /* 网站统计 */
+  /* ==================== 5. 右侧栏挂件 (指定到第 3 列) ==================== */
+  html body #body-wrap #content-inner #aside-content .card-recent-post,
+  html body #body-wrap #content-inner #aside-content .card-archives,
   html body #body-wrap #content-inner #aside-content .card-webinfo {
-    grid-column: 3 / 4 !important;
-    grid-row: 3 !important;
+    grid-column: 3 !important;
   }
 
-  /* ==================== 6. 统一卡片宽度兜底 ==================== */
+  /* 6. 兜底卡片宽度 */
   html body #body-wrap #content-inner #aside-content .card-widget {
     width: 100% !important;
   }
