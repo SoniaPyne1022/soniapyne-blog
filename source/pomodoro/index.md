@@ -7,55 +7,51 @@ pjax: false
 ---
 
 <div id="pomo-container">
-  <!-- 计时器显示 -->
-  <div class="pomo-timer-box">
-    <!-- 新增：时长自定义设置区域 -->
-    <div class="pomo-settings">
-      <div class="setting-item">
-        <label for="pomo-focus-input">🎯 专注时长</label>
-        <input type="number" id="pomo-focus-input" value="25" min="1" max="120" onchange="handleInputChange()">
-        <span>分钟</span>
-      </div>
-      <div class="setting-item">
-        <label for="pomo-break-input">☕ 休息时长</label>
-        <input type="number" id="pomo-break-input" value="5" min="1" max="60" onchange="handleInputChange()">
-        <span>分钟</span>
-      </div>
-    </div>
+<div class="pomo-timer-box">
+<div class="pomo-settings">
+<div class="setting-item">
+<label for="pomo-focus-input">🎯 专注时长</label>
+<input type="number" id="pomo-focus-input" value="25" min="1" max="120" onchange="handleInputChange()">
+<span>分钟</span>
+</div>
+<div class="setting-item">
+<label for="pomo-break-input">☕ 休息时长</label>
+<input type="number" id="pomo-break-input" value="5" min="1" max="60" onchange="handleInputChange()">
+<span>分钟</span>
+</div>
+</div>
 
-    <hr class="pomo-divider">
+<hr class="pomo-divider">
 
-    <div id="pomo-status">准备专注</div>
-    <div id="pomo-time-display">25:00</div>
-    <div class="pomo-controls">
-      <button id="pomo-start-btn" onclick="toggleTimer()">开始</button>
-      <button id="pomo-reset-btn" onclick="resetTimer()">重置</button>
-    </div>
-  </div>
+<div id="pomo-status">准备专注</div>
+<div id="pomo-time-display">25:00</div>
+<div class="pomo-controls">
+<button id="pomo-start-btn" onclick="toggleTimer()">开始</button>
+<button id="pomo-reset-btn" onclick="resetTimer()">重置</button>
+</div>
+</div>
 
-  <!-- 历史记录统计 -->
-  <div class="pomo-history-box">
-    <h3>📊 专注历史记录</h3>
-    <div class="pomo-table-wrapper">
-      <table id="pomo-history-table">
-        <thead>
-          <tr>
-            <th>时间</th>
-            <th>专注时长</th>
-            <th>状态</th>
-          </tr>
-        </thead>
-        <tbody id="pomo-history-body">
-          <!-- 记录将通过 JS 动态插入 -->
-        </tbody>
-      </table>
-    </div>
-    <button id="pomo-clear-btn" onclick="clearHistory()">清空所有记录</button>
-  </div>
+<div class="pomo-history-box">
+<h3>📊 专注历史记录</h3>
+<div class="pomo-table-wrapper">
+<table id="pomo-history-table">
+<thead>
+<tr>
+<th>时间</th>
+<th>专注时长</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody id="pomo-history-body">
+</tbody>
+</table>
+</div>
+<button id="pomo-clear-btn" onclick="clearHistory()">清空所有记录</button>
+</div>
 </div>
 
 <style>
-/* 核心容器 */
+/* 这里面的内容可以缩进，不会出错 */
 #pomo-container {
   max-width: 800px;
   margin: 20px auto;
@@ -71,8 +67,6 @@ pjax: false
   text-align: center;
   transition: all 0.3s;
 }
-
-/* 新增：设置区域样式 */
 .pomo-settings {
   display: flex;
   justify-content: center;
@@ -105,8 +99,6 @@ pjax: false
   border-top: 1px dashed var(--light-grey, #eee);
   width: 80%;
 }
-
-/* 计时器与按钮 */
 #pomo-status {
   font-size: 1.3rem;
   color: var(--text-highlight-color, #49b1f5);
@@ -143,8 +135,6 @@ pjax: false
 #pomo-clear-btn:hover {
   background: #ff7875;
 }
-
-/* 历史表格 */
 .pomo-table-wrapper {
   overflow-x: auto;
   margin-top: 15px;
@@ -161,24 +151,48 @@ pjax: false
 </style>
 
 <script>
+// 这里面的内容可以缩进，不会出错
 let countdown;
 let isRunning = false;
-let currentMode = 'focus'; // 'focus' 代表专注模式，'break' 代表休息模式
+let currentMode = 'focus'; 
 let timeLeft;
+let startBtn;
+let statusText;
+let focusInput;
+let breakInput;
+let display;
 
-const display = document.getElementById('pomo-time-display');
-const startBtn = document.getElementById('pomo-start-btn');
-const statusText = document.getElementById('pomo-status');
-const focusInput = document.getElementById('pomo-focus-input');
-const breakInput = document.getElementById('pomo-break-input');
+// 确保 DOM 加载完成后再绑定变量和执行逻辑，防止 PJAX 引起的 bug
+function initPomodoro() {
+  display = document.getElementById('pomo-time-display');
+  startBtn = document.getElementById('pomo-start-btn');
+  statusText = document.getElementById('pomo-status');
+  focusInput = document.getElementById('pomo-focus-input');
+  breakInput = document.getElementById('pomo-break-input');
 
-// 初始化
-document.addEventListener('DOMContentLoaded', () => {
+  // 初始化检查，如果找不到元素直接返回（防止在其他页面报错）
+  if(!display) return;
+
+  clearInterval(countdown); // 切换页面时重置老计时器
+  isRunning = false;
+  currentMode = 'focus';
+
   resetToConfiguredTime();
   renderHistory();
-});
+}
 
-// 根据当前的输入动态设置初始时间
+// 兼容 PJAX 的加载
+if (typeof GLOBAL_CONFIG !== 'undefined' && GLOBAL_CONFIG.pjax) {
+  document.addEventListener('pjax:complete', initPomodoro);
+} else {
+  document.addEventListener('DOMContentLoaded', initPomodoro);
+}
+
+// 如果首屏就是这个页面
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  initPomodoro();
+}
+
 function resetToConfiguredTime() {
   const minutes = currentMode === 'focus' 
     ? (parseInt(focusInput.value) || 25) 
@@ -187,7 +201,6 @@ function resetToConfiguredTime() {
   updateDisplay(timeLeft);
 }
 
-// 当用户更改输入框数值时触发
 function handleInputChange() {
   if (!isRunning) {
     resetToConfiguredTime();
@@ -197,25 +210,22 @@ function handleInputChange() {
 function updateDisplay(seconds) {
   const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
   const secs = (seconds % 60).toString().padStart(2, '0');
-  display.textContent = `${mins}:${secs}`;
+  if(display) display.textContent = `${mins}:${secs}`;
 }
 
-// 锁定/解锁输入框（防止在倒计时中途修改时长引发逻辑混乱）
 function setInputsDisabled(disabled) {
-  focusInput.disabled = disabled;
-  breakInput.disabled = disabled;
+  if(focusInput) focusInput.disabled = disabled;
+  if(breakInput) breakInput.disabled = disabled;
 }
 
 function toggleTimer() {
   if (isRunning) {
-    // 暂停
     clearInterval(countdown);
     isRunning = false;
     startBtn.textContent = '开始';
     statusText.textContent = currentMode === 'focus' ? '专注已暂停' : '休息已暂停';
     setInputsDisabled(false);
   } else {
-    // 开始
     isRunning = true;
     startBtn.textContent = '暂停';
     setInputsDisabled(true);
@@ -233,18 +243,14 @@ function toggleTimer() {
         playAlert();
 
         if (currentMode === 'focus') {
-          // 专注时间到 -> 结算并切到休息
           const configuredFocus = parseInt(focusInput.value) || 25;
           saveRecord(configuredFocus, '完成');
-          
           currentMode = 'break';
           statusText.textContent = '🎉 搞定！点击“开始”享受休息吧';
         } else {
-          // 休息时间到 -> 切回专注
           currentMode = 'focus';
           statusText.textContent = '💪 休息结束，准备新一轮专注！';
         }
-        
         resetToConfiguredTime();
       }
     }, 1000);
@@ -257,7 +263,6 @@ function resetTimer() {
   startBtn.textContent = '开始';
   setInputsDisabled(false);
   
-  // 仅在专注中途重置时，记录实际坚持的分钟数
   if (currentMode === 'focus') {
     const configuredFocus = parseInt(focusInput.value) || 25;
     const minutesSpent = Math.floor((configuredFocus * 60 - timeLeft) / 60);
@@ -268,11 +273,9 @@ function resetTimer() {
   } else {
     statusText.textContent = '休息已重置';
   }
-
   resetToConfiguredTime();
 }
 
-// 存储记录
 function saveRecord(minutes, status) {
   const records = JSON.parse(localStorage.getItem('pomo_history') || '[]');
   const newRecord = {
@@ -285,10 +288,10 @@ function saveRecord(minutes, status) {
   renderHistory();
 }
 
-// 渲染历史记录
 function renderHistory() {
-  const records = JSON.parse(localStorage.getItem('pomo_history') || '[]');
   const tbody = document.getElementById('pomo-history-body');
+  if(!tbody) return;
+  const records = JSON.parse(localStorage.getItem('pomo_history') || '[]');
   tbody.innerHTML = '';
 
   if (records.length === 0) {
@@ -308,7 +311,6 @@ function renderHistory() {
   });
 }
 
-// 清空历史
 function clearHistory() {
   if (confirm('确定要清空所有的专注历史记录吗？')) {
     localStorage.removeItem('pomo_history');
@@ -316,7 +318,6 @@ function clearHistory() {
   }
 }
 
-// 铃声提示
 function playAlert() {
   try {
     const context = new (window.AudioContext || window.webkitAudioContext)();
@@ -327,7 +328,7 @@ function playAlert() {
     oscillator.start();
     oscillator.stop(context.currentTime + 0.6);
   } catch (e) {
-    console.log('Audio error:', e);
+    console.log('Audio context not supported or blocked.');
   }
 }
 </script>
