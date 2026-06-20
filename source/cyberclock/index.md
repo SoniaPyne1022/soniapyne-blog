@@ -27,6 +27,7 @@ pjax: false
 </div>
 
 <style>
+/* 核心容器与板式控制 */
 #lenormand-workspace {
   max-width: 950px;
   margin: 20px auto;
@@ -88,9 +89,11 @@ pjax: false
   min-height: 260px;
   padding: 10px;
 }
+
+/* ================= 重点修复：卡牌 3D 与文本防御样式 ================= */
 .lenormand-card {
   width: 170px;
-  height: 250px;
+  height: 265px; /* 稍微拉高15px，给底部文本留足呼吸空间 */
   perspective: 1000px;
 }
 .card-inner {
@@ -116,6 +119,7 @@ pjax: false
   flex-direction: column;
   padding: 15px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  overflow: hidden; /* 强行切断任何可能超出圆角外框的内容 */
 }
 .card-back {
   background: linear-gradient(135deg, #111827 0%, #1e1b4b 100%);
@@ -138,10 +142,35 @@ pjax: false
   align-items: center;
 }
 .card-num { font-size: 0.85rem; color: #aaa; align-self: flex-start; font-family: monospace; }
-.card-emoji { font-size: 3.2rem; margin: 10px 0; }
-.card-name { font-size: 1.2rem; font-weight: bold; margin-bottom: 5px; }
-.card-kw { font-size: 0.75rem; color: #ff7875; background: rgba(255,120,117,0.08); padding: 2px 6px; border-radius: 4px; }
+.card-emoji { font-size: 3.2rem; margin: 5px 0; }
 
+/* 底部文本容器微调 */
+.card-text-content {
+  width: 100%;
+  margin-bottom: 5px;
+}
+.card-name { 
+  font-size: 1.15rem; 
+  font-weight: bold; 
+  margin-bottom: 6px; 
+  line-height: 1.3 !important;
+}
+
+/* 核心修复：彻底解决标签换行重叠与高度压实问题 */
+.card-kw { 
+  font-size: 0.72rem !important; 
+  color: #ff7875 !important; 
+  background: rgba(255,120,117,0.08) !important; 
+  padding: 4px 6px !important; 
+  border-radius: 4px !important;
+  display: inline-block !important; /* 必须是 inline-block 或 block 才能正常拥有行高 */
+  line-height: 1.4 !important;      /* 强制写死安全行高，绝不让文字重叠 */
+  height: auto !important;          /* 消除可能继承自主题的固定高度 */
+  word-break: break-all !important; /* 允许在任意字符间断行，防止撑爆容器 */
+  box-sizing: border-box !important;
+}
+
+/* ================= 报告区域 ================= */
 .report-title { color: var(--text-main-color); margin-top: 0; text-align: center; border-bottom: 2px solid var(--text-highlight-color); padding-bottom: 10px; }
 .report-content {
   display: flex;
@@ -166,12 +195,12 @@ pjax: false
 </style>
 
 <script>
-// ================= 升级版雷诺曼全套多重因果断语库 =================
+// 全套多重因果断语库保持不变
 const lenormandDeck = [
   { id: 1, name: "骑士", emoji: "🏃‍♂️", kw: "消息、速度、行动", focus: "新消息或计划正在全速向你推进，执行力已被唤醒", block: "行动过于急躁粗糙，或者在缺乏深度思考的前提下盲目刚正面", future: "局势将以极快的速度迎来破局，新赛道彻底畅通" },
   { id: 2, name: "四叶草", emoji: "🍀", kw: "小幸运、惊喜、短暂窗口", focus: "眼前有随手可得的短暂转机，局势正在自发舒缓", block: "心态流于浮躁，过度依赖运气加成而忽视了主观的硬核沉淀", future: "将迎来一个能让你轻松化解 Bug 或危机的惊喜窗口期" },
   { id: 3, name: "船", emoji: "🚢", kw: "长期规划、跨界、远见", focus: "眼界大开，正在开辟需要长期投入的宏观新项目赛道", block: "目标定得过于长远宏大，导致脚下眼前的技术细节面临严重失控", future: "时空将引向跨界合作、跨学科融合或方向的开阔大变动" },
-  { id: 4, name: "房子", emoji: "🏠", kw: "核心圈、根基、安全感", focus: "退回了最安全的已有成果圈中，正在梳理内部秩序", block: "思维陷入保守僵化，画地为牢，过度防御而不敢做出任何改变", future: "核心根基全面稳固，你的学业或项目将搭建出坚不可摧的底层" },
+  { id: 4, name: "房子", emoji: "🏠", kw: "核心圈、根基、安全感", focus: "退回了最安全的已有成果圈中，正在梳理内部秩序", block: "思维陷入保守僵化，画地牢，过度防御而不敢做出任何改变", future: "核心根基全面稳固，你的学业或项目将搭建出坚不可摧的底层" },
   { id: 5, name: "树", emoji: "🌳", kw: "长期健康、缓慢扎根、底蕴", focus: "正处于底蕴积蓄期，当前的课题需要漫长的时间来沉淀", block: "时间跨度被拉得太长，你开始失去了耐心，产生了严重的焦虑内耗", future: "种子已然成活，你的心血和布局终将缓慢但极其稳健地长成参天大树" },
   { id: 6, name: "云", emoji: "☁️", kw: "短暂迷茫、不确定、盲区", focus: "视野暂时被不确定性的雾气遮蔽，方向有些模糊不清", block: "混沌的算法误区或信息不对称让你彻底看不清眼前的因果真相", future: "这团阴霾只是暂时的气流波动，不久后终将拨云见日、全然清朗" },
   { id: 7, name: "蛇", emoji: "🐍", kw: "复杂纠缠、曲线、逻辑陷阱", focus: "面对的是一个盘根错节的复杂局面或嵌套逻辑陷阱", block: "背后隐藏着复杂的弯路、代码死循环或有人在带偏你的注意力", future: "强行硬刚必会受挫，你必须运用曲线迂回策略才能精妙地化险为夷" },
@@ -237,7 +266,7 @@ function drawLenormand() {
         <div class="card-front">
           <div class="card-num">#${String(card.id).padStart(2,'0')}</div>
           <div class="card-emoji">${card.emoji}</div>
-          <div>
+          <div class="card-text-content">
             <div class="card-name">${card.name}</div>
             <div class="card-kw">${card.kw}</div>
           </div>
@@ -251,11 +280,9 @@ function drawLenormand() {
     }, 300 * (idx + 1));
   });
 
-  // ================= 核心升级：网页端自动化时空解耦报告生成 =================
   let reportHTML = '';
 
   if (currentSpreadMode === 1) {
-    // 单牌模式：直接提取每日核心能量
     const card = pickedCards[0];
     reportHTML += `
       <div class="report-item" style="border-left-color: #722ed1; background: rgba(114,46,209,0.02); padding: 15px; border-radius: 8px;">
@@ -265,10 +292,9 @@ function drawLenormand() {
       </div>
     `;
   } else if (currentSpreadMode === 3) {
-    // 三牌模式：触发 AI 式多重位置断语拼句算法，生成无缝的因果锁链总评！
-    const c1 = pickedCards[0]; // 现状
-    const c2 = pickedCards[1]; // 阻碍
-    const c3 = pickedCards[2]; // 走向
+    const c1 = pickedCards[0]; 
+    const c2 = pickedCards[1]; 
+    const c3 = pickedCards[2]; 
 
     reportHTML += `
       <div class="report-item" style="border-left-color: #ff4d4f; background: rgba(255,77,79,0.02); padding: 18px; border-radius: 8px; margin-bottom: 25px;">
