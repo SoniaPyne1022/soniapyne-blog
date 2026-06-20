@@ -6,63 +6,69 @@ aside: false
 pjax: false
 ---
 
+<!-- 警告：以下所有 HTML 标签必须顶格左对齐，不能有任何前置空格或 Tab -->
 <div id="cyber-clock-container">
-  <div class="clock-dial-box">
-    <div class="matrix-bg"></div>
-    <div class="compass-wrapper">
-      <div id="ring-earthly" class="compass-ring ring-outer"></div>
-      <div id="ring-elements" class="compass-ring ring-middle">
-        <div class="element-node e-mu">木</div>
-        <div class="element-node e-huo">火</div>
-        <div class="element-node e-tu">土</div>
-        <div class="element-node e-jin">金</div>
-        <div class="element-node e-shui">水</div>
-      </div>
-      <div class="compass-center">
-        <div class="taichi-logo">☯</div>
-      </div>
-    </div>
-  </div>
+<!-- 左侧：3D赛博时空罗盘 -->
+<div class="clock-dial-box">
+<div class="matrix-bg"></div>
+<div class="compass-wrapper">
+<!-- 外环：干支地支环 -->
+<div id="ring-earthly" class="compass-ring ring-outer"></div>
+<!-- 中环：五行八卦流光环 -->
+<div id="ring-elements" class="compass-ring ring-middle">
+<div class="element-node e-mu">木</div>
+<div class="element-node e-huo">火</div>
+<div class="element-node e-tu">土</div>
+<div class="element-node e-jin">金</div>
+<div class="element-node e-shui">水</div>
+</div>
+<!-- 内心：太极内核 -->
+<div class="compass-center">
+<div class="taichi-logo">☯</div>
+</div>
+</div>
+</div>
 
-  <div class="clock-info-box">
-    <h2 class="mystic-title">⚡ 赛博时空解构器</h2>
-    <p class="mystic-subtitle">实时追踪宇宙弦波动与传统历法时空能量</p>
-    
-    <div class="deconstruct-display">
-      <div class="dec-item">
-        <span class="dec-label">当前公历</span>
-        <span id="dec-gregorian" class="dec-val">-</span>
-      </div>
-      <div class="dec-item">
-        <span class="dec-label">解构时辰</span>
-        <span id="dec-shichen" class="dec-val mystic-highlight">-</span>
-      </div>
-      <div class="dec-item">
-        <span class="dec-label">考时定刻</span>
-        <span id="dec-ke" class="dec-val mystic-highlight">-</span>
-      </div>
-    </div>
+<!-- 右侧：时空解构面板与占卜卡片 -->
+<div class="clock-info-box">
+<h2 class="mystic-title">⚡ 赛博时空解构器</h2>
+<p class="mystic-subtitle">实时追踪宇宙弦波动与传统历法时空能量</p>
+<div class="deconstruct-display">
+<div class="dec-item">
+<span class="dec-label">当前公历</span>
+<span id="dec-gregorian" class="dec-val">-</span>
+</div>
+<div class="dec-item">
+<span class="dec-label">解构时辰</span>
+<span id="dec-shichen" class="dec-val mystic-highlight">-</span>
+</div>
+<div class="dec-item">
+<span class="dec-label">考时定刻</span>
+<span id="dec-ke" class="dec-val mystic-highlight">-</span>
+</div>
+</div>
 
-    <button class="mystic-btn" onclick="triggerDivination()">⚡ 解构当下时空因果</button>
+<button class="mystic-btn" onclick="triggerDivination()">⚡ 解构当下时空因果</button>
 
-    <div id="divination-card" class="divination-card" style="display: none;">
-      <div class="card-header">
-        <span id="card-element-tag" class="element-tag">水</span>
-        <h3 id="card-title">时空波动报告</h3>
-      </div>
-      <div id="card-desc" class="card-body">
-        正在读取五行气场消长...
-      </div>
-      <div class="card-footer">
-        <div class="footer-item"><strong>宜：</strong><span id="card-yi">-</span></div>
-        <div class="footer-item"><strong>忌：</strong><span id="card-ji">-</span></div>
-      </div>
-    </div>
-  </div>
+<!-- 动态弹出的测时/气场运势卡片 -->
+<div id="divination-card" class="divination-card" style="display: none;">
+<div class="card-header">
+<span id="card-element-tag" class="element-tag">水</span>
+<h3 id="card-title">时空波动报告</h3>
+</div>
+<div id="card-desc" class="card-body">
+正在读取五行气场消长...
+</div>
+<div class="card-footer">
+<div class="footer-item"><strong>宜：</strong><span id="card-yi">-</span></div>
+<div class="footer-item"><strong>忌：</strong><span id="card-ji">-</span></div>
+</div>
+</div>
+</div>
 </div>
 
 <style>
-/* 核心容器布局 */
+/* Style 和 Script 标签内部的缩进是安全的，可以保留 */
 #cyber-clock-container {
   max-width: 1000px;
   margin: 20px auto;
@@ -79,8 +85,6 @@ pjax: false
   box-shadow: var(--card-hover-shadow, 0 4px 15px rgba(0,0,0,0.06));
   box-sizing: border-box;
 }
-
-/* ================= 罗盘炫酷视觉样式 ================= */
 .clock-dial-box {
   position: relative;
   display: flex;
@@ -107,19 +111,16 @@ pjax: false
   align-items: center;
   transition: transform 0.5s cubic-bezier(0.1, 0.8, 0.25, 1);
 }
-/* 外环：缓慢逆时针旋转 */
 .ring-outer {
   width: 300px;
   height: 300px;
   animation: spinClockwise 60s linear infinite reverse;
 }
-/* 中环：稍微快一点顺时针旋转 */
 .ring-middle {
   width: 200px;
   height: 200px;
   animation: spinClockwise 40s linear infinite;
 }
-/* 地支与五行节点的绝对数学定位 */
 .branch-node, .element-node {
   position: absolute;
   font-family: "Courier New", Courier, monospace;
@@ -133,14 +134,12 @@ pjax: false
   border-radius: 4px;
   color: #fff;
 }
-/* 五行炫酷配色 */
 .e-mu { background: #52c41a; }
 .e-huo { background: #ff4d4f; }
 .e-tu { background: #faad14; }
 .e-jin { background: #13c2c2; }
 .e-shui { background: #2f54eb; }
 
-/* 内心太极 */
 .compass-center {
   width: 80px;
   height: 80px;
@@ -163,7 +162,6 @@ pjax: false
   100% { transform: rotate(360deg); }
 }
 
-/* ================= 右侧面板控制层 ================= */
 .mystic-title { margin-top: 0; margin-bottom: 5px; color: var(--text-main-color); }
 .mystic-subtitle { font-size: 0.85rem; color: #999; margin-bottom: 25px; }
 .deconstruct-display {
@@ -187,7 +185,6 @@ pjax: false
 .dec-val { font-family: monospace; font-size: 1.05rem; font-weight: bold; }
 .mystic-highlight { color: var(--text-highlight-color, #49b1f5); font-size: 1.2rem; }
 
-/* 触发按钮 */
 .mystic-btn {
   width: 100%;
   background: linear-gradient(135deg, #2f54eb 0%, var(--btn-bg, #49b1f5) 100%);
@@ -206,7 +203,6 @@ pjax: false
   box-shadow: 0 6px 15px rgba(73,177,245,0.5);
 }
 
-/* ================= 占卜运势卡片 ================= */
 .divination-card {
   margin-top: 25px;
   border: 1px solid var(--text-highlight-color);
@@ -250,7 +246,6 @@ pjax: false
 </style>
 
 <script>
-// ================= 玄学核心算法数据库 =================
 const earthlyBranches = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
 const keNames = ["初刻", "一刻", "二刻", "三刻"];
 
@@ -269,13 +264,11 @@ const shichenDatabase = {
   "亥": { element: "水", color: "#2f54eb", name: "人定亥时（万物归藏）", desc: "水气凝聚，天地安宁。一天因果在此处收束闭环。宜锁屏离线，清空浏览器冗余标签页，总结全天专注时长并给予自己积极正反馈。", yi: "关闭设备、离线思考总结、心流全面闭环", ji: "强行开辟新工作赛道、沉迷信息流冲浪" }
 };
 
-// ================= 初始化地支罗盘物理环 =================
 function initCompassRings() {
   const outerRing = document.getElementById('ring-earthly');
   if (!outerRing) return;
   outerRing.innerHTML = '';
 
-  // 12地支 360度均分分布
   earthlyBranches.forEach((branch, index) => {
     const angle = index * 30; 
     const node = document.createElement('div');
@@ -285,7 +278,6 @@ function initCompassRings() {
     outerRing.appendChild(node);
   });
 
-  // 5行中环分布
   const middleRing = document.getElementById('ring-elements');
   if(middleRing) {
     const nodes = middleRing.querySelectorAll('.element-node');
@@ -296,11 +288,9 @@ function initCompassRings() {
   }
 }
 
-// ================= 时空实时动态解构核心 =================
 function updateCyberClock() {
   const now = new Date();
   
-  // 1. 公历时间
   const gStr = now.getFullYear() + '/' + 
                String(now.getMonth()+1).padStart(2,'0') + '/' + 
                String(now.getDate()).padStart(2,'0') + ' ' + 
@@ -313,30 +303,24 @@ function updateCyberClock() {
   const hour = now.getHours();
   const minute = now.getMinutes();
 
-  // 2. 计算传统十二时辰 (公式算法精准匹配)
   const shichenIdx = Math.floor((hour + 1) / 2) % 12;
   const currentShichen = earthlyBranches[shichenIdx];
   const shichenEl = document.getElementById('dec-shichen');
   if(shichenEl) shichenEl.textContent = currentShichen + "时 (" + shichenDatabase[currentShichen].element + "气)";
 
-  // 3. 考时定刻精密算法
   const prefix = (hour % 2 !== 0) ? "初" : "正";
   const keIdx = Math.floor(minute / 15);
   const currentKe = prefix + keNames[keIdx];
   const keEl = document.getElementById('dec-ke');
   if(keEl) keEl.textContent = currentKe;
 
-  // 4. 罗盘视觉微调：让对应时辰转到最上方顶格闪烁
   const outerRing = document.getElementById('ring-earthly');
   if(outerRing && !outerRing.dataset.customInteracted) {
-    // 基准旋转，让当前时辰高亮对准正上方
     const targetAngle = -shichenIdx * 30;
-    // 叠加一个基础动画，让它在实时微动
     outerRing.style.transform = `rotate(${targetAngle}deg)`;
   }
 }
 
-// ================= 点击解构占卜逻辑 =================
 function triggerDivination() {
   const now = new Date();
   const hour = now.getHours();
@@ -353,22 +337,19 @@ function triggerDivination() {
 
   if(!card) return;
 
-  // 炫酷的物理环加速反馈交互
   const outerRing = document.getElementById('ring-earthly');
   if(outerRing) {
     outerRing.style.transition = "transform 1s cubic-bezier(0.2, 2, 0.4, 1)";
-    const randomExtraSpin = 720 + (-shichenIdx * 30); // 炫酷转两圈定位
+    const randomExtraSpin = 720 + (-shichenIdx * 30);
     outerRing.style.transform = `rotate(${randomExtraSpin}deg)`;
     outerRing.dataset.customInteracted = "true";
     
-    // 3秒后允许恢复实时追踪状态
     setTimeout(() => {
       outerRing.style.transition = "transform 0.5s ease-out";
       outerRing.dataset.customInteracted = "";
     }, 3000);
   }
 
-  // 写入占卜卡片数据
   tag.textContent = data.element + "气";
   tag.style.background = data.color;
   title.textContent = data.name;
@@ -376,11 +357,9 @@ function triggerDivination() {
   yi.textContent = data.yi;
   ji.textContent = data.ji;
 
-  // 优雅滑出显示
   card.style.display = 'block';
 }
 
-// ================= 生命周期初始化兼容 =================
 function initAllMysticComponents() {
   initCompassRings();
   updateCyberClock();
