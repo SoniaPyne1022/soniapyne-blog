@@ -1,5 +1,5 @@
 ---
-title: 赛博周易量化演台
+title: 周易起卦与人生智慧
 date: 2026-06-20 20:40:00
 top_img: false
 aside: false
@@ -8,45 +8,45 @@ pjax: false
 
 <div id="zhouyi-workspace">
 <div class="zhouyi-header-box">
-<h2 class="zhouyi-title">☯️ 赛博周易量化演算法工作台</h2>
-<p class="zhouyi-subtitle">借助经典三钱二分法，通过六次随机量子干涉，解耦当下的宏观时空辩证走向</p>
+<h2 class="zhouyi-title">☯️ 周易经典三钱起卦台</h2>
+<p class="zhouyi-subtitle">抛掷三枚硬币，重复六次，听听两千年前的东方智慧给你当下的生活小建议</p>
 <div class="coin-stage">
 <div id="coin-1" class="virtual-coin">🪙</div>
 <div id="coin-2" class="virtual-coin">🪙</div>
 <div id="coin-3" class="virtual-coin">🪙</div>
 </div>
 <div class="control-panel">
-<button id="toss-btn" class="mystic-btn" onclick="tossCoins()">🪙 掷钱起爻 (第 <span id="toss-count-text">1</span> 次)</button>
-<button class="reset-btn" onclick="resetZhouyi()">🔄 重置法坛</button>
+<button id="toss-btn" class="mystic-btn" onclick="tossCoins()">🪙 掷硬币 (第 <span id="toss-count-text">1</span> 次)</button>
+<button class="reset-btn" onclick="resetZhouyi()">🔄 重新开始</button>
 </div>
 </div>
 
 <div class="zhouyi-flex-layout">
 <div class="zhouyi-board-box">
-<h3 class="board-title">📊 显化时空卦象</h3>
+<h3 class="board-title">📊 你的专属卦象</h3>
 <div class="gua-visual-container">
-<div id="yao-6" class="yao-line-wrapper"><div class="yao-name-label">上爻</div><div class="yao-bar-place">-</div></div>
-<div id="yao-5" class="yao-line-wrapper"><div class="yao-name-label">五爻</div><div class="yao-bar-place">-</div></div>
-<div id="yao-4" class="yao-line-wrapper"><div class="yao-name-label">四爻</div><div class="yao-bar-place">-</div></div>
-<div id="yao-3" class="yao-line-wrapper"><div class="yao-name-label">三爻</div><div class="yao-bar-place">-</div></div>
-<div id="yao-2" class="yao-line-wrapper"><div class="yao-name-label">二爻</div><div class="yao-bar-place">-</div></div>
+<div id="yao-6" class="yao-line-wrapper"><div class="yao-name-label">第六爻</div><div class="yao-bar-place">-</div></div>
+<div id="yao-5" class="yao-line-wrapper"><div class="yao-name-label">第五爻</div><div class="yao-bar-place">-</div></div>
+<div id="yao-4" class="yao-line-wrapper"><div class="yao-name-label">第四爻</div><div class="yao-bar-place">-</div></div>
+<div id="yao-3" class="yao-line-wrapper"><div class="yao-name-label">第三爻</div><div class="yao-bar-place">-</div></div>
+<div id="yao-2" class="yao-line-wrapper"><div class="yao-name-label">第二爻</div><div class="yao-bar-place">-</div></div>
 <div id="yao-1" class="yao-line-wrapper"><div class="yao-name-label">初爻</div><div class="yao-bar-place">-</div></div>
 </div>
-<div class="gua-direction-tip">↑ 爻位自下而上依次堆叠进化 ↑</div>
+<div class="gua-direction-tip">↑ 提示：卦象是从最底下的“初爻”开始往上生成的 ↑</div>
 </div>
 
 <div class="zhouyi-analysis-box">
-<h3 class="board-title">📜 演算法清算报告</h3>
-<div id="zhouyi-intro-tip" class="zhouyi-intro-tip">请静心冥想你当下的困惑或科研卡点，连续点击 6 次“掷钱起爻”按钮完成取样。</div>
+<h3 class="board-title">📜 卦象白话解析报告</h3>
+<div id="zhouyi-intro-tip" class="zhouyi-intro-tip">请在心里默想你最近烦恼的事、学业或某个面临的选择，然后连续点击 6 次“掷硬币”按钮即可。</div>
 <div id="zhouyi-report" class="zhouyi-report" style="display: none;">
 <div class="report-section">
-<span class="report-tag tag-ben">本卦</span>
+<span class="report-tag tag-ben">当前处境</span>
 <h4 id="report-ben-name" class="gua-display-title">读取中...</h4>
 <p id="report-ben-struct" class="gua-struct-info"></p>
 <p id="report-ben-desc" class="gua-meaning-text"></p>
 </div>
 <div id="report-change-section" class="report-section" style="border-top: 1px dashed var(--light-grey); margin-top:15px; padding-top:15px;">
-<span class="report-tag tag-bian">变卦 / 之卦</span>
+<span class="report-tag tag-bian">未来转机</span>
 <h4 id="report-bian-name" class="gua-display-title">无变动</h4>
 <p id="report-bian-desc" class="gua-meaning-text"></p>
 </div>
@@ -56,7 +56,6 @@ pjax: false
 </div>
 
 <style>
-/* CSS与JS内部缩进安全 */
 #zhouyi-workspace {
   max-width: 950px;
   margin: 20px auto;
@@ -84,8 +83,6 @@ pjax: false
   display: flex;
   flex-direction: column;
 }
-
-/* 硬币震荡动画 */
 .coin-stage {
   display: flex;
   justify-content: center;
@@ -101,11 +98,9 @@ pjax: false
   animation: coinSpin 0.5s linear infinite;
 }
 @keyframes coinSpin {
-  0% { transform: rotateY(0deg) scale(1); }
-  50% { transform: rotateY(180deg) scale(1.2); }
-  100% { transform: rotateY(360deg) scale(1); }
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
 }
-
 .control-panel {
   display: flex;
   justify-content: center;
@@ -125,10 +120,9 @@ pjax: false
 }
 .reset-btn:hover { opacity: 0.9; }
 
-/* ================= 重点：纯 CSS 阴阳爻形态渲染 ================= */
 .gua-visual-container {
   display: flex;
-  flex-direction: column-reverse; /* 强行让一爻在最底部，符合起卦逻辑 */
+  flex-direction: column-reverse; 
   gap: 14px;
   margin: 30px auto;
   width: 80%;
@@ -141,24 +135,21 @@ pjax: false
   width: 100%;
 }
 .yao-name-label {
-  font-size: 0.85rem; color: #999; width: 35px; text-align: right; font-family: monospace;
+  font-size: 0.85rem; color: #999; width: 45px; text-align: right; font-family: monospace;
 }
 .yao-bar-place { flex: 1; display: flex; gap: 16px; height: 18px; }
-
-/* 阳爻：一整条稳固的纯色块 */
 .yao-yang { background: var(--text-main-color, #333); width: 100%; border-radius: 3px; height: 100%; }
-/* 阴爻：中间断开的两个对称色块 */
 .yao-yin-part { background: var(--text-main-color, #333); flex: 1; border-radius: 3px; height: 100%; }
-/* 老阳、老阴（动爻标记闪烁） */
 .yao-moving-active {
   box-shadow: 0 0 10px #ff4d4f;
   animation: borderPulse 1.5s infinite alternate;
 }
+.gua-direction-tip { text-align: center; font-size: 0.8rem; color: #aaa; margin-top: 10px; }
+
 @keyframes borderPulse {
   from { opacity: 0.6; } to { opacity: 1; }
 }
 
-/* 解卦报告包装 */
 .board-title { margin-top: 0; color: var(--text-main-color); border-bottom: 2px solid var(--btn-bg); padding-bottom: 6px; display: inline-block; }
 .zhouyi-intro-tip { color: #999; font-size: 0.95rem; line-height: 1.6; margin: auto 0; text-align: center; }
 .report-section { position: relative; }
@@ -173,38 +164,39 @@ pjax: false
 </style>
 
 <script>
-// ================= 赛博周易大数据矩阵字典 =================
+// ================= 彻底去技术黑话：大白话微观因子库 =================
 const trigramDatabase = {
-  '111': { name: '天', spirit: '乾', tech: '硬核算力爆发、主线畅通无阻、宜重拳全速推进核心代码与方案' },
-  '000': { name: '地', spirit: '坤', tech: '底层稳固承载、海量数据长线沉淀、宜降速进行架构梳理与重构' },
-  '100': { name: '雷', spirit: '震', tech: '闪电般爆破性突局、打破沉闷僵持、宜敏捷重构、技术栈全面演进' },
-  '011': { name: '风', spirit: '巽', tech: '分布式无形渗透、精细化增量更新、宜细微调优、小步快跑迭代' },
-  '010': { name: '水', spirit: '坎', tech: '陷入未知阻尼异常、隐密死循环逻辑坑点、面临系统级高负荷调优风险' },
-  '101': { name: '火', spirit: '离', tech: '性能指标大幅优化、前端美学高度显化、宜推进可视化呈现与高光答辩' },
-  '001': { name: '山', spirit: '艮', tech: '遭遇宏观卡点屏障、阶段性合并封版、宜立刻终止无效盲目改动，静止复盘' },
-  '110': { name: '泽', spirit: '兑', tech: '接口高度平滑解耦、开源生态顺畅协同、宜对外交流、无缝推进学术团队互通' }
+  '111': { name: '天', spirit: '乾', tech: '充满力量、方向非常顺畅，现在正是放手大干、全速前进的好时机' },
+  '000': { name: '地', spirit: '坤', tech: '稳重、包容性强，适合放慢脚步，安心做好基础准备和整理工作' },
+  '100': { name: '雷', spirit: '震', tech: '充满干劲和突发的变化，能打破死气沉沉的僵局，适合做出全新尝试' },
+  '011': { name: '风', spirit: '巽', tech: '像微风一样温柔渗透，适合慢慢调整、一点一点改进，千万不能着急' },
+  '010': { name: '水', spirit: '坎', tech: '遇到了暂时的困难或看不见的陷阱，让人感到压力，需要小心应对、谨慎调整' },
+  '101': { name: '火', spirit: '离', tech: '光明磊落、非常引人注目，适合展示自己的成果，多向大家表现自己' },
+  '001': { name: '山', spirit: '艮', tech: '遇到了像大山一样的阻碍，暂时走不通了，这时候最适合停下来休息和复盘' },
+  '110': { name: '泽', spirit: '兑', tech: '气氛非常轻松愉快，人际关系很好，适合多和别人交流、沟通与合作' }
 };
 
+// 剥离掉古怪后缀，换成通俗白话大标签
 const hexagramNames = {
-  "天天": "乾为天 (纯阳刚健之大交响)", "地地": "坤为地 (厚德载物之大后方)", "雷雷": "震为雷 (惊雷破局之爆发力)", "风风": "巽为风 (随风渗透之微迭代)",
-  "水水": "坎为水 (重重险阻之死循环)", "火火": "离为火 (文明之火之可视化)", "山山": "艮为山 (重峦叠嶂之暂封版)", "泽泽": "兑为泽 (喜悦共鸣之解耦流)",
-  "天地": "天地否 (闭塞不通之冷隔离)", "地天": "地天泰 (三阳开泰之丝滑流)", "水雷": "水雷屯 (万事开头难之初立项)", "山水": "山水蒙 (迷茫摸索之启蒙期)",
-  "水天": "水天需 (蓄势待时之静等待)", "天水": "天水讼 (逻辑冲突之大复盘)", "地水": "地水师 (严密组织之团队战)", "水地": "水地比 (生态顺畅之无缝集成)",
-  "风天": "风天小畜 (微量增量之小蓄势)", "天泽": "天泽履 (如履薄冰之严合规)", "天火": "天火同人 (开源共享之大协同)", "火天": "火天大有 (算力满载之大丰收)",
-  "地山": "地山谦 (虚怀若谷之低调攒)", "雷地": "雷地豫 (顺畅高涨之士气满)", "泽雷": "泽雷随 (顺应规律之敏捷随)", "山风": "山风蛊 (内部积弊之清除Bug)",
-  "地泽": "地泽临 (大军压境之强推进)", "风地": "风地观 (宏观审视之全局架构)", "火雷": "火雷噬嗑 (强力突破之咬碎阻碍)", "山火": "山火贲 (界面美化之数字美学)",
-  "山地": "山地剥 (资源流失之严防死守)", "地雷": "地雷复 (触底反弹之触底复苏)", "天雷": "天雷无妄 (遵循本真之忌盲目投机)", "山天": "山天大畜 (储备雄厚之知识库大成)",
-  "山雷": "山雷颐 (闭门修养之自我迭代)", "泽风": "泽风大过 (负荷过载之压力测试)", "水山": "水山蹇 (寸步难行之极高阻尼)", "雷水": "雷水解 (Bug清零之全面解脱)",
-  "山泽": "山泽损 (精简架构之大减负)", "风雷": "风雷益 (强强联合之成倍增益)", "泽天": "泽天嬖 (果断决裂之清除冗余)", "天风": "天风姤 (遭遇突发未知异常遭遇)",
-  "泽地": "泽地萃 (精英云集之资源聚合)", "地风": "地风升 (阶梯式稳步爬升跃迁)", "泽水": "泽水困 (资金/算力陷入极度围困)", "水风": "水风井 (源源不断之长效基建)",
-  "泽火": "泽火革 (颠覆性技术大重构架构)", "火风": "火风鼎 (鼎力革新之全新立项)", "雷风": "雷风恒 (持之以恒之死磕长线)", "天山": "天山遁 (战略性退出或暂避锋芒)",
-  "雷天": "雷天大壮 (阳气满载之强势爆破)", "火地": "火地晋 (蒸蒸日上之全速前进)", "地火": "地火明夷 (藏锋敛翼之暗夜潜行)", "风火": "风火家人 (内部团队协调一致闭环)",
-  "火泽": "火泽睽 (接口冲突之求同存异)", "雷山": "雷山小过 (微小越界之精细微调)", "风泽": "风泽中孚 (绝对信任之核心验证)", "风山": "风山渐 (循序渐进之稳健大创)",
-  "雷泽": "雷泽归妹 (因果错位之严防越权)", "雷火": "雷火丰 (高光繁荣之全面交付)", "火山": "火山旅 (居无定所之跨平台探索)", "泽山": "泽山咸 (心灵感应之高效耦合)",
-  "水泽": "水泽节 (适度限流之精细化控制)", "水火": "水火既济 (完美闭环之严防功亏一篑)", "火水": "火水未济 (黎明前黑夜之尚未成功仍需死磕)"
+  "天天": "乾为天 (充满干劲，全速前进)", "地地": "坤为地 (脚踏实地，包容万物)", "雷雷": "震为雷 (大刀阔斧，迎来改变)", "风风": "巽为风 (顺应时势，潜移默化)",
+  "水水": "坎为水 (重重困难，需要耐心)", "火火": "离为火 (寻找光明，展现成果)", "山山": "艮为山 (见好就收，适时止步)", "泽泽": "兑为泽 (心情愉悦，人缘极佳)",
+  "天地": "天地否 (沟通不畅，暂时沉寂)", "地天": "地天泰 (万事顺遂，丝滑顺畅)", "水雷": "水雷屯 (万事开头难，别放弃)", "山水": "山水蒙 (迷茫摸索，需要指引)",
+  "水天": "水天需 (耐着性子，静等时机)", "天水": "天水讼 (容易起冲突，多自我反思)", "地水": "地水师 (需要团队合作与纪律)", "水地": "水地比 (互帮互助，打成一片)",
+  "风天": "风天小畜 (积累微小的力量)", "天泽": "天泽履 (如履薄冰，小心规矩)", "天火": "天火同人 (志同道合，开源共享)", "火天": "火天大有 (收获满满，大丰收)",
+  "地山": "地山谦 (低调内敛，反而受益)", "雷地": "雷地豫 (心情欢畅，士气高涨)", "泽雷": "泽雷随 (顺应规律，不要强求)", "山风": "山风蛊 (内部有积弊，抓紧清理)",
+  "地泽": "地泽临 (大好时机，主动推进)", "风地": "风地观 (登高望远，全局审视)", "火雷": "火雷噬嗑 (强力突破，咬碎阻碍)", "山火": "山火贲 (精心打扮，注重美学)",
+  "山地": "山地剥 (能量流失，注意防守)", "地雷": "地雷复 (触底反弹，迎来复苏)", "天雷": "天雷无妄 (顺其自然，别动歪脑筋)", "山天": "山天大畜 (储备雄厚，大成之兆)",
+  "山雷": "山雷颐 (闭门修养，调理自身)", "泽风": "泽风大过 (压力太大，注意减压)", "水山": "水山蹇 (寸步难行，找人帮忙)", "雷水": "雷水解 (大势松绑，误会冰释)",
+  "山泽": "山泽损 (精简架构，适度减负)", "风雷": "风雷益 (强强联合，成倍增益)", "泽天": "泽天夬 (果断决裂，清除冗余)", "天风": "天风姤 (防范突发的小意外)",
+  "泽地": "泽地萃 (人才相聚，资源聚合)", "地风": "地风升 (像竹子一样稳步攀升)", "泽水": "泽水困 (陷入围困，注意节约)", "水风": "水风井 (源源不断，细水长流)",
+  "泽火": "泽火革 (迎来彻底的颠覆大改)", "火风": "火风鼎 (稳扎稳打，全新立项)", "雷风": "雷风恒 (持之以恒，死磕长线)", "天山": "天山遁 (战略退出，暂避锋芒)",
+  "雷天": "雷天大壮 (力量极强，强势爆破)", "火地": "火地晋 (蒸蒸日上，全速前进)", "地火": "地火明夷 (黑暗潜行，低调藏锋)", "风火": "风火家人 (内部家庭/团队和睦闭环)",
+  "火泽": "火泽睽 (有分歧，但求同存异)", "雷山": "雷山小过 (小有越界，注意微调)", "风泽": "风泽中孚 (绝对诚信，打动人心)", "风山": "风山渐 (循序渐进，走得很稳)",
+  "雷泽": "雷泽归妹 (位置错位，别越权行事)", "雷火": "雷火丰 (高光繁荣，成果丰硕)", "火山": "火山旅 (跨平台探索，人在旅途)", "泽山": "泽山咸 (心灵感应，一拍即合)",
+  "水泽": "水泽节 (适度节制，开源节流)", "水火": "水火既济 (完美成功，严防虎头蛇尾)", "火水": "火水未济 (尚未成功，仍需努力死磕)"
 };
 
-let yaoResults = []; // 存储6次起爻结果（数字 6, 7, 8, 9）
+let yaoResults = [];
 
 function resetZhouyi() {
   yaoResults = [];
@@ -229,11 +221,9 @@ function tossCoins() {
   coins.forEach(c => c.classList.add('coin-flipping'));
   document.getElementById('toss-btn').disabled = true;
 
-  // 模拟500ms的硬件掷钱动画开销
   setTimeout(() => {
     coins.forEach(c => c.classList.remove('coin-flipping'));
     
-    // 三钱演算法核心：正为3(字), 背为2(背). 随机清算
     let tossScore = 0;
     for(let i=0; i<3; i++) {
       const isHead = Math.random() > 0.5;
@@ -260,14 +250,11 @@ function renderCurrentYao(yaoIndex, score) {
 
   barPlace.innerHTML = '';
   
-  // 判定阴阳少老
   if (score === 7 || score === 9) {
-    // 阳爻 ⚊
     const yang = document.createElement('div');
     yang.className = 'yao-yang';
     barPlace.appendChild(yang);
   } else if (score === 8 || score === 6) {
-    // 阴爻 ⚋
     const yin1 = document.createElement('div');
     yin1.className = 'yao-yin-part';
     const yin2 = document.createElement('div');
@@ -276,17 +263,15 @@ function renderCurrentYao(yaoIndex, score) {
     barPlace.appendChild(yin2);
   }
 
-  // 如果是老阳(9)或老阴(6)，触发动爻强光闪烁
   if (score === 6 || score === 9) {
     barPlace.classList.add('yao-moving-active');
   }
 }
 
+// ================= 核心重写：完全大白话文案拼装流 =================
 function 清算时空大报告() {
   document.getElementById('zhouyi-intro-tip').style.display = 'none';
-  const reportBox = document.getElementById('lenormand-report'); // 消除可能的重叠干扰
 
-  // 1. 解析本卦二进制序列（下三爻为内卦，上三爻为外卦）
   let benBinary = yaoResults.map(s => (s === 7 || s === 9) ? '1' : '0');
   let benLowerCode = benBinary.slice(0, 3).join('');
   let benUpperCode = benBinary.slice(3, 6).join('');
@@ -296,10 +281,11 @@ function 清算时空大报告() {
   const benGuaName = hexagramNames[benUpperGua.name + benLowerGua.name] || (benUpperGua.name + benLowerGua.name + "卦");
 
   document.getElementById('report-ben-name').textContent = benGuaName;
-  document.getElementById('report-ben-struct').textContent = `【本卦解耦架构】：外卦为${benUpperGua.name}(${benUpperGua.spirit})，内卦为${benLowerGua.name}(${benLowerGua.spirit})`;
-  document.getElementById('report-ben-desc').innerHTML = `<strong>宏观质能场分析：</strong>当前你的主观意识/内部环境对应【${benLowerGua.name}】，具有 <em>${benLowerGua.tech}</em> 的特征；客观环境/外部干涉对应【${benUpperGua.name}】，暗示着 <em>${benUpperGua.tech}</em>。内部逻辑与外部环境相互碰撞，构成了当前的大局。`;
+  document.getElementById('report-ben-struct').textContent = `【卦象组合】：外卦为“${benUpperGua.name}”，内卦为“${benLowerGua.name}”`;
+  
+  // 大白话现状分析
+  document.getElementById('report-ben-desc').innerHTML = `<strong>当前处境大白话解析：</strong>从你想问的事情来看，你目前自己的状态和内部情况对应【${benLowerGua.name}】，特点是：<em>${benLowerGua.tech}</em>。而你面临的外部环境和客观条件对应【${benUpperGua.name}】，特点是：<em>${benUpperGua.tech}</em>。这两者相互结合影响，就是你目前所处的真实情况。`;
 
-  // 2. 判定动爻（变卦之算法）
   let movingYaoIndices = [];
   yaoResults.forEach((s, idx) => {
     if (s === 6 || s === 9) movingYaoIndices.push(idx + 1);
@@ -307,14 +293,14 @@ function 清算时空大报告() {
 
   const bianSection = document.getElementById('report-change-section');
   if (movingYaoIndices.length === 0) {
-    // 六爻皆静：无变卦，直接看本卦静态辩证
+    // 纯静卦
     bianSection.style.display = 'none';
   } else {
-    // 存在动爻：物极必反，老阳变阴，老阴变阳
+    // 存在动爻，触发事情发展的变化走向
     bianSection.style.display = 'block';
     let bianBinary = yaoResults.map(s => {
-      if (s === 9) return '0'; // 老阳变阴
-      if (s === 6) return '1'; // 老阴变阳
+      if (s === 9) return '0'; 
+      if (s === 6) return '1'; 
       return (s === 7) ? '1' : '0';
     });
 
@@ -324,11 +310,12 @@ function 清算时空大报告() {
     const bianUpperGua = trigramDatabase[bianUpperCode];
     const bianGuaName = hexagramNames[bianUpperGua.name + bianLowerGua.name] || (bianUpperGua.name + bianLowerGua.name + "卦");
 
-    document.getElementById('report-bian-name').textContent = `之卦：${bianGuaName}`;
-    document.getElementById('report-bian-desc').innerHTML = `<strong>时空偏转动态路径：</strong>本次推演在第 <strong>[${movingYaoIndices.join(', ')}]</strong> 爻触发了老极而变。动爻揭示了当前的能量不稳定性。变卦提示你：随着当前局势的自发演进或核心卡点的爆破，时空质能将顺理成章地向 <em>【${bianLowerGua.tech}】</em> 与 <em>【${bianUpperGua.tech}】</em> 的纠缠态发生跃迁演化。请重点参考之卦作为中长线的行动闭环准则。`;
+    document.getElementById('report-bian-name').textContent = `未来的好转契机：${bianGuaName}`;
+    
+    // 大白话未来转机建议
+    document.getElementById('report-bian-desc').innerHTML = `<strong>给你的下一步小建议：</strong>你在第 <strong>[${movingYaoIndices.join(', ')}]</strong> 爻发生了变化（物极必反）。这说明在这个地方有些不稳定，或者事情正在发生转折。变卦提示你：随着你解决了眼前的难题或者局势的自然发展，未来的走向会变成 <em>【${bianLowerGua.name}】（${bianLowerGua.tech}）</em> 和 <em>【${bianUpperGua.name}】（${bianUpperGua.tech}）</em> 的完美结合状态。你可以把这个变化后的情况，当作你接下来调整心态和行动的指南针。`;
   }
 
-  // 优雅滑出总报告卡
   document.getElementById('zhouyi-report').style.display = 'block';
 }
 
