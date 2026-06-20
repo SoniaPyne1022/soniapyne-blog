@@ -1,7 +1,9 @@
 ---
 title: Whisper 全自动 LRC 歌词生成器使用说明
 date: 2026-06-16 10:53:03
-categories: 代码
+categories: 
+  - 网站更新
+  - 代码
 tags: 代码
 orderby: name
 ---
