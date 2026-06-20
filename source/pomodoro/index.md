@@ -1,13 +1,30 @@
 ---
 title: 专注番茄钟
-date: 2026-06-20 19:36:00
-top_img: false # 可以选择关闭顶部大图，让界面更紧凑
-aside: false   # 关闭侧边栏，给番茄钟和记录留出足够空间
-pjax: false    # 关键：关闭该页面的PJAX，防止定时器冲突
+date: 2026-06-20 19:40:00
+top_img: false 
+aside: false   
+pjax: false    
 ---
 
 <div id="pomo-container">
+  <!-- 计时器显示 -->
   <div class="pomo-timer-box">
+    <!-- 新增：时长自定义设置区域 -->
+    <div class="pomo-settings">
+      <div class="setting-item">
+        <label for="pomo-focus-input">🎯 专注时长</label>
+        <input type="number" id="pomo-focus-input" value="25" min="1" max="120" onchange="handleInputChange()">
+        <span>分钟</span>
+      </div>
+      <div class="setting-item">
+        <label for="pomo-break-input">☕ 休息时长</label>
+        <input type="number" id="pomo-break-input" value="5" min="1" max="60" onchange="handleInputChange()">
+        <span>分钟</span>
+      </div>
+    </div>
+
+    <hr class="pomo-divider">
+
     <div id="pomo-status">准备专注</div>
     <div id="pomo-time-display">25:00</div>
     <div class="pomo-controls">
@@ -16,6 +33,7 @@ pjax: false    # 关键：关闭该页面的PJAX，防止定时器冲突
     </div>
   </div>
 
+  <!-- 历史记录统计 -->
   <div class="pomo-history-box">
     <h3>📊 专注历史记录</h3>
     <div class="pomo-table-wrapper">
@@ -28,7 +46,8 @@ pjax: false    # 关键：关闭该页面的PJAX，防止定时器冲突
           </tr>
         </thead>
         <tbody id="pomo-history-body">
-          </tbody>
+          <!-- 记录将通过 JS 动态插入 -->
+        </tbody>
       </table>
     </div>
     <button id="pomo-clear-btn" onclick="clearHistory()">清空所有记录</button>
@@ -36,7 +55,7 @@ pjax: false    # 关键：关闭该页面的PJAX，防止定时器冲突
 </div>
 
 <style>
-/* 样式调优：完美适配 Butterfly 主题的圆角与阴影 */
+/* 核心容器 */
 #pomo-container {
   max-width: 800px;
   margin: 20px auto;
@@ -52,24 +71,60 @@ pjax: false    # 关键：关闭该页面的PJAX，防止定时器冲突
   text-align: center;
   transition: all 0.3s;
 }
+
+/* 新增：设置区域样式 */
+.pomo-settings {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+.setting-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.setting-item label {
+  font-weight: bold;
+  color: var(--text-main-color, #333);
+}
+.setting-item input {
+  width: 70px;
+  padding: 6px 10px;
+  border: 1px solid var(--light-grey, #ccc);
+  border-radius: 6px;
+  background: var(--background, #fff);
+  color: var(--text-main-color, #333);
+  text-align: center;
+  font-size: 1rem;
+}
+.pomo-divider {
+  margin: 20px auto;
+  border: 0;
+  border-top: 1px dashed var(--light-grey, #eee);
+  width: 80%;
+}
+
+/* 计时器与按钮 */
 #pomo-status {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: var(--text-highlight-color, #49b1f5);
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 #pomo-time-display {
-  font-size: 4rem;
+  font-size: 4.5rem;
   font-weight: 700;
   font-family: monospace;
-  margin: 10px 0 20px 0;
+  margin: 5px 0 20px 0;
   color: var(--text-main-color, #333);
 }
 .pomo-controls button, #pomo-clear-btn {
   background: var(--btn-bg, #49b1f5);
   color: #fff;
   border: none;
-  padding: 10px 24px;
+  padding: 10px 28px;
   margin: 0 10px;
   border-radius: 8px;
   font-size: 1rem;
@@ -88,6 +143,8 @@ pjax: false    # 关键：关闭该页面的PJAX，防止定时器冲突
 #pomo-clear-btn:hover {
   background: #ff7875;
 }
+
+/* 历史表格 */
 .pomo-table-wrapper {
   overflow-x: auto;
   margin-top: 15px;
@@ -106,18 +163,36 @@ pjax: false    # 关键：关闭该页面的PJAX，防止定时器冲突
 <script>
 let countdown;
 let isRunning = false;
-let timeLeft = 25 * 60; // 25分钟默认时长
-const defaultTime = 25 * 60;
+let currentMode = 'focus'; // 'focus' 代表专注模式，'break' 代表休息模式
+let timeLeft;
 
 const display = document.getElementById('pomo-time-display');
 const startBtn = document.getElementById('pomo-start-btn');
 const statusText = document.getElementById('pomo-status');
+const focusInput = document.getElementById('pomo-focus-input');
+const breakInput = document.getElementById('pomo-break-input');
 
-// 初始化载入记录
+// 初始化
 document.addEventListener('DOMContentLoaded', () => {
-  updateDisplay(timeLeft);
+  resetToConfiguredTime();
   renderHistory();
 });
+
+// 根据当前的输入动态设置初始时间
+function resetToConfiguredTime() {
+  const minutes = currentMode === 'focus' 
+    ? (parseInt(focusInput.value) || 25) 
+    : (parseInt(breakInput.value) || 5);
+  timeLeft = minutes * 60;
+  updateDisplay(timeLeft);
+}
+
+// 当用户更改输入框数值时触发
+function handleInputChange() {
+  if (!isRunning) {
+    resetToConfiguredTime();
+  }
+}
 
 function updateDisplay(seconds) {
   const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
@@ -125,18 +200,26 @@ function updateDisplay(seconds) {
   display.textContent = `${mins}:${secs}`;
 }
 
+// 锁定/解锁输入框（防止在倒计时中途修改时长引发逻辑混乱）
+function setInputsDisabled(disabled) {
+  focusInput.disabled = disabled;
+  breakInput.disabled = disabled;
+}
+
 function toggleTimer() {
   if (isRunning) {
-    // 暂停逻辑
+    // 暂停
     clearInterval(countdown);
     isRunning = false;
     startBtn.textContent = '开始';
-    statusText.textContent = '已暂停';
+    statusText.textContent = currentMode === 'focus' ? '专注已暂停' : '休息已暂停';
+    setInputsDisabled(false);
   } else {
-    // 开始逻辑
+    // 开始
     isRunning = true;
     startBtn.textContent = '暂停';
-    statusText.textContent = '🚀 专注中...';
+    setInputsDisabled(true);
+    statusText.textContent = currentMode === 'focus' ? '🚀 专注中...' : '☕ 休息中...';
     
     countdown = setInterval(() => {
       timeLeft--;
@@ -146,15 +229,23 @@ function toggleTimer() {
         clearInterval(countdown);
         isRunning = false;
         startBtn.textContent = '开始';
-        statusText.textContent = '🎉 释压一下，完成单次专注！';
-        
-        // 成功完成，记录数据（25分钟）
-        saveRecord(25, '完成');
-        timeLeft = defaultTime;
-        updateDisplay(timeLeft);
-        
-        // 播放提示音（可选，使用浏览器自带API）
+        setInputsDisabled(false);
         playAlert();
+
+        if (currentMode === 'focus') {
+          // 专注时间到 -> 结算并切到休息
+          const configuredFocus = parseInt(focusInput.value) || 25;
+          saveRecord(configuredFocus, '完成');
+          
+          currentMode = 'break';
+          statusText.textContent = '🎉 搞定！点击“开始”享受休息吧';
+        } else {
+          // 休息时间到 -> 切回专注
+          currentMode = 'focus';
+          statusText.textContent = '💪 休息结束，准备新一轮专注！';
+        }
+        
+        resetToConfiguredTime();
       }
     }, 1000);
   }
@@ -163,20 +254,25 @@ function toggleTimer() {
 function resetTimer() {
   clearInterval(countdown);
   isRunning = false;
+  startBtn.textContent = '开始';
+  setInputsDisabled(false);
   
-  // 如果在专注中途重置，可以选择是否记录未完成的时长
-  const minutesSpent = Math.floor((defaultTime - timeLeft) / 60);
-  if (minutesSpent > 0 && statusText.textContent.includes('专注中')) {
-    saveRecord(minutesSpent, '中断');
+  // 仅在专注中途重置时，记录实际坚持的分钟数
+  if (currentMode === 'focus') {
+    const configuredFocus = parseInt(focusInput.value) || 25;
+    const minutesSpent = Math.floor((configuredFocus * 60 - timeLeft) / 60);
+    if (minutesSpent > 0 && statusText.textContent.includes('专注中')) {
+      saveRecord(minutesSpent, '中断');
+    }
+    statusText.textContent = '准备专注';
+  } else {
+    statusText.textContent = '休息已重置';
   }
 
-  timeLeft = defaultTime;
-  updateDisplay(timeLeft);
-  startBtn.textContent = '开始';
-  statusText.textContent = '准备专注';
+  resetToConfiguredTime();
 }
 
-// 存储记录到 LocalStorage
+// 存储记录
 function saveRecord(minutes, status) {
   const records = JSON.parse(localStorage.getItem('pomo_history') || '[]');
   const newRecord = {
@@ -184,12 +280,12 @@ function saveRecord(minutes, status) {
     duration: minutes + ' 分钟',
     status: status
   };
-  records.unshift(newRecord); // 最新记录排在前面
+  records.unshift(newRecord);
   localStorage.setItem('pomo_history', JSON.stringify(records));
   renderHistory();
 }
 
-// 渲染历史记录表格
+// 渲染历史记录
 function renderHistory() {
   const records = JSON.parse(localStorage.getItem('pomo_history') || '[]');
   const tbody = document.getElementById('pomo-history-body');
@@ -212,15 +308,15 @@ function renderHistory() {
   });
 }
 
-// 清空历史记录
+// 清空历史
 function clearHistory() {
-  if (confirm('确定要清空所有的专注历史记录吗？数据将无法恢复。')) {
+  if (confirm('确定要清空所有的专注历史记录吗？')) {
     localStorage.removeItem('pomo_history');
     renderHistory();
   }
 }
 
-// 浏览器音频提示
+// 铃声提示
 function playAlert() {
   try {
     const context = new (window.AudioContext || window.webkitAudioContext)();
@@ -229,9 +325,9 @@ function playAlert() {
     oscillator.frequency.setValueAtTime(440, context.currentTime);
     oscillator.connect(context.destination);
     oscillator.start();
-    oscillator.stop(context.currentTime + 0.5); // 响铃0.5秒
+    oscillator.stop(context.currentTime + 0.6);
   } catch (e) {
-    console.log('Audio context not supported or blocked by browser policy.');
+    console.log('Audio error:', e);
   }
 }
 </script>
