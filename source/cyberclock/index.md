@@ -1,5 +1,5 @@
 ---
-title: 赛博雷诺曼启示卡
+title: 雷诺曼每日启示卡
 date: 2026-06-20 20:25:00
 top_img: false
 aside: false
@@ -7,27 +7,30 @@ pjax: false
 ---
 
 <div id="lenormand-workspace">
+<!-- 头部控制面板 -->
 <div class="lenormand-header-box">
-<h2 class="lenormand-title">🔮 赛博雷诺曼（Lenormand）工作台</h2>
-<p class="lenormand-subtitle">通过36张欧式传统神秘符号，动态拆解你当下的现实因果镜像</p>
+<h2 class="lenormand-title">🔮 暖心雷诺曼启示卡工作台</h2>
+<p class="lenormand-subtitle">用36张生活化的小卡片，帮你通俗易懂地梳理眼前的烦恼、卡点与接下来的行动建议</p>
 <div class="lenormand-modes">
 <button id="btn-spread-1" class="mode-btn active" onclick="switchSpread(1)">🎯 单牌每日指引</button>
 <button id="btn-spread-3" class="mode-btn" onclick="switchSpread(3)">📐 三牌因果阵</button>
 </div>
-<button class="shuffle-btn" onclick="drawLenormand()">✨ 冥想并洗牌抽卡</button>
+<button class="shuffle-btn" onclick="drawLenormand()">✨ 静心冥想并抽卡</button>
 </div>
 
+<!-- 卡牌物理牌桌 -->
 <div id="lenormand-desk" class="lenormand-desk">
+<!-- JS动态渲染 -->
 </div>
 
+<!-- 占卜结算报告卡片 -->
 <div id="lenormand-report" class="lenormand-report" style="display: none;">
-<h3 class="report-title">📜 时空潜意识镜象报告</h3>
+<h3 class="report-title">📜 你的专属卡片白话解析</h3>
 <div id="report-content" class="report-content"></div>
 </div>
 </div>
 
 <style>
-/* 核心容器与板式控制 */
 #lenormand-workspace {
   max-width: 950px;
   margin: 20px auto;
@@ -89,11 +92,9 @@ pjax: false
   min-height: 260px;
   padding: 10px;
 }
-
-/* ================= 重点修复：卡牌 3D 与文本防御样式 ================= */
 .lenormand-card {
   width: 170px;
-  height: 265px; /* 稍微拉高15px，给底部文本留足呼吸空间 */
+  height: 265px; 
   perspective: 1000px;
 }
 .card-inner {
@@ -119,7 +120,7 @@ pjax: false
   flex-direction: column;
   padding: 15px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  overflow: hidden; /* 强行切断任何可能超出圆角外框的内容 */
+  overflow: hidden; 
 }
 .card-back {
   background: linear-gradient(135deg, #111827 0%, #1e1b4b 100%);
@@ -143,8 +144,6 @@ pjax: false
 }
 .card-num { font-size: 0.85rem; color: #aaa; align-self: flex-start; font-family: monospace; }
 .card-emoji { font-size: 3.2rem; margin: 5px 0; }
-
-/* 底部文本容器微调 */
 .card-text-content {
   width: 100%;
   margin-bottom: 5px;
@@ -155,22 +154,18 @@ pjax: false
   margin-bottom: 6px; 
   line-height: 1.3 !important;
 }
-
-/* 核心修复：彻底解决标签换行重叠与高度压实问题 */
 .card-kw { 
   font-size: 0.72rem !important; 
   color: #ff7875 !important; 
   background: rgba(255,120,117,0.08) !important; 
   padding: 4px 6px !important; 
   border-radius: 4px !important;
-  display: inline-block !important; /* 必须是 inline-block 或 block 才能正常拥有行高 */
-  line-height: 1.4 !important;      /* 强制写死安全行高，绝不让文字重叠 */
-  height: auto !important;          /* 消除可能继承自主题的固定高度 */
-  word-break: break-all !important; /* 允许在任意字符间断行，防止撑爆容器 */
+  display: inline-block !important; 
+  line-height: 1.4 !important;      
+  height: auto !important;          
+  word-break: break-all !important; 
   box-sizing: border-box !important;
 }
-
-/* ================= 报告区域 ================= */
 .report-title { color: var(--text-main-color); margin-top: 0; text-align: center; border-bottom: 2px solid var(--text-highlight-color); padding-bottom: 10px; }
 .report-content {
   display: flex;
@@ -186,7 +181,7 @@ pjax: false
   margin-bottom: 5px;
 }
 .report-item h4 { margin: 0 0 6px 0; font-size: 1.1rem; color: var(--text-highlight-color); }
-.report-item p { margin: 0; font-size: 0.95rem; line-height: 1.6; }
+.report-item p { margin: 0; font-size: 0.95rem; line-height: 1.6; color: var(--text-main-color); }
 
 @keyframes pulse {
   from { transform: scale(0.95); opacity: 0.7; }
@@ -195,44 +190,44 @@ pjax: false
 </style>
 
 <script>
-// 全套多重因果断语库保持不变
+// ================= 彻底去黑话：全套大白话雷诺曼词库 =================
 const lenormandDeck = [
-  { id: 1, name: "骑士", emoji: "🏃‍♂️", kw: "消息、速度、行动", focus: "新消息或计划正在全速向你推进，执行力已被唤醒", block: "行动过于急躁粗糙，或者在缺乏深度思考的前提下盲目刚正面", future: "局势将以极快的速度迎来破局，新赛道彻底畅通" },
-  { id: 2, name: "四叶草", emoji: "🍀", kw: "小幸运、惊喜、短暂窗口", focus: "眼前有随手可得的短暂转机，局势正在自发舒缓", block: "心态流于浮躁，过度依赖运气加成而忽视了主观的硬核沉淀", future: "将迎来一个能让你轻松化解 Bug 或危机的惊喜窗口期" },
-  { id: 3, name: "船", emoji: "🚢", kw: "长期规划、跨界、远见", focus: "眼界大开，正在开辟需要长期投入的宏观新项目赛道", block: "目标定得过于长远宏大，导致脚下眼前的技术细节面临严重失控", future: "时空将引向跨界合作、跨学科融合或方向的开阔大变动" },
-  { id: 4, name: "房子", emoji: "🏠", kw: "核心圈、根基、安全感", focus: "退回了最安全的已有成果圈中，正在梳理内部秩序", block: "思维陷入保守僵化，画地牢，过度防御而不敢做出任何改变", future: "核心根基全面稳固，你的学业或项目将搭建出坚不可摧的底层" },
-  { id: 5, name: "树", emoji: "🌳", kw: "长期健康、缓慢扎根、底蕴", focus: "正处于底蕴积蓄期，当前的课题需要漫长的时间来沉淀", block: "时间跨度被拉得太长，你开始失去了耐心，产生了严重的焦虑内耗", future: "种子已然成活，你的心血和布局终将缓慢但极其稳健地长成参天大树" },
-  { id: 6, name: "云", emoji: "☁️", kw: "短暂迷茫、不确定、盲区", focus: "视野暂时被不确定性的雾气遮蔽，方向有些模糊不清", block: "混沌的算法误区或信息不对称让你彻底看不清眼前的因果真相", future: "这团阴霾只是暂时的气流波动，不久后终将拨云见日、全然清朗" },
-  { id: 7, name: "蛇", emoji: "🐍", kw: "复杂纠缠、曲线、逻辑陷阱", focus: "面对的是一个盘根错节的复杂局面或嵌套逻辑陷阱", block: "背后隐藏着复杂的弯路、代码死循环或有人在带偏你的注意力", future: "强行硬刚必会受挫，你必须运用曲线迂回策略才能精妙地化险为夷" },
-  { id: 8, name: "棺材", emoji: "⚰️", kw: "彻底终结、断舍离、真空转型", focus: "旧的运行模式、死磕的沉没成本正迎来宿命般的彻底终结", block: "死守着被彻底卡住的死局死代码不肯放手，拒绝承认沉没成本", future: "彻底破旧立新，在旧事物的废墟之上迎来涅槃式的转型复苏" },
-  { id: 9, name: "花束", emoji: "💐", kw: "正面赞赏、阶段果实、认可", focus: "正在迎来一波极其正面的外部反馈，才华收获肯定", block: "沉溺于眼前轻而易举获得的赞赏与虚荣中，不愿再向深水区钻研", future: "付出将惊艳显化，你的成果将在答辩汇报或公众面前收获极高赞誉" },
-  { id: 10, name: "镰刀", emoji: "🗡️", kw: "突然决断、切割清除、突发中断", focus: "来到了必须快刀斩乱麻、大刀阔斧做出果断放弃的重大关口", block: "突如其来的计划中断、技术重构或关系切割打得你措手不及", future: "将以惊人的铁腕决心，干净利落地斩断并清除一切冗余隐患" },
-  { id: 11, name: "鞭子", emoji: "💥", kw: "剧烈交锋、反复内耗、严苛洗礼", focus: "思维正在经历高强度的反驳、淬炼与剧烈激荡", block: "陷入了无穷无尽的自我全盘否定、严重的精神内耗与自我拷问中", future: "将在高压的磨砺与反复锤炼中，彻底逼出你最硬核的底层潜能" },
-  { id: 12, name: "鸟", emoji: "🐦", kw: "碎片信息、高频交流、浮躁", focus: "高频、高密度的信息流正在交织，人际网在活跃运作", block: "声音太杂、信息太碎、无用噪声太多，带来了极大的情绪浮躁", future: "在一场场看似琐碎高频的头脑风暴碰撞中，将意外抓到破局线索" },
-  { id: 13, name: "孩子", emoji: "👶", kw: "纯粹起点、全新无经验、破土", focus: "正站在一个完全从零开始、没有任何历史包袱的纯粹新起点上", block: "策略制定得过于幼稚简单，严重缺乏实战经验和严密合规度", future: "计划将如初生婴儿般，展现出完全不设限、野蛮生长的无限可能性" },
-  { id: 14, name: "狐狸", emoji: "🦊", kw: "战术谋划、生存策略、精细辨识", focus: "正在运用高度精细的防御战术或策略思维来推进博弈", block: "聪明反被聪明误，心术过度沉迷于投机取巧而忽视了正道根基", future: "将凭借极其清醒冷酷的精细谋划，对现有困局达成降维打击" },
-  { id: 15, name: "熊", emoji: "🐻", kw: "力量积蓄、资源把控、威严担当", focus: "处于掌控厚重资源或拥有长辈导师鼎力支持的稳健状态", block: "控制欲过强，刚愎自用、听不进旁人意见，甚至压制了其他可能性", future: "厚积薄发，你终将积蓄出足以独当一面、震慑全局的绝对力量" },
-  { id: 16, name: "星星", emoji: "⭐", kw: "长远希望、高维直觉、愿景导航", focus: "心中秉持着长远的理想图景，直觉导航极其灵敏", block: "愿景和概念飘在空中沦为乌托邦，极度缺乏接引落地的具体方案", future: "理想照进现实，长远迷茫退散，星光将为你指明最正确的通途" },
-  { id: 17, name: "鹳", emoji: "🕊️", kw: "正面改善、规律变动、阶梯跃升", focus: "顺应天时与事物规律的阶梯式好转和调整正在悄然发生", block: "频繁、无规律的环境变动或方向修改让你彻底无所适从、心力交瘁", future: "将顺理成章地完成大跨度的规律性大迁徙，实现阶梯式跃升" },
-  { id: 18, name: "狗", emoji: "🐶", kw: "忠诚同盟、信任网、依赖稳定", focus: "身边拥有非常牢固的团队同盟、知心挚友或导师的完全信任", block: "过度依赖已有经验或熟人保护伞，失去了独立刚正面对抗的能力", future: "将收获一段绝对忠诚、牢不可破的核心联合纽带与支持" },
-  { id: 19, name: "塔", emoji: "🏰", kw: "象牙塔、闭门钻研、权威机构边界", focus: "正处于极度孤独的象牙塔闭门深造、隔离钻研的状态中", block: "自我孤立，筑墙太高，思维与外界最新的学术/市场信息严重脱节", future: "将在深度的闭关中，筑起属于你个人极具权威性、极高壁垒的成果" },
-  { id: 20, name: "花园", emoji: "⛲", kw: "开放社群、成果展示、流量碰撞", focus: "思维正在开放的网络环境或公共社群中接受激烈的交融碰撞", block: "外界社交诱惑和噪声太多，精力在迎合大众的过程中被严重蚕食", future: "成果将走向极具流量的公开展示大舞台，收获多点开花的破圈效应" },
-  { id: 21, name: "山", emoji: "⛰️", kw: "巨大卡点、严重延迟、硬骨头", focus: "正面遭遇了一块以目前能力极难啃下的宏大硬骨头", block: "山头死死耸立在前，导致整个大创或研究进度面临全面卡死、延迟", future: "天堑变通途，你终将踏平这个终极卡点，在顶峰俯瞰众山小" },
-  { id: 22, name: "十字路口", emoji: "🛣️", kw: "选择分叉、可能性、自由意志", focus: "来到了多重可能性交汇、必须要做出分流的决定性分叉口", block: "选项和诱惑太多，导致你陷入无休止的权衡中，优柔寡断卡在原地", future: "你将运用绝对冷酷的自由意志，做出最清醒的单向切割，全面推进" },
-  { id: 23, name: "老鼠", emoji: "🐭", kw: "潜在隐患、精力泄漏、慢性损耗", focus: "警报：代表你的时间、成果或精力正处于不知名的慢性损耗中", block: "潜在的隐密 Bug 或负面内耗正在悄悄蚕食、偷走你辛苦累积的成果", future: "必须进行地毯式大排查，全面补齐底层漏洞，彻底终止精力泄漏" },
-  { id: 24, name: "心", emoji: "❤️", kw: "绝对狂热、热爱锚点、纯粹激情", focus: "所问之事正是你内心狂热、灵感喷涌的绝对热爱所在", block: "过度被情绪化的潮汐或感情用事主导，完全丧失了严密的理智底线", future: "将全盘投入无限的纯粹激情，达成最炽热、毫无杂质的沉浸式心流" },
-  { id: 25, name: "戒指", emoji: "💍", kw: "契约绑定、承诺、长期循环闭环", focus: "正在迎来一段极为稳定的契约达标、关系绑定或合作承诺", block: "陷入了某种死板死结的循环模式、或者被过期的协议僵化限制了思维", future: "所有的逻辑环、联盟和契约将达成最高等级的交织，完美绑定闭环" },
-  { id: 26, name: "书", emoji: "📖", kw: "未知核心、隐藏知识、精深钻研", focus: "正在沉浸于深精硬核的隐藏学问里，尚未到公开的时机", block: "核心信息尚被完全隐藏，严重的信息不对称导致你卡在原地摸黑", future: "尘封的秘密将被你彻底读懂读穿，将真正攻克并掌握这门硬核技术" },
-  { id: 27, name: "信", emoji: "✉️", kw: "书面包裹、实体凭证、立项包裹", focus: "某种白纸黑字的实体凭证、关键论文修改意见正在路上传达", block: "死板依赖条文规章和书面文本，思想教条化，缺乏实质行动去变通", future: "官方正式立项书、核心代码包或关键录取信件将顺利安全落地" },
-  { id: 28, name: "男人", emoji: "👨", kw: "阳性意志、绝对理性、杀伐果断", focus: "极客式的钢骨理智已在主导，逻辑推演全面上线", block: "手段或思维过于刚毅冷硬、死板好强，极其缺乏柔性变通与直觉", future: "将全盘借助冷酷的逻辑代码、铁腕执行力把一切障碍彻底轰碎破局" },
-  { id: 29, name: "女人", emoji: "👩", kw: "阴性直觉、感性共鸣、太极化劲", focus: "灵敏敏锐的潜意识直觉已全面苏醒，正以极高感知力共鸣局势", block: "心思过于敏感细腻，极易受到周围环境风吹草动和负面情绪的打乱", future: "将运用最柔韧的太极内劲包容一切，以极其精妙细腻的直觉化解危机" },
-  { id: 30, name: "百合", emoji: "⚜️", kw: "平静优雅、漫长时间、底蕴资历", focus: "处于细水长流、极其纯洁平静的漫长安全平稳期", block: "发展节奏过于老旧缓慢、死气沉沉，缺乏破旧立新的冲劲与爆发力", future: "你过去长期积累的丰富资历与扎实功底，终将沉淀出最好的果实" },
-  { id: 31, name: "太阳", emoji: "☀️", kw: "至高大吉、绝对高能、驱散一切", focus: "雷诺曼天花板大吉态！能量全盘大爆，核心自信正在全面觉醒", block: "运势过于耀眼炙热，容易让你盲目自大、狂妄，从而灼伤了核心细节", future: "一切阴霾、小人、Bug 被至阳之光瞬间融化驱散，迎来全面巅峰颠覆" },
-  { id: 32, name: "月亮", emoji: "🌙", kw: "荣誉高光、名声流转、潜意识潮汐", focus: "你的才华、科研成果或作品正处于即将收获外界瞩目的高光期", block: "情绪潮汐波动异常剧烈，极度在意他人评价，整天患得患失", future: "你的心血将被强烈看见、引发轰动，收获应得的极高荣誉与名望" },
-  { id: 33, name: "钥匙", emoji: "🔑", kw: "绝对解法、命运掌握、胜券在握", focus: "关键的通关密匙、核心破局灵感已被你牢牢掌控在手", block: "明明最完美的终极解法就在手边，你却缺乏勇气和果断去开启大门", future: "核心谜题瞬间迎刃而解，尘封的关卡全面爆破，拥有最高主控权" },
-  { id: 34, name: "鱼", emoji: "🐟", kw: "流动资源、灵感丰盛、多点产出", focus: "江河奔涌般的丰盛态势，思路和资源都处于极高频的流动中", block: "想法概念像鱼群一样多而散乱，导致核心精力面临全面分散溃败", future: "财富、人脉和研究灵感将如同大江大河般全盘丰盛涌现，多源流产出" },
-  { id: 35, name: "锚", emoji: "⚓", kw: "安全稳固、坚守定力、死磕僵化", focus: "定力极其稳健，底层基础打得极为牢固，无惧任何大风大浪", block: "安全感绑定得太死导致思维彻底僵化，安于现状不愿跨出舒适区", future: "稳坐钓鱼台，以泰山崩于前而不动之势，筑起坚不可摧的终极闭环" },
-  { id: 36, name: "十字架", emoji: "✝️", kw: "沉重历练、宿命考验、磨砺升华", focus: "正在经受一段无法避免、极其沉重的宿命式高压负荷历练", block: "沉重巨大的精神包袱和考验压迫得你几乎窒息，快要到了崩溃边缘", future: "这是一场必经的渡劫，通过这场大磨砺后，你的灵魂和能力将完成蜕变" }
+  { id: 1, name: "骑士", emoji: "🏃‍♂️", kw: "新消息、行动、速度", focus: "有一些新消息或新计划正在向你靠近，你的行动力被唤醒了", block: "做事有点太急躁粗糙，没有彻底想清楚就盲目乱冲", future: "事情会全速向前推进，很快就能打破眼前的闷局" },
+  { id: 2, name: "四叶草", emoji: "🍀", kw: "小幸运、惊喜、短暂机会", focus: "眼前有一个很不错的小运气或新转机，压力正在减轻", block: "心态有点太浮躁，总想着靠运气碰巧通关，忽视了脚踏实地的积累", future: "会迎来一个让你感到惊喜的轻松时刻，随手化解掉眼前的烦恼" },
+  { id: 3, name: "船", emoji: "🚢", kw: "长远规划、换方向、远见", focus: "眼界大开，你正在规划一个需要长线投入、很有远见的新方向", block: "目标定得太长远宏大，反而把脚下眼前的关键细节给搞砸、搞失控了", future: "会迎来新的合作，或者是出门旅行、换个环境的大转机" },
+  { id: 4, name: "房子", emoji: "🏠", kw: "家庭、安全感、已有根基", focus: "退回到了最舒适的已有成果和私人空间里，正在重新梳理内部秩序", block: "思维太保守僵化了，总是画地为牢，抗拒做出任何改变", future: "大后方会全面稳固，为你接下来的拼搏提供最踏实平稳的底层支持" },
+  { id: 5, name: "树", emoji: "🌳", kw: "缓慢成长、底蕴积蓄、健康", focus: "正处于默默积蓄实力的平稳期，当前的课题需要漫长的时间来沉淀成长", block: "成长的周期有点太长了，你开始失去了耐心，产生了严重的焦虑内耗", future: "种子已经成活，你的心血和布局终将像大树一样，虽然慢但极其稳健地长起来" },
+  { id: 6, name: "云", emoji: "☁️", kw: "迷茫、不确定、看不清盲区", focus: "视野暂时被一些不确定性遮蔽住了，方向有点模糊不清", block: "暂时的误区或者信息不透明，让你有些看不清眼前的因果真相", future: "这团迷茫只是暂时的天气波动，不久后一定会拨云见日，彻底看清前路" },
+  { id: 7, name: "蛇", emoji: "🐍", kw: "复杂局势、曲线逻辑、警惕陷阱", focus: "面对的是一个有点盘根错节的复杂局面，或者绕来绕去的逻辑陷阱", block: "背后隐藏着一些弯路、代码死循环，或者有人在悄悄带偏你的注意力", future: "强行硬碰硬肯定会吃亏，必须运用绕道、曲线迂回的聪明策略才能巧妙化解" },
+  { id: 8, name: "棺材", emoji: "⚰️", kw: "彻底终结、断舍离、转型", focus: "旧的运行模式、死磕的沉没成本，正迎来宿命般的彻底结束", block: "死守着被彻底卡住的死局、不合适的旧方法不肯放手，舍不得放弃过去", future: "迎来彻底的破旧立新，在旧事物的废墟之上迎来涅槃式的全新复苏" },
+  { id: 9, name: "花束", emoji: "💐", kw: "正面赞赏、收获、收获好运", focus: "正在迎来一波很棒的外部反馈，你的才华和努力收获了大家的肯定", block: "太容易沉溺在眼前的赞赏里沾沾自喜，失去了继续往深水区硬刚的拼劲", future: "你的心血将迎来最赞的成果，并在答辩或大家面前收获极高的赞誉" },
+  { id: 10, name: "镰刀", emoji: "🗡️", kw: "果断取舍、清除、突发中断", focus: "来到了必须快刀斩乱麻、果断做出放弃或切割的关键关口", block: "突如其来的计划变动、意外中断或者关系切割打得你措手不及", future: "你会拿出惊人的果断决心，干净利落地切断并清除一切冗余隐患" },
+  { id: 11, name: "鞭子", emoji: "💥", kw: "激烈讨论、精神内耗、严苛洗礼", focus: "思维正在经历高强度的自我反驳、严格讨论与反复激荡", block: "陷入了无穷无尽的自我全盘否定，整天在严重的精神内耗里反复折腾", future: "虽然过程有些痛苦，但会在高压的磨砺和反复锤炼中，彻底逼出你最大潜能" },
+  { id: 12, name: "鸟", emoji: "🐦", kw: "八卦碎片、高频交流、略带浮躁", focus: "高频、高密度的信息正在和周围人交流，人际网在活跃运作中", block: "声音太杂、消息太碎、无用噪声太多，带给了你极大的情绪浮躁和焦虑", future: "在一场场看似琐碎高频的头脑风暴碰撞中，会意外抓到破局的关键线索" },
+  { id: 13, name: "孩子", emoji: "👶", kw: "纯粹新起点、没经验、野蛮生长", focus: "正站在一个完全从零开始、没有任何历史包袱的纯粹新起点上", block: "想法或者策略制定得有点太幼稚、太简单，由于缺乏经验而把事情想简单了", future: "计划将如初生婴儿般，展现出完全不设限、充满惊喜的无限可能性" },
+  { id: 14, name: "狐狸", emoji: "🦊", kw: "精细策略、聪明谋划、谨慎防备", focus: "正在运用精细的战术策略或者清醒的防御思维来推进手头的事情", block: "有点聪明反被聪明误，太想走捷径、投机取巧，反而忽视了最正道的根基", future: "能凭借极其清醒冷酷的细致谋划，对现有困局实现漂亮的降维突围" },
+  { id: 15, name: "熊", emoji: "🐻", kw: "实力雄厚、长辈支持、掌控力", focus: "正处于掌控着不错的资源，或者有靠谱长辈、导师鼎力支持的状态", block: "控制欲有点太强了，听不进旁人意见，强烈的固执压制了别的可能性", future: "厚积薄发，你终将积蓄出足以独当一面、彻底稳住大局的绝对力量" },
+  { id: 16, name: "星星", emoji: "⭐", kw: "希望指引、灵感导航、长期愿景", focus: "心中秉持着长远的理想图景，直觉和灵感现在非常灵敏活跃", block: "愿景和目标完全飘在空中变成了空想，极度缺乏接引落地的具体行动", future: "理想照进现实，眼前的短期迷茫全部退散，星光会指明最正确的路线" },
+  { id: 17, name: "鹳", emoji: "🕊️", kw: "正面改善、良性变动、步步高升", focus: "顺应事物发展规律的正面向好、改善和微调正在悄然发生", block: "频繁、没有规律的环境变动或者反复修改方向，让你心力交瘁", future: "将顺理成章地完成一波大跨度的调整，实现生活或学业的阶梯式跃升" },
+  { id: 18, name: "狗", emoji: "🐶", kw: "靠谱伙伴、信任网、稳定支持", focus: "身边拥有非常牢固的团队同盟、知心挚友或导师的完全信任", block: "过度依赖已有的老经验或别人的保护伞，失去了自己独立刚正面的能力", future: "在接下来的难关里，将收获一段绝对靠谱、牢不可破的核心联合支持" },
+  { id: 19, name: "塔", emoji: "🏰", kw: "闭门深造、独立钻研、规则边界", focus: "正处于孤独闭门深造、一个人隔离噪声、疯狂钻研的专注状态中", block: "自我孤立，筑墙太高，思维和外界最新、最鲜活的信息严重脱节了", future: "在这段深度的闭关努力中，将筑起属于你个人极具权威和含金量的成果" },
+  { id: 20, name: "花园", emoji: "⛲", kw: "开放社群、成果展示、大舞台", focus: "思维和想法正在开放的环境或大家面前接受激烈的交融碰撞", block: "外界社交诱惑和噪声太多，精力在迎合大众或无意义社交中被严重蚕食", future: "成果将走向极具瞩目的公开展示大舞台，收获多点开花的破圈效应" },
+  { id: 21, name: "山", emoji: "⛰️", kw: "宏大阻碍、进度延迟、大硬骨头", focus: "正面遭遇了一块以目前能力很难啃下的巨大硬骨头、大难题", block: "大山死死挡在前面，导致目前的整个大创或研究进度面临全面的卡死", future: "天堑变通途，你终将踏平这个终极难关，在顶峰俯瞰风景，一切都是值得的" },
+  { id: 22, name: "十字路口", emoji: "🛣️", kw: "自由抉择、方向分叉、面临选择", focus: "来到了多重可能性交汇、必须做出方向分流的决定性分叉路口", block: "选项和诱惑太多，导致你陷入无休止的得失权衡中，优柔寡断卡在原地", future: "你将运用绝对清醒的理智，做出最干净的单向取舍，全面推进下一步计划" },
+  { id: 23, name: "老鼠", emoji: "🐭", kw: "潜在漏洞、精力流失、悄悄损耗", focus: "强烈警告：代表你的时间、成果或精力正处于不知名的慢性损耗中", block: "潜在的隐密 Bug 或负面内耗正在悄悄蚕食、偷走你辛苦累积的果实", future: "必须进行拉网式大排查，补齐漏洞，就能彻底终止精力泄漏" },
+  { id: 24, name: "心", emoji: "❤️", kw: "绝对热爱、灵感锚点、激情全满", focus: "所问之事正是你内心狂热、灵感喷涌的绝对热爱所在", block: "过度被情绪化的潮汐或感情用事主导，完全丧失了严密的理智底线", future: "全盘投入无限的纯粹激情，能达成最炽热、毫无杂质的沉浸式心流" },
+  { id: 25, name: "戒指", emoji: "💍", kw: "协议达成、承诺绑定、循环闭环", focus: "正在迎来一段极为稳定的契约达成、关系绑定或合作承诺", block: "陷入了某种死板死结的循环老套路模式，僵化限制了思维的灵活性", future: "所有的合作、协议和任务交织将迎来最圆满的闭环和落实，完美绑定" },
+  { id: 26, name: "书", emoji: "📖", kw: "隐藏知识、未知核心、精深钻研", focus: "正在沉浸于高深硬核的隐藏学问里，目前还没到公开的最佳时机", block: "核心信息尚被完全隐藏，严重的信息不对称导致你只能摸黑前行", future: "尘封的秘密将被你彻底读懂读穿，真正攻克并掌握这门核心技术" },
+  { id: 27, name: "信", emoji: "✉️", kw: "正式文件、实体凭证、正式通知", focus: "某种白纸黑字的实体凭证、正式通知或关键修改意见正在路上传达", block: "太死板地依赖条文规章和书面文本，思想教条化，缺乏实质行动去变通", future: "官方正式的立项书、核心代码包或关键信件将顺利、安全地落地" },
+  { id: 28, name: "男人", emoji: "👨", kw: "理性主导、行动力、果断破局", focus: "清醒的理智已经占据绝对主导，严密的逻辑推演全面上线", block: "手段或思维过于刚毅冷硬、死板好强，极其缺乏柔性变通与感性觉察", future: "将全盘借助冷酷理智的逻辑和超强执行力，把一切障碍彻底冲碎" },
+  { id: 29, name: "女人", emoji: "👩", kw: "直觉全面苏醒、以柔克刚、柔韧", focus: "灵敏的潜意识直觉已经全面苏醒，正以极高感知力觉察眼前的局势", block: "心思过于敏感细腻了，极易受到周围环境风吹草动和负面情绪的打乱", future: "将运用最柔韧的以柔克刚方式包容一切，靠细腻的直觉化解当前的危机" },
+  { id: 30, name: "百合", emoji: "⚜️", kw: "平静优雅、漫长时间、资历底蕴", focus: "处于细水长流、极其纯洁平静的漫长安全平稳期中", block: "发展节奏过于老旧缓慢、死气沉沉，缺乏破旧立新的冲劲与爆发力", future: "你过去长期积累的丰富资历与扎实功底，终将沉淀出最好的果实" },
+  { id: 31, name: "太阳", emoji: "☀️", kw: "大吉大利、状态大好、驱散困难", focus: "运势全面的大吉态！核心自信正在全面觉醒，能量满满", block: "势头过于耀眼炙热，容易让你盲目自大、轻敌，从而灼伤了核心细节", future: "一切阴霾、小人、Bug 被瞬间融化驱散，迎来全面的大放异彩" },
+  { id: 32, name: "月亮", emoji: "🌙", kw: "荣誉高光、才华看见、情绪起伏", focus: "你的才华、科研成果或作品正处于即将收获外界强烈瞩目的高光期", block: "情绪起伏异常剧烈，极度在意他人的评价，整天患得患失、非常心累", future: "你的心血将被强烈看见、引发轰动，收获应得的极高荣誉与名望" },
+  { id: 33, name: "钥匙", emoji: "🔑", kw: "终极解法、命运掌握、胜券在握", focus: "最关键的通关密匙、核心破局灵感已被你牢牢掌控在手", block: "明明最完美的终极解法就在手边，你却缺乏勇气和果断去开启大门", future: "核心难题瞬间迎刃而解，尘封的关卡全面爆破，拥有最高主控权" },
+  { id: 34, name: "鱼", emoji: "🐟", kw: "流动资源、丰盛思维、超多点子", focus: "处于非常丰盛、活络的态势中，思路和资源都在极高频地流动", block: "想法和点子像鱼群一样多而散乱，导致核心精力面临全面分散溃败", future: "财富、人脉和研究灵感将如同大江大河般全盘涌现，多源流产出" },
+  { id: 35, name: "锚", emoji: "⚓", kw: "安全稳固、抗击风浪、坚守定力", focus: "定力极其稳健，底层基础打得极为牢固，无惧任何大风大浪", block: "安全感绑定得太死导致思维彻底僵化，安于现状不愿跨出舒适区", future: "稳坐钓鱼台，以泰山崩于前而不动之势，筑起坚不可摧的终极闭环" },
+  { id: 36, name: "十字架", emoji: "✝️", kw: "沉重考验、历练打磨、升华蜕变", focus: "正在经受一段无法避免、极其沉重的高压考验与负荷历练", block: "沉重巨大的精神包袱压迫得你几乎窒息，快要到了崩溃的边缘", future: "这是一场必经的渡劫，通过这场大磨砺后，你的灵魂和能力将完成蜕变" }
 ];
 
 let currentSpreadMode = 1;
@@ -254,7 +249,13 @@ function drawLenormand() {
   desk.innerHTML = '';
   reportBox.style.display = 'none';
 
-  let shuffled = [...lenormandDeck].sort(() => Math.random() - 0.5);
+  // 【Fisher-Yates 真正纯随机洗牌算法】
+  let shuffled = [...lenormandDeck];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  
   let pickedCards = shuffled.slice(0, currentSpreadMode);
 
   pickedCards.forEach((card, idx) => {
@@ -280,15 +281,16 @@ function drawLenormand() {
     }, 300 * (idx + 1));
   });
 
+  // ================= 核心白话拼装引擎重构 =================
   let reportHTML = '';
 
   if (currentSpreadMode === 1) {
     const card = pickedCards[0];
     reportHTML += `
       <div class="report-item" style="border-left-color: #722ed1; background: rgba(114,46,209,0.02); padding: 15px; border-radius: 8px;">
-        <h4 style="color: #722ed1; font-size:1.2rem;">🎯 今日核心天时能量显化 —— 【${card.emoji} ${card.name}】</h4>
-        <p style="margin-top: 10px;"><strong>能量坐标系：</strong>${card.kw}</p>
-        <p style="margin-top: 5px; color: var(--text-main-color);"><strong>时空因果镜象：</strong>当前你正停留在 ${card.focus} 的状态中。请深度感知这一磁场，化解眼前的局势。</p>
+        <h4 style="color: #722ed1; font-size:1.2rem;">🎯 今日核心建议卡 —— 【${card.emoji} ${card.name}】</h4>
+        <p style="margin-top: 10px;"><strong>核心标签：</strong>${card.kw}</p>
+        <p style="margin-top: 5px; color: var(--text-main-color); text-align: justify;"><strong>大白话处境解析：</strong>${card.focus}。你可以根据这个小提示，来规划和调整今天的学习跟心态。</p>
       </div>
     `;
   } else if (currentSpreadMode === 3) {
@@ -298,29 +300,31 @@ function drawLenormand() {
 
     reportHTML += `
       <div class="report-item" style="border-left-color: #ff4d4f; background: rgba(255,77,79,0.02); padding: 18px; border-radius: 8px; margin-bottom: 25px;">
-        <h4 style="color: #ff4d4f; font-size:1.2rem; margin-bottom:10px;">🔗 赛博因果锁链·深度解耦总评</h4>
-        <p style="text-indent: 2em; line-height: 1.8; font-size: 1.02rem; color: var(--text-main-color);">
-          根据潜意识网格的共振演算，<strong>当前你正处于【${c1.name}】映射的阶段：</strong>${c1.focus}。
-          <strong>然而，由于时空中被注入了【${c2.name}】的干涉能量，导致发生了偏转：</strong>这表明你当前最核心的卡点或盲区恰恰在于${c2.block}。
-          若想打破僵局、让能量彻底闭环，<strong>你必须强行将意志力和行动手段收束到【${c3.name}】的破局维中：</strong>只要你接下来${c3.future}。
+        <h4 style="color: #ff4d4f; font-size:1.2rem; margin-bottom:10px;">🔗 暖心三牌阵·连贯解析</h4>
+        <p style="line-height: 1.8; font-size: 1.02rem; color: var(--text-main-color); text-align: justify;">
+          从你想问的问题来看，<strong>你目前面临的真实处境对应【${c1.name}】卡牌：</strong>${c1.focus}。
+          <br><br>
+          <strong>但是，你现在之所以觉得烦恼或卡住，是因为遇到了【${c2.name}】卡牌代表的阻碍：</strong>主要是因为${c2.block}。
+          <br><br>
+          <strong>如果你想打破眼前的僵局，让事情顺顺当当地发展，接下来的破局绝招藏在【${c3.name}】卡牌里：</strong>建议你接下来${c3.future}。
         </p>
       </div>
 
-      <div style="font-weight: bold; margin-bottom: 10px; color: #999; font-size:0.85rem;">📊 各象限微观干涉数据明细：</div>
+      <div style="font-weight: bold; margin-bottom: 10px; color: #999; font-size:0.85rem;">📊 各个卡片位置含义明细：</div>
       
       <div class="report-item">
-        <h4>位置 ①：现状映射 【${c1.emoji} ${c1.name}】</h4>
-        <p><strong>微观气场：</strong>${c1.kw}</p>
+        <h4>位置 ①：你的当前现状 【${c1.emoji} ${c1.name}】</h4>
+        <p><strong>卡片含义：</strong>${c1.kw}</p>
       </div>
       
       <div class="report-item" style="border-left-color: #faad14;">
-        <h4 style="color: #faad14;">位置 ②：潜在潜意识阻碍 【${c2.emoji} ${c2.name}】</h4>
-        <p><strong>卡点波动：</strong>${c2.kw}</p>
+        <h4 style="color: #faad14;">位置 ②：核心卡点/阻碍 【${c2.emoji} ${c2.name}】</h4>
+        <p><strong>卡片含义：</strong>${c2.kw}</p>
       </div>
       
       <div class="report-item" style="border-left-color: #52c41a;">
-        <h4 style="color: #52c41a;">位置 ③：未来时空因果走向 【${c3.emoji} ${c3.name}】</h4>
-        <p><strong>破局质能：</strong>${c3.kw}</p>
+        <h4 style="color: #52c41a;">位置 ③：未来好转转机 【${c3.emoji} ${c3.name}】</h4>
+        <p><strong>卡片含义：</strong>${c3.kw}</p>
       </div>
     `;
   }
