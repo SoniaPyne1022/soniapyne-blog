@@ -1,377 +1,322 @@
 ---
-title: 赛博时空罗盘
-date: 2026-06-20 20:10:00
+title: 赛博雷诺曼启示卡
+date: 2026-06-20 20:25:00
 top_img: false
 aside: false
 pjax: false
 ---
 
-<!-- 警告：以下所有 HTML 标签必须顶格左对齐，不能有任何前置空格或 Tab -->
-<div id="cyber-clock-container">
-<!-- 左侧：3D赛博时空罗盘 -->
-<div class="clock-dial-box">
-<div class="matrix-bg"></div>
-<div class="compass-wrapper">
-<!-- 外环：干支地支环 -->
-<div id="ring-earthly" class="compass-ring ring-outer"></div>
-<!-- 中环：五行八卦流光环 -->
-<div id="ring-elements" class="compass-ring ring-middle">
-<div class="element-node e-mu">木</div>
-<div class="element-node e-huo">火</div>
-<div class="element-node e-tu">土</div>
-<div class="element-node e-jin">金</div>
-<div class="element-node e-shui">水</div>
+<div id="lenormand-workspace">
+<div class="lenormand-header-box">
+<h2 class="lenormand-title">🔮 赛博雷诺曼（Lenormand）工作台</h2>
+<p class="lenormand-subtitle">通过36张欧式传统神秘符号，动态拆解你当下的现实因果镜像</p>
+<div class="lenormand-modes">
+<button id="btn-spread-1" class="mode-btn active" onclick="switchSpread(1)">🎯 单牌每日指引</button>
+<button id="btn-spread-3" class="mode-btn" onclick="switchSpread(3)">📐 三牌因果阵</button>
 </div>
-<!-- 内心：太极内核 -->
-<div class="compass-center">
-<div class="taichi-logo">☯</div>
-</div>
-</div>
+<button class="shuffle-btn" onclick="drawLenormand()">✨ 冥想并洗牌抽卡</button>
 </div>
 
-<!-- 右侧：时空解构面板与占卜卡片 -->
-<div class="clock-info-box">
-<h2 class="mystic-title">⚡ 赛博时空解构器</h2>
-<p class="mystic-subtitle">实时追踪宇宙弦波动与传统历法时空能量</p>
-<div class="deconstruct-display">
-<div class="dec-item">
-<span class="dec-label">当前公历</span>
-<span id="dec-gregorian" class="dec-val">-</span>
-</div>
-<div class="dec-item">
-<span class="dec-label">解构时辰</span>
-<span id="dec-shichen" class="dec-val mystic-highlight">-</span>
-</div>
-<div class="dec-item">
-<span class="dec-label">考时定刻</span>
-<span id="dec-ke" class="dec-val mystic-highlight">-</span>
-</div>
+<div id="lenormand-desk" class="lenormand-desk">
 </div>
 
-<button class="mystic-btn" onclick="triggerDivination()">⚡ 解构当下时空因果</button>
-
-<!-- 动态弹出的测时/气场运势卡片 -->
-<div id="divination-card" class="divination-card" style="display: none;">
-<div class="card-header">
-<span id="card-element-tag" class="element-tag">水</span>
-<h3 id="card-title">时空波动报告</h3>
-</div>
-<div id="card-desc" class="card-body">
-正在读取五行气场消长...
-</div>
-<div class="card-footer">
-<div class="footer-item"><strong>宜：</strong><span id="card-yi">-</span></div>
-<div class="footer-item"><strong>忌：</strong><span id="card-ji">-</span></div>
-</div>
-</div>
+<div id="lenormand-report" class="lenormand-report" style="display: none;">
+<h3 class="report-title">📜 时空潜意识镜象报告</h3>
+<div id="report-content" class="report-content"></div>
 </div>
 </div>
 
 <style>
-/* Style 和 Script 标签内部的缩进是安全的，可以保留 */
-#cyber-clock-container {
-  max-width: 1000px;
+#lenormand-workspace {
+  max-width: 950px;
   margin: 20px auto;
   display: flex;
-  gap: 40px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 30px;
 }
-.clock-dial-box, .clock-info-box {
-  flex: 1;
-  min-width: 320px;
+.lenormand-header-box, .lenormand-report {
   background: var(--card-bg, #fff);
-  padding: 35px;
+  padding: 30px;
   border-radius: 16px;
   box-shadow: var(--card-hover-shadow, 0 4px 15px rgba(0,0,0,0.06));
+  text-align: center;
   box-sizing: border-box;
 }
-.clock-dial-box {
-  position: relative;
+.lenormand-modes {
   display: flex;
   justify-content: center;
-  align-items: center;
-  min-height: 400px;
-  background: radial-gradient(circle at center, var(--card-bg, #fff) 40%, var(--background, #f0f2f5) 100%);
-  overflow: hidden;
+  gap: 15px;
+  margin: 20px 0;
 }
-.compass-wrapper {
-  position: relative;
-  width: 320px;
-  height: 320px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.compass-ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px dashed var(--btn-bg, #49b1f5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: transform 0.5s cubic-bezier(0.1, 0.8, 0.25, 1);
-}
-.ring-outer {
-  width: 300px;
-  height: 300px;
-  animation: spinClockwise 60s linear infinite reverse;
-}
-.ring-middle {
-  width: 200px;
-  height: 200px;
-  animation: spinClockwise 40s linear infinite;
-}
-.branch-node, .element-node {
-  position: absolute;
-  font-family: "Courier New", Courier, monospace;
-  font-weight: bold;
+.mode-btn {
+  background: var(--background, #f4f4f4);
   color: var(--text-main-color, #333);
+  border: 1px solid var(--light-grey, #eee);
+  padding: 8px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s;
 }
-.branch-node { font-size: 1.1rem; }
-.element-node {
-  font-size: 0.9rem;
-  padding: 3px 6px;
-  border-radius: 4px;
+.mode-btn.active, .mode-btn:hover {
+  background: var(--btn-bg, #49b1f5);
   color: #fff;
+  border-color: var(--btn-bg, #49b1f5);
 }
-.e-mu { background: #52c41a; }
-.e-huo { background: #ff4d4f; }
-.e-tu { background: #faad14; }
-.e-jin { background: #13c2c2; }
-.e-shui { background: #2f54eb; }
-
-.compass-center {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: var(--text-main-color, #333);
-  color: var(--card-bg, #fff);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
-  z-index: 5;
-}
-.taichi-logo {
-  font-size: 2.8rem;
-  animation: spinClockwise 10s linear infinite;
-}
-
-@keyframes spinClockwise {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.mystic-title { margin-top: 0; margin-bottom: 5px; color: var(--text-main-color); }
-.mystic-subtitle { font-size: 0.85rem; color: #999; margin-bottom: 25px; }
-.deconstruct-display {
-  background: var(--background);
-  padding: 20px;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 25px;
-}
-.dec-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px dashed var(--light-grey);
-  padding-bottom: 8px;
-}
-.dec-item:last-child { border-bottom: none; padding-bottom: 0; }
-.dec-label { font-size: 0.9rem; color: #888; }
-.dec-val { font-family: monospace; font-size: 1.05rem; font-weight: bold; }
-.mystic-highlight { color: var(--text-highlight-color, #49b1f5); font-size: 1.2rem; }
-
-.mystic-btn {
-  width: 100%;
-  background: linear-gradient(135deg, #2f54eb 0%, var(--btn-bg, #49b1f5) 100%);
+.shuffle-btn {
+  background: linear-gradient(135deg, #722ed1 0%, var(--btn-bg, #49b1f5) 100%);
   color: #fff;
   border: none;
-  padding: 14px;
-  border-radius: 10px;
+  padding: 12px 35px;
+  border-radius: 25px;
   font-size: 1.05rem;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(73,177,245,0.3);
+  box-shadow: 0 4px 15px rgba(114,46,209,0.35);
   transition: all 0.3s;
 }
-.mystic-btn:hover {
+.shuffle-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(73,177,245,0.5);
+  box-shadow: 0 6px 20px rgba(114,46,209,0.5);
 }
-
-.divination-card {
-  margin-top: 25px;
-  border: 1px solid var(--text-highlight-color);
-  background: rgba(73,177,245,0.04);
-  border-radius: 12px;
-  padding: 20px;
-  animation: fadeInUp 0.4s ease-out;
-}
-.card-header {
+.lenormand-desk {
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
+  gap: 35px;
+  flex-wrap: wrap;
+  min-height: 260px;
+  padding: 10px;
 }
-.element-tag {
-  padding: 2px 8px;
-  border-radius: 4px;
-  color: #fff;
-  font-weight: bold;
-  font-size: 0.85rem;
+.lenormand-card {
+  width: 170px;
+  height: 250px;
+  perspective: 1000px;
 }
-.card-body {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--text-main-color);
-  margin-bottom: 15px;
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
 }
-.card-footer {
-  border-top: 1px dashed var(--light-grey);
-  padding-top: 12px;
+.lenormand-card.is-flipped .card-inner {
+  transform: rotateY(180deg);
+}
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 14px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  font-size: 0.9rem;
+  padding: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
+.card-back {
+  background: linear-gradient(135deg, #111827 0%, #1e1b4b 100%);
+  border: 2px solid #722ed1;
+  color: #722ed1;
+  justify-content: center;
+  align-items: center;
+}
+.card-back-pattern {
+  font-size: 3rem;
+  text-shadow: 0 0 10px rgba(114,46,209,0.6);
+  animation: pulse 2s infinite alternate;
+}
+.card-front {
+  background: var(--background, #f9fafb);
+  border: 2px solid var(--text-highlight-color, #49b1f5);
+  color: var(--text-main-color, #333);
+  transform: rotateY(180deg);
+  justify-content: space-between;
+  align-items: center;
+}
+.card-num { font-size: 0.85rem; color: #aaa; align-self: flex-start; font-family: monospace; }
+.card-emoji { font-size: 3.2rem; margin: 10px 0; }
+.card-name { font-size: 1.2rem; font-weight: bold; margin-bottom: 5px; }
+.card-kw { font-size: 0.75rem; color: #ff7875; background: rgba(255,120,117,0.08); padding: 2px 6px; border-radius: 4px; }
 
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+.report-title { color: var(--text-main-color); margin-top: 0; text-align: center; border-bottom: 2px solid var(--text-highlight-color); padding-bottom: 10px; }
+.report-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: left;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.report-item {
+  border-left: 4px solid var(--btn-bg, #49b1f5);
+  padding-left: 15px;
+  margin-bottom: 5px;
+}
+.report-item h4 { margin: 0 0 6px 0; font-size: 1.1rem; color: var(--text-highlight-color); }
+.report-item p { margin: 0; font-size: 0.95rem; line-height: 1.6; }
+
+@keyframes pulse {
+  from { transform: scale(0.95); opacity: 0.7; }
+  to { transform: scale(1.05); opacity: 1; }
 }
 </style>
 
 <script>
-const earthlyBranches = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
-const keNames = ["初刻", "一刻", "二刻", "三刻"];
+// ================= 升级版雷诺曼全套多重因果断语库 =================
+const lenormandDeck = [
+  { id: 1, name: "骑士", emoji: "🏃‍♂️", kw: "消息、速度、行动", focus: "新消息或计划正在全速向你推进，执行力已被唤醒", block: "行动过于急躁粗糙，或者在缺乏深度思考的前提下盲目刚正面", future: "局势将以极快的速度迎来破局，新赛道彻底畅通" },
+  { id: 2, name: "四叶草", emoji: "🍀", kw: "小幸运、惊喜、短暂窗口", focus: "眼前有随手可得的短暂转机，局势正在自发舒缓", block: "心态流于浮躁，过度依赖运气加成而忽视了主观的硬核沉淀", future: "将迎来一个能让你轻松化解 Bug 或危机的惊喜窗口期" },
+  { id: 3, name: "船", emoji: "🚢", kw: "长期规划、跨界、远见", focus: "眼界大开，正在开辟需要长期投入的宏观新项目赛道", block: "目标定得过于长远宏大，导致脚下眼前的技术细节面临严重失控", future: "时空将引向跨界合作、跨学科融合或方向的开阔大变动" },
+  { id: 4, name: "房子", emoji: "🏠", kw: "核心圈、根基、安全感", focus: "退回了最安全的已有成果圈中，正在梳理内部秩序", block: "思维陷入保守僵化，画地为牢，过度防御而不敢做出任何改变", future: "核心根基全面稳固，你的学业或项目将搭建出坚不可摧的底层" },
+  { id: 5, name: "树", emoji: "🌳", kw: "长期健康、缓慢扎根、底蕴", focus: "正处于底蕴积蓄期，当前的课题需要漫长的时间来沉淀", block: "时间跨度被拉得太长，你开始失去了耐心，产生了严重的焦虑内耗", future: "种子已然成活，你的心血和布局终将缓慢但极其稳健地长成参天大树" },
+  { id: 6, name: "云", emoji: "☁️", kw: "短暂迷茫、不确定、盲区", focus: "视野暂时被不确定性的雾气遮蔽，方向有些模糊不清", block: "混沌的算法误区或信息不对称让你彻底看不清眼前的因果真相", future: "这团阴霾只是暂时的气流波动，不久后终将拨云见日、全然清朗" },
+  { id: 7, name: "蛇", emoji: "🐍", kw: "复杂纠缠、曲线、逻辑陷阱", focus: "面对的是一个盘根错节的复杂局面或嵌套逻辑陷阱", block: "背后隐藏着复杂的弯路、代码死循环或有人在带偏你的注意力", future: "强行硬刚必会受挫，你必须运用曲线迂回策略才能精妙地化险为夷" },
+  { id: 8, name: "棺材", emoji: "⚰️", kw: "彻底终结、断舍离、真空转型", focus: "旧的运行模式、死磕的沉没成本正迎来宿命般的彻底终结", block: "死守着被彻底卡住的死局死代码不肯放手，拒绝承认沉没成本", future: "彻底破旧立新，在旧事物的废墟之上迎来涅槃式的转型复苏" },
+  { id: 9, name: "花束", emoji: "💐", kw: "正面赞赏、阶段果实、认可", focus: "正在迎来一波极其正面的外部反馈，才华收获肯定", block: "沉溺于眼前轻而易举获得的赞赏与虚荣中，不愿再向深水区钻研", future: "付出将惊艳显化，你的成果将在答辩汇报或公众面前收获极高赞誉" },
+  { id: 10, name: "镰刀", emoji: "🗡️", kw: "突然决断、切割清除、突发中断", focus: "来到了必须快刀斩乱麻、大刀阔斧做出果断放弃的重大关口", block: "突如其来的计划中断、技术重构或关系切割打得你措手不及", future: "将以惊人的铁腕决心，干净利落地斩断并清除一切冗余隐患" },
+  { id: 11, name: "鞭子", emoji: "💥", kw: "剧烈交锋、反复内耗、严苛洗礼", focus: "思维正在经历高强度的反驳、淬炼与剧烈激荡", block: "陷入了无穷无尽的自我全盘否定、严重的精神内耗与自我拷问中", future: "将在高压的磨砺与反复锤炼中，彻底逼出你最硬核的底层潜能" },
+  { id: 12, name: "鸟", emoji: "🐦", kw: "碎片信息、高频交流、浮躁", focus: "高频、高密度的信息流正在交织，人际网在活跃运作", block: "声音太杂、信息太碎、无用噪声太多，带来了极大的情绪浮躁", future: "在一场场看似琐碎高频的头脑风暴碰撞中，将意外抓到破局线索" },
+  { id: 13, name: "孩子", emoji: "👶", kw: "纯粹起点、全新无经验、破土", focus: "正站在一个完全从零开始、没有任何历史包袱的纯粹新起点上", block: "策略制定得过于幼稚简单，严重缺乏实战经验和严密合规度", future: "计划将如初生婴儿般，展现出完全不设限、野蛮生长的无限可能性" },
+  { id: 14, name: "狐狸", emoji: "🦊", kw: "战术谋划、生存策略、精细辨识", focus: "正在运用高度精细的防御战术或策略思维来推进博弈", block: "聪明反被聪明误，心术过度沉迷于投机取巧而忽视了正道根基", future: "将凭借极其清醒冷酷的精细谋划，对现有困局达成降维打击" },
+  { id: 15, name: "熊", emoji: "🐻", kw: "力量积蓄、资源把控、威严担当", focus: "处于掌控厚重资源或拥有长辈导师鼎力支持的稳健状态", block: "控制欲过强，刚愎自用、听不进旁人意见，甚至压制了其他可能性", future: "厚积薄发，你终将积蓄出足以独当一面、震慑全局的绝对力量" },
+  { id: 16, name: "星星", emoji: "⭐", kw: "长远希望、高维直觉、愿景导航", focus: "心中秉持着长远的理想图景，直觉导航极其灵敏", block: "愿景和概念飘在空中沦为乌托邦，极度缺乏接引落地的具体方案", future: "理想照进现实，长远迷茫退散，星光将为你指明最正确的通途" },
+  { id: 17, name: "鹳", emoji: "🕊️", kw: "正面改善、规律变动、阶梯跃升", focus: "顺应天时与事物规律的阶梯式好转和调整正在悄然发生", block: "频繁、无规律的环境变动或方向修改让你彻底无所适从、心力交瘁", future: "将顺理成章地完成大跨度的规律性大迁徙，实现阶梯式跃升" },
+  { id: 18, name: "狗", emoji: "🐶", kw: "忠诚同盟、信任网、依赖稳定", focus: "身边拥有非常牢固的团队同盟、知心挚友或导师的完全信任", block: "过度依赖已有经验或熟人保护伞，失去了独立刚正面对抗的能力", future: "将收获一段绝对忠诚、牢不可破的核心联合纽带与支持" },
+  { id: 19, name: "塔", emoji: "🏰", kw: "象牙塔、闭门钻研、权威机构边界", focus: "正处于极度孤独的象牙塔闭门深造、隔离钻研的状态中", block: "自我孤立，筑墙太高，思维与外界最新的学术/市场信息严重脱节", future: "将在深度的闭关中，筑起属于你个人极具权威性、极高壁垒的成果" },
+  { id: 20, name: "花园", emoji: "⛲", kw: "开放社群、成果展示、流量碰撞", focus: "思维正在开放的网络环境或公共社群中接受激烈的交融碰撞", block: "外界社交诱惑和噪声太多，精力在迎合大众的过程中被严重蚕食", future: "成果将走向极具流量的公开展示大舞台，收获多点开花的破圈效应" },
+  { id: 21, name: "山", emoji: "⛰️", kw: "巨大卡点、严重延迟、硬骨头", focus: "正面遭遇了一块以目前能力极难啃下的宏大硬骨头", block: "山头死死耸立在前，导致整个大创或研究进度面临全面卡死、延迟", future: "天堑变通途，你终将踏平这个终极卡点，在顶峰俯瞰众山小" },
+  { id: 22, name: "十字路口", emoji: "🛣️", kw: "选择分叉、可能性、自由意志", focus: "来到了多重可能性交汇、必须要做出分流的决定性分叉口", block: "选项和诱惑太多，导致你陷入无休止的权衡中，优柔寡断卡在原地", future: "你将运用绝对冷酷的自由意志，做出最清醒的单向切割，全面推进" },
+  { id: 23, name: "老鼠", emoji: "🐭", kw: "潜在隐患、精力泄漏、慢性损耗", focus: "警报：代表你的时间、成果或精力正处于不知名的慢性损耗中", block: "潜在的隐密 Bug 或负面内耗正在悄悄蚕食、偷走你辛苦累积的成果", future: "必须进行地毯式大排查，全面补齐底层漏洞，彻底终止精力泄漏" },
+  { id: 24, name: "心", emoji: "❤️", kw: "绝对狂热、热爱锚点、纯粹激情", focus: "所问之事正是你内心狂热、灵感喷涌的绝对热爱所在", block: "过度被情绪化的潮汐或感情用事主导，完全丧失了严密的理智底线", future: "将全盘投入无限的纯粹激情，达成最炽热、毫无杂质的沉浸式心流" },
+  { id: 25, name: "戒指", emoji: "💍", kw: "契约绑定、承诺、长期循环闭环", focus: "正在迎来一段极为稳定的契约达标、关系绑定或合作承诺", block: "陷入了某种死板死结的循环模式、或者被过期的协议僵化限制了思维", future: "所有的逻辑环、联盟和契约将达成最高等级的交织，完美绑定闭环" },
+  { id: 26, name: "书", emoji: "📖", kw: "未知核心、隐藏知识、精深钻研", focus: "正在沉浸于深精硬核的隐藏学问里，尚未到公开的时机", block: "核心信息尚被完全隐藏，严重的信息不对称导致你卡在原地摸黑", future: "尘封的秘密将被你彻底读懂读穿，将真正攻克并掌握这门硬核技术" },
+  { id: 27, name: "信", emoji: "✉️", kw: "书面包裹、实体凭证、立项包裹", focus: "某种白纸黑字的实体凭证、关键论文修改意见正在路上传达", block: "死板依赖条文规章和书面文本，思想教条化，缺乏实质行动去变通", future: "官方正式立项书、核心代码包或关键录取信件将顺利安全落地" },
+  { id: 28, name: "男人", emoji: "👨", kw: "阳性意志、绝对理性、杀伐果断", focus: "极客式的钢骨理智已在主导，逻辑推演全面上线", block: "手段或思维过于刚毅冷硬、死板好强，极其缺乏柔性变通与直觉", future: "将全盘借助冷酷的逻辑代码、铁腕执行力把一切障碍彻底轰碎破局" },
+  { id: 29, name: "女人", emoji: "👩", kw: "阴性直觉、感性共鸣、太极化劲", focus: "灵敏敏锐的潜意识直觉已全面苏醒，正以极高感知力共鸣局势", block: "心思过于敏感细腻，极易受到周围环境风吹草动和负面情绪的打乱", future: "将运用最柔韧的太极内劲包容一切，以极其精妙细腻的直觉化解危机" },
+  { id: 30, name: "百合", emoji: "⚜️", kw: "平静优雅、漫长时间、底蕴资历", focus: "处于细水长流、极其纯洁平静的漫长安全平稳期", block: "发展节奏过于老旧缓慢、死气沉沉，缺乏破旧立新的冲劲与爆发力", future: "你过去长期积累的丰富资历与扎实功底，终将沉淀出最好的果实" },
+  { id: 31, name: "太阳", emoji: "☀️", kw: "至高大吉、绝对高能、驱散一切", focus: "雷诺曼天花板大吉态！能量全盘大爆，核心自信正在全面觉醒", block: "运势过于耀眼炙热，容易让你盲目自大、狂妄，从而灼伤了核心细节", future: "一切阴霾、小人、Bug 被至阳之光瞬间融化驱散，迎来全面巅峰颠覆" },
+  { id: 32, name: "月亮", emoji: "🌙", kw: "荣誉高光、名声流转、潜意识潮汐", focus: "你的才华、科研成果或作品正处于即将收获外界瞩目的高光期", block: "情绪潮汐波动异常剧烈，极度在意他人评价，整天患得患失", future: "你的心血将被强烈看见、引发轰动，收获应得的极高荣誉与名望" },
+  { id: 33, name: "钥匙", emoji: "🔑", kw: "绝对解法、命运掌握、胜券在握", focus: "关键的通关密匙、核心破局灵感已被你牢牢掌控在手", block: "明明最完美的终极解法就在手边，你却缺乏勇气和果断去开启大门", future: "核心谜题瞬间迎刃而解，尘封的关卡全面爆破，拥有最高主控权" },
+  { id: 34, name: "鱼", emoji: "🐟", kw: "流动资源、灵感丰盛、多点产出", focus: "江河奔涌般的丰盛态势，思路和资源都处于极高频的流动中", block: "想法概念像鱼群一样多而散乱，导致核心精力面临全面分散溃败", future: "财富、人脉和研究灵感将如同大江大河般全盘丰盛涌现，多源流产出" },
+  { id: 35, name: "锚", emoji: "⚓", kw: "安全稳固、坚守定力、死磕僵化", focus: "定力极其稳健，底层基础打得极为牢固，无惧任何大风大浪", block: "安全感绑定得太死导致思维彻底僵化，安于现状不愿跨出舒适区", future: "稳坐钓鱼台，以泰山崩于前而不动之势，筑起坚不可摧的终极闭环" },
+  { id: 36, name: "十字架", emoji: "✝️", kw: "沉重历练、宿命考验、磨砺升华", focus: "正在经受一段无法避免、极其沉重的宿命式高压负荷历练", block: "沉重巨大的精神包袱和考验压迫得你几乎窒息，快要到了崩溃边缘", future: "这是一场必经的渡劫，通过这场大磨砺后，你的灵魂和能力将完成蜕变" }
+];
 
-const shichenDatabase = {
-  "子": { element: "水", color: "#2f54eb", name: "夜半子时（暗流涌动）", desc: "此刻天地水气最旺，万物归寂。宇宙弦波动平缓，极其适合屏蔽外界喧嚣，深入算法底层、重构核心逻辑架构或清理思维碎片。", yi: "潜心冥想、代码重构、极端深度硬核思考", ji: "强行熬夜突击、情绪化Debug、多任务分心" },
-  "丑": { element: "土", color: "#faad14", name: "鸡鸣丑时（厚德载物）", desc: "大地产出交替之刻，土气凝重。此刻思维沉稳但活跃度较低，适合进行知识点的归纳总结、大创报告的查漏补缺或休养生息。", yi: "文档整理、错题分类、数据容灾备份", ji: "开辟全新高难度项目、高强度脑力刚正面" },
-  "寅": { element: "木", color: "#52c41a", name: "平旦寅时（旭日初升）", desc: "木气萌发，破晓之始。时空阻尼开始减小，思维灵感如泉涌。极其适合开启构思一个全新的项目大纲、撰写全新论文开篇。", yi: "灵感发散、策划全新项目方案、晨读背诵", ji: "陷入细节死磕、过度沉溺于历史沉没成本" },
-  "卯": { element: "木", color: "#52c41a", name: "日出卯时（生机蓬勃）", desc: "旭日跃升，木气纯正。机体与宏观电磁场共振达到顶峰。大脑运算速率拉满，效率极高，宜全速输出核心生产力代码或学习重难点。", yi: "攻克数学模型、连贯性高强编写、硬核备考", ji: "闲逛论坛、被无效通知频繁打断" },
-  "辰": { element: "土", color: "#faad14", name: "食时辰时（飞龙在天）", desc: "土生万物，气吞山河。此时人世间社交与阳气交织。适合整理大创汇报、推进对外学术沟通、或者与团队同步进度，力求果断。", yi: "对外邮件联络、团队协作、制定周计划表", ji: "优柔寡断、逃避核心问题、过度悲观" },
-  "巳": { element: "火", color: "#ff4d4f", name: "隅中巳时（精力充沛）", desc: "火曜中天，精力如炽。宇宙能量场极度高能。此时是战胜高难度 Bug、优化复杂 Python 脚本性能或攻克硬核物理海洋学推导的绝佳黄金期。", yi: "复杂Bug清零、重难点攻坚、算法逻辑压榨", ji: "做简单机械工作浪费精力、拖延核心任务" },
-  "午": { element: "火", color: "#ff4d4f", name: "日中午时（日中则移）", desc: "盛极必衰，火气流转。此时阳气达到极限开始收敛。不宜强行高载荷运转，宜定心午憩、放空大脑，平复午前焦虑，复盘得失。", yi: "午休小憩、平复心绪、轻度文档阅读", ji: "情绪烦躁下盲目改代码、连续高负荷开会" },
-  "未": { element: "土", color: "#faad14", name: "日昳未时（承前启后）", desc: "土气沉降，承接火之余温。适合耐心地整理实验室数据、修正绘图脚本坐标轴、或补充完善繁琐的实验步骤文档。", yi: "实验数据清洗、完善科研文档、图形可视化微调", ji: "挑战毫无头绪的全新未知领域" },
-  "申": { element: "金", color: "#13c2c2", name: "晡时申时（锋芒毕露）", desc: "金气锐利，肃杀果断。午后的慵懒彻底退去，执行力与审判力攀上顶峰。适合开启秒表进行大段高压沉浸式“心流刚正面”，极其利剪裁冗余代码。", yi: "高强度极速刷题、敏捷重构解耦、大刀阔斧删减", ji: "拖延不决、反复纠结细枝末节" },
-  "酉": { element: "金", color: "#13c2c2", name: "日入酉时（金气收敛）", desc: "夕阳西下，金气归拢。宏观噪声降低，适合对一天的产出进行精确复盘，归纳Bug日志，将阶段性成果妥善归档。", yi: "收尾今天的工作、复盘专注记录、整理桌面空间", ji: "开启可能需要通宵才能搞定的宏观工程" },
-  "戌": { element: "土", color: "#faad14", name: "黄昏戌时（华灯初上）", desc: "土入火库，神思发散。此时思维跳脱出严谨的公式框架，艺术和数字美学灵感爆棚。非常适合规划 UI 界面、寻找调色灵感、或者进行泛读。", yi: "界面设计美化、泛读前沿文献、兴趣驱动研究", ji: "机械式刷题、高重复性体力劳动" },
-  "亥": { element: "水", color: "#2f54eb", name: "人定亥时（万物归藏）", desc: "水气凝聚，天地安宁。一天因果在此处收束闭环。宜锁屏离线，清空浏览器冗余标签页，总结全天专注时长并给予自己积极正反馈。", yi: "关闭设备、离线思考总结、心流全面闭环", ji: "强行开辟新工作赛道、沉迷信息流冲浪" }
-};
+let currentSpreadMode = 1;
 
-function initCompassRings() {
-  const outerRing = document.getElementById('ring-earthly');
-  if (!outerRing) return;
-  outerRing.innerHTML = '';
+function switchSpread(mode) {
+  currentSpreadMode = mode;
+  document.getElementById('btn-spread-1').className = mode === 1 ? 'mode-btn active' : 'mode-btn';
+  document.getElementById('btn-spread-3').className = mode === 3 ? 'mode-btn active' : 'mode-btn';
+  document.getElementById('lenormand-desk').innerHTML = '';
+  document.getElementById('lenormand-report').style.display = 'none';
+}
 
-  earthlyBranches.forEach((branch, index) => {
-    const angle = index * 30; 
-    const node = document.createElement('div');
-    node.className = 'branch-node';
-    node.textContent = branch;
-    node.style.transform = `rotate(${angle}deg) translateY(-125px) rotate(${-angle}deg)`;
-    outerRing.appendChild(node);
+function drawLenormand() {
+  const desk = document.getElementById('lenormand-desk');
+  const reportBox = document.getElementById('lenormand-report');
+  const reportContent = document.getElementById('report-content');
+  if (!desk || !reportBox || !reportContent) return;
+
+  desk.innerHTML = '';
+  reportBox.style.display = 'none';
+
+  let shuffled = [...lenormandDeck].sort(() => Math.random() - 0.5);
+  let pickedCards = shuffled.slice(0, currentSpreadMode);
+
+  pickedCards.forEach((card, idx) => {
+    const cardEl = document.createElement('div');
+    cardEl.className = 'lenormand-card';
+    cardEl.innerHTML = `
+      <div class="card-inner">
+        <div class="card-back"><div class="card-back-pattern">🌌</div></div>
+        <div class="card-front">
+          <div class="card-num">#${String(card.id).padStart(2,'0')}</div>
+          <div class="card-emoji">${card.emoji}</div>
+          <div>
+            <div class="card-name">${card.name}</div>
+            <div class="card-kw">${card.kw}</div>
+          </div>
+        </div>
+      </div>
+    `;
+    desk.appendChild(cardEl);
+
+    setTimeout(() => {
+      cardEl.classList.add('is-flipped');
+    }, 300 * (idx + 1));
   });
 
-  const middleRing = document.getElementById('ring-elements');
-  if(middleRing) {
-    const nodes = middleRing.querySelectorAll('.element-node');
-    nodes.forEach((node, index) => {
-      const angle = index * 72;
-      node.style.transform = `rotate(${angle}deg) translateY(-80px) rotate(${-angle}deg)`;
-    });
-  }
-}
+  // ================= 核心升级：网页端自动化时空解耦报告生成 =================
+  let reportHTML = '';
 
-function updateCyberClock() {
-  const now = new Date();
-  
-  const gStr = now.getFullYear() + '/' + 
-               String(now.getMonth()+1).padStart(2,'0') + '/' + 
-               String(now.getDate()).padStart(2,'0') + ' ' + 
-               String(now.getHours()).padStart(2,'0') + ':' + 
-               String(now.getMinutes()).padStart(2,'0') + ':' + 
-               String(now.getSeconds()).padStart(2,'0');
-  const gregEl = document.getElementById('dec-gregorian');
-  if(gregEl) gregEl.textContent = gStr;
+  if (currentSpreadMode === 1) {
+    // 单牌模式：直接提取每日核心能量
+    const card = pickedCards[0];
+    reportHTML += `
+      <div class="report-item" style="border-left-color: #722ed1; background: rgba(114,46,209,0.02); padding: 15px; border-radius: 8px;">
+        <h4 style="color: #722ed1; font-size:1.2rem;">🎯 今日核心天时能量显化 —— 【${card.emoji} ${card.name}】</h4>
+        <p style="margin-top: 10px;"><strong>能量坐标系：</strong>${card.kw}</p>
+        <p style="margin-top: 5px; color: var(--text-main-color);"><strong>时空因果镜象：</strong>当前你正停留在 ${card.focus} 的状态中。请深度感知这一磁场，化解眼前的局势。</p>
+      </div>
+    `;
+  } else if (currentSpreadMode === 3) {
+    // 三牌模式：触发 AI 式多重位置断语拼句算法，生成无缝的因果锁链总评！
+    const c1 = pickedCards[0]; // 现状
+    const c2 = pickedCards[1]; // 阻碍
+    const c3 = pickedCards[2]; // 走向
 
-  const hour = now.getHours();
-  const minute = now.getMinutes();
+    reportHTML += `
+      <div class="report-item" style="border-left-color: #ff4d4f; background: rgba(255,77,79,0.02); padding: 18px; border-radius: 8px; margin-bottom: 25px;">
+        <h4 style="color: #ff4d4f; font-size:1.2rem; margin-bottom:10px;">🔗 赛博因果锁链·深度解耦总评</h4>
+        <p style="text-indent: 2em; line-height: 1.8; font-size: 1.02rem; color: var(--text-main-color);">
+          根据潜意识网格的共振演算，<strong>当前你正处于【${c1.name}】映射的阶段：</strong>${c1.focus}。
+          <strong>然而，由于时空中被注入了【${c2.name}】的干涉能量，导致发生了偏转：</strong>这表明你当前最核心的卡点或盲区恰恰在于${c2.block}。
+          若想打破僵局、让能量彻底闭环，<strong>你必须强行将意志力和行动手段收束到【${c3.name}】的破局维中：</strong>只要你接下来${c3.future}。
+        </p>
+      </div>
 
-  const shichenIdx = Math.floor((hour + 1) / 2) % 12;
-  const currentShichen = earthlyBranches[shichenIdx];
-  const shichenEl = document.getElementById('dec-shichen');
-  if(shichenEl) shichenEl.textContent = currentShichen + "时 (" + shichenDatabase[currentShichen].element + "气)";
-
-  const prefix = (hour % 2 !== 0) ? "初" : "正";
-  const keIdx = Math.floor(minute / 15);
-  const currentKe = prefix + keNames[keIdx];
-  const keEl = document.getElementById('dec-ke');
-  if(keEl) keEl.textContent = currentKe;
-
-  const outerRing = document.getElementById('ring-earthly');
-  if(outerRing && !outerRing.dataset.customInteracted) {
-    const targetAngle = -shichenIdx * 30;
-    outerRing.style.transform = `rotate(${targetAngle}deg)`;
-  }
-}
-
-function triggerDivination() {
-  const now = new Date();
-  const hour = now.getHours();
-  const shichenIdx = Math.floor((hour + 1) / 2) % 12;
-  const currentShichen = earthlyBranches[shichenIdx];
-  const data = shichenDatabase[currentShichen];
-
-  const card = document.getElementById('divination-card');
-  const tag = document.getElementById('card-element-tag');
-  const title = document.getElementById('card-title');
-  const desc = document.getElementById('card-body');
-  const yi = document.getElementById('card-yi');
-  const ji = document.getElementById('card-ji');
-
-  if(!card) return;
-
-  const outerRing = document.getElementById('ring-earthly');
-  if(outerRing) {
-    outerRing.style.transition = "transform 1s cubic-bezier(0.2, 2, 0.4, 1)";
-    const randomExtraSpin = 720 + (-shichenIdx * 30);
-    outerRing.style.transform = `rotate(${randomExtraSpin}deg)`;
-    outerRing.dataset.customInteracted = "true";
-    
-    setTimeout(() => {
-      outerRing.style.transition = "transform 0.5s ease-out";
-      outerRing.dataset.customInteracted = "";
-    }, 3000);
+      <div style="font-weight: bold; margin-bottom: 10px; color: #999; font-size:0.85rem;">📊 各象限微观干涉数据明细：</div>
+      
+      <div class="report-item">
+        <h4>位置 ①：现状映射 【${c1.emoji} ${c1.name}】</h4>
+        <p><strong>微观气场：</strong>${c1.kw}</p>
+      </div>
+      
+      <div class="report-item" style="border-left-color: #faad14;">
+        <h4 style="color: #faad14;">位置 ②：潜在潜意识阻碍 【${c2.emoji} ${c2.name}】</h4>
+        <p><strong>卡点波动：</strong>${c2.kw}</p>
+      </div>
+      
+      <div class="report-item" style="border-left-color: #52c41a;">
+        <h4 style="color: #52c41a;">位置 ③：未来时空因果走向 【${c3.emoji} ${c3.name}】</h4>
+        <p><strong>破局质能：</strong>${c3.kw}</p>
+      </div>
+    `;
   }
 
-  tag.textContent = data.element + "气";
-  tag.style.background = data.color;
-  title.textContent = data.name;
-  desc.innerHTML = `<strong>宇宙时空共振态：</strong>${data.desc}`;
-  yi.textContent = data.yi;
-  ji.textContent = data.ji;
-
-  card.style.display = 'block';
+  setTimeout(() => {
+    reportContent.innerHTML = reportHTML;
+    reportBox.style.display = 'block';
+  }, 400 * currentSpreadMode + 400);
 }
 
-function initAllMysticComponents() {
-  initCompassRings();
-  updateCyberClock();
-  setInterval(updateCyberClock, 1000);
+function initLenormand() {
+  const desk = document.getElementById('lenormand-desk');
+  if(!desk) return;
+  switchSpread(1);
 }
 
 if (typeof GLOBAL_CONFIG !== 'undefined' && GLOBAL_CONFIG.pjax) {
-  document.addEventListener('pjax:complete', initAllMysticComponents);
+  document.addEventListener('pjax:complete', initLenormand);
 } else {
-  document.addEventListener('DOMContentLoaded', initAllMysticComponents);
+  document.addEventListener('DOMContentLoaded', initLenormand);
 }
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
-  initAllMysticComponents();
+  initLenormand();
 }
 </script>
