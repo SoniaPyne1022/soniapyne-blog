@@ -31,6 +31,7 @@ menu:
     Python: /categories/学习手册/Python/ || fab fa-python
     R语言: /categories/学习手册/R语言/ || fas fa-chart-line        # 👈 成功归类到“页面”目录下
   工作台: /pomodoro/ || fas fa-clock  # 添加这一行
+  时空罗盘: /cyberclock/ || fas fa-compass  # 添加这一行
   留言板: /message/ || fas fa-comment-dots
           
 
