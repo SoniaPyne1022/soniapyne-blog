@@ -1,6 +1,6 @@
 ---
 title: 专注番茄钟
-date: 2026-06-20 19:40:00
+date: 2026-06-20 19:50:00
 top_img: false 
 aside: false   
 pjax: false    
@@ -8,6 +8,15 @@ pjax: false
 
 <div id="pomo-container">
 <div class="pomo-timer-box">
+
+<div id="pomo-prompt-overlay" style="display: none;">
+<div id="pomo-prompt-text">🎯 专注完成！要开启休息吗？(30秒后自动进入下一轮专注)</div>
+<div class="pomo-prompt-controls">
+<button id="pomo-confirm-yes" onclick="choosePrompt('yes')">☕ 开始休息</button>
+<button id="pomo-confirm-no" onclick="choosePrompt('no')">💪 不歇了，继续专注</button>
+</div>
+</div>
+
 <div class="pomo-settings">
 <div class="setting-item">
 <label for="pomo-focus-input">🎯 专注时长</label>
@@ -51,7 +60,6 @@ pjax: false
 </div>
 
 <style>
-/* 这里面的内容可以缩进，不会出错 */
 #pomo-container {
   max-width: 800px;
   margin: 20px auto;
@@ -59,14 +67,62 @@ pjax: false
   flex-direction: column;
   gap: 30px;
 }
-.pomo-timer-box, .pomo-history-box {
+/* 确保父容器是 relative，方便遮罩层绝对定位 */
+.pomo-timer-box {
+  position: relative; 
   background: var(--card-bg, #fff);
   padding: 30px;
   border-radius: 12px;
   box-shadow: var(--card-hover-shadow, 0 4px 12px rgba(0,0,0,0.08));
   text-align: center;
   transition: all 0.3s;
+  overflow: hidden;
 }
+
+/* 新增：30秒询问遮罩层样式，完美融入卡片 */
+#pomo-prompt-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--card-bg, #fff);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+#pomo-prompt-text {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--text-main-color, #333);
+  line-height: 1.6;
+}
+.pomo-prompt-controls button {
+  border: none;
+  padding: 12px 24px;
+  margin: 0 10px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #fff;
+  transition: opacity 0.2s;
+}
+.pomo-prompt-controls button:hover {
+  opacity: 0.9;
+}
+#pomo-confirm-yes {
+  background: var(--btn-bg, #49b1f5);
+}
+#pomo-confirm-no {
+  background: #858585;
+}
+
+/* 基础样式保持 */
 .pomo-settings {
   display: flex;
   justify-content: center;
@@ -151,29 +207,31 @@ pjax: false
 </style>
 
 <script>
-// 这里面的内容可以缩进，不会出错
 let countdown;
+let promptInterval; // 新增：询问层专用定时器
 let isRunning = false;
 let currentMode = 'focus'; 
 let timeLeft;
-let startBtn;
-let statusText;
-let focusInput;
-let breakInput;
-let display;
+let promptTimeLeft = 30; // 30秒倒计时变量
 
-// 确保 DOM 加载完成后再绑定变量和执行逻辑，防止 PJAX 引起的 bug
+let startBtn, statusText, focusInput, breakInput, display;
+let promptOverlay, promptText;
+
 function initPomodoro() {
   display = document.getElementById('pomo-time-display');
   startBtn = document.getElementById('pomo-start-btn');
   statusText = document.getElementById('pomo-status');
   focusInput = document.getElementById('pomo-focus-input');
   breakInput = document.getElementById('pomo-break-input');
+  promptOverlay = document.getElementById('pomo-prompt-overlay');
+  promptText = document.getElementById('pomo-prompt-text');
 
-  // 初始化检查，如果找不到元素直接返回（防止在其他页面报错）
   if(!display) return;
 
-  clearInterval(countdown); // 切换页面时重置老计时器
+  clearInterval(countdown);
+  clearInterval(promptInterval);
+  if(promptOverlay) promptOverlay.style.display = 'none';
+  
   isRunning = false;
   currentMode = 'focus';
 
@@ -181,14 +239,11 @@ function initPomodoro() {
   renderHistory();
 }
 
-// 兼容 PJAX 的加载
 if (typeof GLOBAL_CONFIG !== 'undefined' && GLOBAL_CONFIG.pjax) {
   document.addEventListener('pjax:complete', initPomodoro);
 } else {
   document.addEventListener('DOMContentLoaded', initPomodoro);
 }
-
-// 如果首屏就是这个页面
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
   initPomodoro();
 }
@@ -226,39 +281,92 @@ function toggleTimer() {
     statusText.textContent = currentMode === 'focus' ? '专注已暂停' : '休息已暂停';
     setInputsDisabled(false);
   } else {
-    isRunning = true;
-    startBtn.textContent = '暂停';
-    setInputsDisabled(true);
-    statusText.textContent = currentMode === 'focus' ? '🚀 专注中...' : '☕ 休息中...';
-    
-    countdown = setInterval(() => {
-      timeLeft--;
-      updateDisplay(timeLeft);
+    autoStartTimer(); // 抽取出来的通用启动逻辑
+  }
+}
 
-      if (timeLeft <= 0) {
-        clearInterval(countdown);
-        isRunning = false;
-        startBtn.textContent = '开始';
-        setInputsDisabled(false);
-        playAlert();
+// 提取出来的核心计时逻辑，方便自动化调用
+function autoStartTimer() {
+  isRunning = true;
+  startBtn.textContent = '暂停';
+  setInputsDisabled(true);
+  statusText.textContent = currentMode === 'focus' ? '🚀 专注中...' : '☕ 休息中...';
+  
+  countdown = setInterval(() => {
+    timeLeft--;
+    updateDisplay(timeLeft);
 
-        if (currentMode === 'focus') {
-          const configuredFocus = parseInt(focusInput.value) || 25;
-          saveRecord(configuredFocus, '完成');
-          currentMode = 'break';
-          statusText.textContent = '🎉 搞定！点击“开始”享受休息吧';
-        } else {
-          currentMode = 'focus';
-          statusText.textContent = '💪 休息结束，准备新一轮专注！';
-        }
+    if (timeLeft <= 0) {
+      clearInterval(countdown);
+      isRunning = false;
+      startBtn.textContent = '开始';
+      setInputsDisabled(false);
+      playAlert();
+
+      if (currentMode === 'focus') {
+        // 专注结束：结算数据
+        const configuredFocus = parseInt(focusInput.value) || 25;
+        saveRecord(configuredFocus, '完成');
+        
+        // 关键改动：不直接切到休息，而是触发30秒询问弹窗
+        triggerBreakPrompt();
+      } else {
+        // 休息结束：切回专注，等待手动开启（或者你也可以改成直接无缝开启专注）
+        currentMode = 'focus';
+        statusText.textContent = '💪 休息结束，准备新一轮专注！';
         resetToConfiguredTime();
       }
-    }, 1000);
+    }
+  }, 1000);
+}
+
+// 新增：触发30秒询问机制
+function triggerBreakPrompt() {
+  if (!promptOverlay || !promptText) return;
+  
+  promptOverlay.style.display = 'flex';
+  promptTimeLeft = 30;
+  promptText.innerHTML = `🎯 单次专注已完成！<br>要开始休息吗？<br><span style="color:#ff4d4f; font-size:1.1rem;">⏱️ ${promptTimeLeft} 秒后将自动开启下一轮专注</span>`;
+
+  promptInterval = setInterval(() => {
+    promptTimeLeft--;
+    promptText.innerHTML = `🎯 单次专注已完成！<br>要开始休息吗？<br><span style="color:#ff4d4f; font-size:1.1rem;">⏱️ ${promptTimeLeft} 秒后将自动开启下一轮专注</span>`;
+    
+    if (promptTimeLeft <= 0) {
+      clearInterval(promptInterval);
+      promptOverlay.style.display = 'none';
+      
+      // 超时未选择：惩罚/激励机制，不休息直接开始下一轮专注！
+      currentMode = 'focus';
+      resetToConfiguredTime();
+      autoStartTimer(); // 自动化狂飙
+    }
+  }, 1000);
+}
+
+// 新增：用户点击选择
+function choosePrompt(choice) {
+  clearInterval(promptInterval);
+  if(promptOverlay) promptOverlay.style.display = 'none';
+
+  if (choice === 'yes') {
+    // 选择休息
+    currentMode = 'break';
+    resetToConfiguredTime();
+    autoStartTimer(); // 自动帮你把休息的倒计时跑起来，不用二次点击
+  } else {
+    // 选择继续硬刚专注
+    currentMode = 'focus';
+    resetToConfiguredTime();
+    autoStartTimer();
   }
 }
 
 function resetTimer() {
   clearInterval(countdown);
+  clearInterval(promptInterval);
+  if(promptOverlay) promptOverlay.style.display = 'none';
+  
   isRunning = false;
   startBtn.textContent = '开始';
   setInputsDisabled(false);
@@ -328,7 +436,7 @@ function playAlert() {
     oscillator.start();
     oscillator.stop(context.currentTime + 0.6);
   } catch (e) {
-    console.log('Audio context not supported or blocked.');
+    console.log('Audio error:', e);
   }
 }
 </script>
