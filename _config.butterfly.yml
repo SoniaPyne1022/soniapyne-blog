@@ -1135,7 +1135,7 @@ inject:
     - <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
     - <script src="/js/music.js"></script>
     - <img id="custom-static-pet" src="/img/pet(1).png" alt="my-pet">
-    - <script src="js/poem.js"></script>
+    - <script src="/js/poems-data.js"></script>
 # # CDN Settings
 # Don't modify the following settings unless you know how they work
 CDN:
