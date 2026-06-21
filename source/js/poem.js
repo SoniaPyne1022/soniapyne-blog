@@ -1,6 +1,6 @@
 (function () {
-    // 定义全局变量存储从文件里读出来的诗词
     let loadedPoemPool = [];
+    console.log("【诗词卡片】🎈 脚本已成功触发并加载...");
 
     function createPoemHTML() {
         return `
@@ -17,7 +17,6 @@
         `;
     }
 
-    // 随机刷新诗词的全局函数
     window.refreshPoem = function () {
         const textEl = document.getElementById('poem-text');
         const fromEl = document.getElementById('poem-from');
@@ -25,49 +24,66 @@
         if (textEl && fromEl && loadedPoemPool.length > 0) {
             const randomIndex = Math.floor(Math.random() * loadedPoemPool.length);
             const selected = loadedPoemPool[randomIndex];
-            
             textEl.innerText = selected.content;
             fromEl.innerText = `—— ${selected.source}`;
-        } else if (loadedPoemPool.length === 0 && textEl) {
-            textEl.innerText = "暂无诗意存留，请检查词库。";
         }
     };
 
-    // 异步加载本地 JSON 诗词库
-async function loadPoemDatabase() {
-    try {
-        const response = await fetch('https://v1.jinrishici.com/all.json');
-        const data = await response.json();
+    async function loadPoemDatabase() {
+        // 自动兼容绝对路径与相对路径，防止子目录 404
+        const pathsToTry = ['/poems.json', 'poems.json', '../poems.json'];
+        let response;
         
-        // 适配公共接口的数据结构
-        loadedPoemPool = [{
-            content: data.content,
-            source: `${data.author} · 《${data.origin}》`
-        }];
-        window.refreshPoem();
-    } catch (error) {
-        // 如果第三方接口挂了，用一句备用诗句兜底
-        loadedPoemPool = [{ content: "寄蜉蝣于天地，渺沧海之一粟。", source: "苏轼 · 《前赤壁赋》" }];
-        window.refreshPoem();
-    }
-}
-    // 将卡片注入到主页的逻辑
-    function injectPoemCard() {
-        const recentPosts = document.getElementById('recent-posts');
-        
-        if (recentPosts && !document.getElementById('custom-poem-card')) {
-            const card = document.createElement('div');
-            card.id = 'custom-poem-card';
-            card.innerHTML = createPoemHTML();
-            
-            recentPosts.insertBefore(card, recentPosts.firstChild);
+        for (let path of pathsToTry) {
+            try {
+                response = await fetch(path);
+                if (response.ok) {
+                    console.log(`【诗词卡片】✅ 成功从路径 [${path}] 读取到诗词库`);
+                    break;
+                }
+            } catch(e) {}
+        }
 
-            // 卡片生成后，去异步请求读取 JSON 数据
-            loadPoemDatabase();
+        if (response && response.ok) {
+            try {
+                loadedPoemPool = await response.json();
+                window.refreshPoem();
+            } catch (err) {
+                console.error('【诗词卡片】❌ JSON 解析错误，请检查 poems.json 格式是否正确', err);
+            }
+        } else {
+            console.error('【诗词卡片】❌ 尝试了多个路径，均未能成功加载 poems.json');
+            const textEl = document.getElementById('poem-text');
+            if (textEl) textEl.innerText = "欲寻诗意，奈何纸卷未开（未找到词库）。";
         }
     }
 
-    // 适配常规加载与 Butterfly 的 PJAX 刷新
-    document.addEventListener('DOMContentLoaded', injectPoemCard);
+    function injectPoemCard() {
+        const recentPosts = document.getElementById('recent-posts');
+        
+        if (!recentPosts) {
+            console.log("【诗词卡片】⚠️ 当前页面未找到 #recent-posts 容器（可能不在主页，或主题结构不匹配）");
+            return;
+        }
+
+        if (document.getElementById('custom-poem-card')) {
+            console.log("【诗词卡片】检测到已有卡片，跳过重复注入");
+            return;
+        }
+
+        console.log("【诗词卡片】⚡ 正在向主页注入古风诗词卡片...");
+        const card = document.createElement('div');
+        card.id = 'custom-poem-card';
+        card.innerHTML = createPoemHTML();
+        
+        recentPosts.insertBefore(card, recentPosts.firstChild);
+        loadPoemDatabase();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', injectPoemCard);
+    } else {
+        injectPoemCard();
+    }
     document.addEventListener('pjax:complete', injectPoemCard);
 })();
