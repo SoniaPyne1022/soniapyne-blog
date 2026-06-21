@@ -1,6 +1,6 @@
-// 🏛️ 东坡居士（苏轼）专属宏大古典诗文库 - 挂载到全局 window
-window.MyMasterPoemLibrary = [
-    // --- 一、旷达襟怀与风雨人生 ---
+(function () {
+    // 🏛️ 纳兰容若（纳兰性德）饮水词大库 - 完美内置，彻底解决多文件加载乱序
+    const nalanLibrary = [
     { content: "竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。", source: "苏轼 · 《定风波 · 三月七日》" },
     { content: "回首向来萧瑟处，归去，也无风雨也无晴。", source: "苏轼 · 《定风波 · 三月七日》" },
     { content: "料峭春风吹酒醒，微冷，山头斜照却相迎。", source: "苏轼 · 《定风波 · 三月七日》" },
@@ -188,5 +188,69 @@ window.MyMasterPoemLibrary = [
     { content: "残雪凝辉冷画屏，落梅横笛熟衣枕，小风疏雨萧萧歇。", source: "纳兰性德 · 《浣溪沙 · 残雪凝辉冷画屏》" },
     { content: "当时七夕笑牵牛，如今恨，九秋愁。几回欲语还休，只向梦中流。", source: "纳兰性德 · 《采桑子 · 当时七夕笑牵牛》" }
 ];
+
+    let lastPickedIndex = -1;
+
+    // 经典垂直版式结构
+    function createPoemHTML() {
+        return `
+            <div class="poem-inner-border">
+                <div class="poem-header-title">岁 华 纪 胜</div>
+                <div class="poem-main-body">
+                    <p id="poem-text" class="poem-content">正在引水研墨...</p>
+                    <p id="poem-from" class="poem-info"></p>
+                </div>
+                <div class="poem-footer-action">
+                    <button onclick="window.refreshPoem()" class="poem-btn-bottom">翻 阅 新 笺</button>
+                </div>
+            </div>
+        `;
+    }
+
+    // 核心流转机制（内置真随机，杜绝连续重复）
+    window.refreshPoem = function () {
+        const textEl = document.getElementById('poem-text');
+        const fromEl = document.getElementById('poem-from');
+        if (!textEl || !fromEl) return;
+
+        let randomIndex = Math.floor(Math.random() * nalanLibrary.length);
+        
+        // 防重复碰撞算法
+        while (randomIndex === lastPickedIndex && nalanLibrary.length > 1) {
+            randomIndex = Math.floor(Math.random() * nalanLibrary.length);
+        }
+        
+        lastPickedIndex = randomIndex;
+        const selected = nalanLibrary[randomIndex];
+
+        textEl.innerText = selected.content;
+        fromEl.innerText = `—— ${selected.source}`;
+    };
+
+    // 优雅切入主页
+    function injectPoemCard() {
+        const recentPosts = document.getElementById('recent-posts');
+        
+        if (recentPosts) {
+            if (!document.getElementById('custom-poem-card')) {
+                const card = document.createElement('div');
+                card.id = 'custom-poem-card';
+                card.innerHTML = createPoemHTML();
+                
+                recentPosts.insertBefore(card, recentPosts.firstChild);
+                window.refreshPoem();
+            } else {
+                window.refreshPoem();
+            }
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', injectPoemCard);
+    } else {
+        injectPoemCard();
+    }
+    document.addEventListener('pjax:complete', injectPoemCard);
+})();
 
 
