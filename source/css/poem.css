@@ -1,129 +1,119 @@
-/* 古朴典雅 · 线装书笺卡片 */
+/* 古朴典雅 · 垂直线装信笺卡片 */
 #custom-poem-card {
-    /* 宣纸底色与微瑕质感 */
-    background-color: #f5f2e9;
+    /* 宣纸淡底色 */
+    background-color: var(--card-bg, #fdfaf3);
     background-image: 
-        linear-gradient(rgba(245, 242, 233, 0.97), rgba(245, 242, 233, 0.97)),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23dcd6cd' fill-opacity='0.4' d='M2 2h2v2H2V2zm4 4h2v2H6V6zm8 8h2v2h-2v-2zm-4-4h2v2h-2v-2zm8 8h2v2h-2v-2z'/%3E%3C/svg%3E");
-    
-    /* 古籍经典版式：四周双边 */
-    border: 1px solid #bfae90;
-    outline: 1px solid #bfae90;
-    outline-offset: -6px;
-    border-radius: 2px;
-    
-    padding: 30px 40px;
+        linear-gradient(rgba(253, 250, 243, 0.96), rgba(253, 250, 243, 0.96)),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23e6dfd3' fill-opacity='0.5' d='M8 0a1 1 0 0 1 1 1v6.586l.293-.293a1 1 0 1 1 1.414 1.414L8.414 11l2.293 2.293a1 1 0 0 1-1.414 1.414L7 12.414V15a1 1 0 1 1-2 0V8.414L2.707 10.707a1 1 0 1 1-1.414-1.414L3.586 7 1.293 4.707a1 1 0 1 1 1.414-1.414L5 5.586V1a1 1 0 0 1 1-1h2z'/%3E%3C/svg%3E");
+    border: 1px solid #dfd3bc;
+    border-radius: 8px;
+    padding: 18px;
     margin-bottom: 24px;
-    position: relative;
-    box-shadow: 0 4px 16px rgba(43, 39, 32, 0.05);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    box-shadow: var(--card-hover-shadow, 0 4px 12px rgba(0, 0, 0, 0.04));
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    width: 100%;
 }
 
-#custom-poem-card:hover {
-    box-shadow: 0 6px 20px rgba(43, 39, 32, 0.1);
-    transform: translateY(-1px);
+/* 典雅的内部双衬线边框（笺纸复古设计，规避挤压变形） */
+.poem-inner-border {
+    border: 1px solid #c9a983;
+    outline: 1px solid #c9a983;
+    outline-offset: -4px;
+    padding: 24px 20px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
-/* 左侧：古籍题签栏（书名贴风格） */
-.poem-book-title {
-    writing-mode: vertical-rl;
+/* 顶部独立一行的标题栏 */
+.poem-header-title {
     font-family: "Noto Serif SC", "Source Han Serif SC", serif;
-    font-size: 0.95em;
-    font-weight: 600;
-    color: #5c5240;
-    letter-spacing: 6px;
-    border-left: 1px dashed #dcd6cd;
-    padding-left: 15px;
-    line-height: 1.4;
+    font-size: 0.9em;
+    color: #7a6e57;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    opacity: 0.8;
+    text-align: center;
 }
 
-/* 中间：诗词主轴 */
-.poem-body {
-    flex: 1;
-    padding: 0 30px;
+/* 诗词核心内容排版区 */
+.poem-main-body {
+    padding: 5px 0 20px 0;
     text-align: center;
-    font-family: "Noto Serif SC", "Source Han Serif SC", "STKaiti", "Kaiti", serif;
 }
 
 .poem-content {
-    font-size: 1.38em;
-    font-weight: 500;
+    font-family: "Noto Serif SC", "Source Han Serif SC", "STKaiti", "Kaiti", serif;
+    font-size: 1.35em;
     line-height: 1.8;
-    color: #2c3539; /* 松烟墨色 */
-    margin: 0 0 12px 0;
-    letter-spacing: 2px;
+    color: #2c2519; /* 文人浓墨色 */
+    margin: 0 auto 16px auto !important;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+    word-break: break-word;
 }
 
 .poem-info {
+    font-family: "Noto Serif SC", "Source Han Serif SC", serif;
     font-size: 0.88em;
-    color: #7c725f;
-    margin: 0;
-    display: block;
+    color: #6e614a;
+    margin: 0 !important;
+    text-align: center;
     opacity: 0.85;
 }
 
-/* 右侧：传统朱砂流转朱文印章（换一句按钮） */
-.poem-refresh-seal {
-    background: #a61b29; /* 传世朱砂红 */
-    border: 1px solid #91121e;
-    box-shadow: inset 0 0 4px rgba(0,0,0,0.2);
+/* 底部操作区分割线 */
+.poem-footer-action {
+    margin-top: 15px;
+    text-align: center;
+    border-top: 1px dashed #eadecc;
+    padding-top: 15px;
+}
+
+/* 摆在最下方的、极其精致克制的古典按钮 */
+.poem-btn-bottom {
+    background: none;
+    border: 1px solid #bfa483;
+    color: #8b1e1f; /* 古典燕脂红 */
+    padding: 4px 18px;
+    font-size: 0.82em;
+    border-radius: 4px;
     cursor: pointer;
-    padding: 6px;
-    width: 26px;
-    height: 54px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-    user-select: none;
-}
-
-.poem-refresh-seal:hover {
-    background: #bc2635;
-    transform: scale(1.03);
-}
-
-.poem-refresh-seal span {
-    writing-mode: vertical-rl;
     font-family: "Noto Serif SC", "Source Han Serif SC", serif;
-    font-size: 0.78em;
-    color: #fff6e5; /* 泥金印泥感 */
-    letter-spacing: 3px;
-    font-weight: bold;
+    letter-spacing: 2px;
+    transition: all 0.2s ease;
+    outline: none;
 }
 
-/* --- 🌟 终极蜕变：暗黑模式适配（打造“千年金石拓本”风骨） --- */
+.poem-btn-bottom:hover {
+    background-color: #8b1e1f;
+    color: #fdfaf3 !important;
+    border-color: #8b1e1f;
+}
+
+/* --- 🌟 暗黑模式适配（依然完美融入金石拓本风骨） --- */
 [data-theme='dark'] #custom-poem-card {
-    background-color: #1c1a16; /* 枯墨碑石底色 */
+    background-color: #181714;
     background-image: none;
-    border-color: #4a4438;
-    outline-color: #4a4438;
-    box-shadow: none;
+    border-color: #3a352c;
 }
 
-[data-theme='dark'] .poem-book-title {
-    color: #8c826e;
-    border-left-color: #3a352b;
+[data-theme='dark'] .poem-inner-border {
+    border-color: #4a4338;
+    outline-color: #4a4338;
 }
 
-[data-theme='dark'] .poem-content {
-    color: #dcd6cd; /* 拓本文心白 */
-    text-shadow: 0 0 1px rgba(220,214,205,0.2);
-}
+[data-theme='dark'] .poem-header-title { color: #8a7e68; }
+[data-theme='dark'] .poem-content { color: #dfd8cd; }
+[data-theme='dark'] .poem-info { color: #8a7e68; }
+[data-theme='dark'] .poem-footer-action { border-top-color: #3a352c; }
 
-[data-theme='dark'] .poem-info {
-    color: #8c826e;
+[data-theme='dark'] .poem-btn-bottom {
+    border-color: #5a5142;
+    color: #c94c4c;
 }
-
-/* 暗黑模式下的印章蜕变为白文石印或阴刻拓印效果 */
-[data-theme='dark'] .poem-refresh-seal {
-    background: #2a2425;
-    border-color: #4a4438;
-}
-[data-theme='dark'] .poem-refresh-seal span {
-    color: #bfae90;
+[data-theme='dark'] .poem-btn-bottom:hover {
+    background-color: #c94c4c;
+    color: #181714 !important;
+    border-color: #c94c4c;
 }
