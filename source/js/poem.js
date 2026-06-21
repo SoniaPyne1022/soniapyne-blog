@@ -5,7 +5,7 @@
             <div class="poem-header">
                 <span class="poem-tag">岁 华 纪 胜</span>
                 <button onclick="window.refreshPoem()" class="poem-refresh-btn">
-                    🔄 换 句
+                     换 句
                 </button>
             </div>
             <div class="poem-body">
