@@ -1,101 +1,129 @@
+/* 古朴典雅 · 线装书笺卡片 */
 #custom-poem-card {
-    background-color: #fcfaf2;
+    /* 宣纸底色与微瑕质感 */
+    background-color: #f5f2e9;
     background-image: 
-        linear-gradient(rgba(252, 250, 242, 0.96), rgba(252, 250, 242, 0.96)),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23e6e1d1' fill-opacity='0.4' d='M8 0a1 1 0 0 1 1 1v6.586l.293-.293a1 1 0 1 1 1.414 1.414L8.414 11l2.293 2.293a1 1 0 0 1-1.414 1.414L7 12.414V15a1 1 0 1 1-2 0V8.414L2.707 10.707a1 1 0 1 1-1.414-1.414L3.586 7 1.293 4.707a1 1 0 1 1 1.414-1.414L5 5.586V1a1 1 0 0 1 1-1h2z'/%3E%3C/svg%3E");
-    border: 3px double #a69a7c;
-    border-radius: 4px;
-    padding: 30px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    margin-bottom: 20px;
+        linear-gradient(rgba(245, 242, 233, 0.97), rgba(245, 242, 233, 0.97)),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23dcd6cd' fill-opacity='0.4' d='M2 2h2v2H2V2zm4 4h2v2H6V6zm8 8h2v2h-2v-2zm-4-4h2v2h-2v-2zm8 8h2v2h-2v-2z'/%3E%3C/svg%3E");
+    
+    /* 古籍经典版式：四周双边 */
+    border: 1px solid #bfae90;
+    outline: 1px solid #bfae90;
+    outline-offset: -6px;
+    border-radius: 2px;
+    
+    padding: 30px 40px;
+    margin-bottom: 24px;
     position: relative;
-    overflow: hidden;
-    text-align: center;
-    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(43, 39, 32, 0.05);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 #custom-poem-card:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(43, 39, 32, 0.1);
+    transform: translateY(-1px);
 }
 
-#custom-poem-card::before,
-#custom-poem-card::after {
-    content: "";
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    opacity: 0.3;
-    background-size: contain;
-    background-repeat: no-repeat;
-    pointer-events: none;
-}
-#custom-poem-card::before { top: 5px; left: 5px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M3.46 32a28.5 28.5 0 0 1 8.35-20.15 28.5 28.5 0 0 1 20.15-8.35 28.5 28.5 0 0 1 20.15 8.35 28.5 28.5 0 0 1 8.35 20.15A28.5 28.5 0 0 1 52.11 52.15 28.5 28.5 0 0 1 31.96 60.5 28.5 28.5 0 0 1 11.81 52.15 28.5 28.5 0 0 1 3.46 32zM32 6.51A25.5 25.5 0 0 0 6.51 32 25.5 25.5 0 0 0 32 57.49 25.5 25.5 0 0 0 57.49 32 25.5 25.5 0 0 0 32 6.51zM19.16 26.65a5.5 5.5 0 0 1 5.5 5.5 5.5 5.5 0 0 1-5.5 5.5 5.5 5.5 0 0 1-5.5-5.5 5.5 5.5 0 0 1 5.5-5.5zM38.84 26.65a5.5 5.5 0 0 1 5.5 5.5 5.5 5.5 0 0 1-5.5 5.5 5.5 5.5 0 0 1-5.5-5.5 5.5 5.5 0 0 1 5.5-5.5z' fill='%23a69a7c'/%3E%3C/svg%3E"); }
-#custom-poem-card::after { bottom: 5px; right: 5px; transform: rotate(180deg); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M3.46 32a28.5 28.5 0 0 1 8.35-20.15 28.5 28.5 0 0 1 20.15-8.35 28.5 28.5 0 0 1 20.15 8.35 28.5 28.5 0 0 1 8.35 20.15A28.5 28.5 0 0 1 52.11 52.15 28.5 28.5 0 0 1 31.96 60.5 28.5 28.5 0 0 1 11.81 52.15 28.5 28.5 0 0 1 3.46 32zM32 6.51A25.5 25.5 0 0 0 6.51 32 25.5 25.5 0 0 0 32 57.49 25.5 25.5 0 0 0 57.49 32 25.5 25.5 0 0 0 32 6.51zM19.16 26.65a5.5 5.5 0 0 1 5.5 5.5 5.5 5.5 0 0 1-5.5 5.5 5.5 5.5 0 0 1-5.5-5.5 5.5 5.5 0 0 1 5.5-5.5zM38.84 26.65a5.5 5.5 0 0 1 5.5 5.5 5.5 5.5 0 0 1-5.5 5.5 5.5 5.5 0 0 1-5.5-5.5 5.5 5.5 0 0 1 5.5-5.5z' fill='%23a69a7c'/%3E%3C/svg%3E"); }
-
-.poem-header {
-    display: block;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #e1dcc9;
-    position: relative;
-}
-
-.poem-tag {
-    font-family: "Noto Serif SC", serif;
-    font-size: 1.05em;
-    font-weight: bold;
-    color: #433e36;
-    letter-spacing: 3px;
-}
-
-/* 右上角古典小印章标签 */
-.poem-date-badge {
-    position: absolute;
-    right: 0;
-    top: 0;
-    font-size: 0.75em;
-    padding: 2px 8px;
-    border: 1px solid #8b0000;
-    color: #8b0000;
-    border-radius: 2px;
-    font-family: "Noto Serif SC", serif;
-    opacity: 0.8;
-}
-
-.poem-body {
-    padding: 10px 0;
+/* 左侧：古籍题签栏（书名贴风格） */
+.poem-book-title {
+    writing-mode: vertical-rl;
     font-family: "Noto Serif SC", "Source Han Serif SC", serif;
+    font-size: 0.95em;
+    font-weight: 600;
+    color: #5c5240;
+    letter-spacing: 6px;
+    border-left: 1px dashed #dcd6cd;
+    padding-left: 15px;
+    line-height: 1.4;
+}
+
+/* 中间：诗词主轴 */
+.poem-body {
+    flex: 1;
+    padding: 0 30px;
+    text-align: center;
+    font-family: "Noto Serif SC", "Source Han Serif SC", "STKaiti", "Kaiti", serif;
 }
 
 .poem-content {
-    font-size: 1.35em;
+    font-size: 1.38em;
     font-weight: 500;
     line-height: 1.8;
-    color: #2b2b2b;
-    margin: 0 0 15px 0;
-    letter-spacing: 1px;
+    color: #2c3539; /* 松烟墨色 */
+    margin: 0 0 12px 0;
+    letter-spacing: 2px;
 }
 
 .poem-info {
-    font-size: 0.9em;
-    color: #615a4c;
-    opacity: 0.8;
+    font-size: 0.88em;
+    color: #7c725f;
     margin: 0;
-    text-align: right;
+    display: block;
+    opacity: 0.85;
 }
 
-/* --- 暗黑模式完美适配 --- */
-[data-theme='dark'] #custom-poem-card {
-    background-color: #2c2923;
-    background-image: 
-        linear-gradient(rgba(44, 41, 35, 0.98), rgba(44, 41, 35, 0.98)),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%236e6757' fill-opacity='0.2' d='M8 0a1 1 0 0 1 1 1v6.586l.293-.293a1 1 0 1 1 1.414 1.414L8.414 11l2.293 2.293a1 1 0 0 1-1.414 1.414L7 12.414V15a1 1 0 1 1-2 0V8.414L2.707 10.707a1 1 0 1 1-1.414-1.414L3.586 7 1.293 4.707a1 1 0 1 1 1.414-1.414L5 5.586V1a1 1 0 0 1 1-1h2z'/%3E%3C/svg%3E");
-    border-color: #7a6f56;
-    color: #e1dcc9;
+/* 右侧：传统朱砂流转朱文印章（换一句按钮） */
+.poem-refresh-seal {
+    background: #a61b29; /* 传世朱砂红 */
+    border: 1px solid #91121e;
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.2);
+    cursor: pointer;
+    padding: 6px;
+    width: 26px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    user-select: none;
 }
-[data-theme='dark'] #custom-poem-card .poem-header { border-bottom-color: #4a4539; }
-[data-theme='dark'] #custom-poem-card .poem-tag { color: #e1dcc9; }
-[data-theme='dark'] #custom-poem-card .poem-content { color: #e1dcc9; }
-[data-theme='dark'] #custom-poem-card .poem-info { color: #a69a7c; }
-[data-theme='dark'] #custom-poem-card .poem-date-badge { border-color: #c94c4c; color: #c94c4c; }
+
+.poem-refresh-seal:hover {
+    background: #bc2635;
+    transform: scale(1.03);
+}
+
+.poem-refresh-seal span {
+    writing-mode: vertical-rl;
+    font-family: "Noto Serif SC", "Source Han Serif SC", serif;
+    font-size: 0.78em;
+    color: #fff6e5; /* 泥金印泥感 */
+    letter-spacing: 3px;
+    font-weight: bold;
+}
+
+/* --- 🌟 终极蜕变：暗黑模式适配（打造“千年金石拓本”风骨） --- */
+[data-theme='dark'] #custom-poem-card {
+    background-color: #1c1a16; /* 枯墨碑石底色 */
+    background-image: none;
+    border-color: #4a4438;
+    outline-color: #4a4438;
+    box-shadow: none;
+}
+
+[data-theme='dark'] .poem-book-title {
+    color: #8c826e;
+    border-left-color: #3a352b;
+}
+
+[data-theme='dark'] .poem-content {
+    color: #dcd6cd; /* 拓本文心白 */
+    text-shadow: 0 0 1px rgba(220,214,205,0.2);
+}
+
+[data-theme='dark'] .poem-info {
+    color: #8c826e;
+}
+
+/* 暗黑模式下的印章蜕变为白文石印或阴刻拓印效果 */
+[data-theme='dark'] .poem-refresh-seal {
+    background: #2a2425;
+    border-color: #4a4438;
+}
+[data-theme='dark'] .poem-refresh-seal span {
+    color: #bfae90;
+}

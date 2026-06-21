@@ -1,16 +1,12 @@
 (function () {
-    // 1. 获取当前日期字符串（格式：YYYY-MM-DD，过了凌晨12点自动改变）
-    function getTodayString() {
-        const now = new Date();
-        return `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
-    }
-
-    // 2. 渲染古典卡片 HTML 结构
+    // 1. 渲染古典卡片 HTML 结构（右上角配备低调的古典刷新按钮）
     function createPoemHTML() {
         return `
             <div class="poem-header">
                 <span class="poem-tag">岁 华 纪 胜</span>
-                <span id="poem-date-badge" class="poem-date-badge">今日笺</span>
+                <button onclick="window.refreshPoem()" class="poem-refresh-btn">
+                    🔄 换 句
+                </button>
             </div>
             <div class="poem-body">
                 <p id="poem-text" class="poem-content">正在翻阅纸笺...</p>
@@ -19,47 +15,20 @@
         `;
     }
 
-    // 3. 核心逻辑：结合【今日诗词官方库】与【每日锁定机制】
-    function loadDailyPoem() {
+    // 2. 核心刷新逻辑：每次触发都直接向「今日诗词库」请求新诗句
+    window.refreshPoem = function () {
         const textEl = document.getElementById('poem-text');
         const fromEl = document.getElementById('poem-from');
         if (!textEl || !fromEl) return;
 
-        const todayStr = getTodayString();
-        const savedDate = localStorage.getItem('daily_poem_date');
+        textEl.innerText = "正在翻阅纸笺...";
+        fromEl.innerText = "";
 
-        // 🛡️ 凌晨12点锁定检查：如果今天已经摇过诗词了，直接读取缓存，不触发网络请求
-        if (savedDate === todayStr) {
-            const savedData = localStorage.getItem('daily_poem_data');
-            if (savedData) {
-                try {
-                    const poem = JSON.parse(savedData);
-                    textEl.innerText = poem.content;
-                    fromEl.innerText = `—— ${poem.source}`;
-                    return;
-                } catch (e) {
-                    console.error("【诗词卡片】缓存解析失败，重新获取...");
-                }
-            }
-        }
-
-        // 🔮 若到了新的一天（过了零点），或者首次访问，直接调用引入的第三方诗词库 SDK
         if (window.jinrishici) {
             window.jinrishici.load(function (result) {
                 if (result && result.status === "success") {
-                    const poemData = {
-                        content: result.data.content,
-                        source: `${result.data.origin.author} · 《${result.data.origin.title}》`
-                    };
-                    
-                    // 展现给读者
-                    textEl.innerText = poemData.content;
-                    fromEl.innerText = `—— ${poemData.source}`;
-                    
-                    // 写入浏览器缓存，锁定当天的缘分，直到跨入次日凌晨
-                    localStorage.setItem('daily_poem_date', todayStr);
-                    localStorage.setItem('daily_poem_data', JSON.stringify(poemData));
-                    console.log("【诗词卡片】📅 新的一天，已成功从今日诗词库获取新笺。");
+                    textEl.innerText = result.data.content;
+                    fromEl.innerText = `—— ${result.data.origin.author} · 《${result.data.origin.title}》`;
                 } else {
                     fallBackPoem();
                 }
@@ -69,9 +38,9 @@
         } else {
             fallBackPoem();
         }
-    }
+    };
 
-    // 🌿 极小概率网络断开时的优雅兜底诗句
+    // 🌿 网络异常时的兜底诗句
     function fallBackPoem() {
         const textEl = document.getElementById('poem-text');
         const fromEl = document.getElementById('poem-from');
@@ -92,25 +61,28 @@
         script.charset = 'utf-8';
         script.onload = callback;
         script.onerror = function() {
-            console.error("【诗词卡片】❌ 第三方诗词库 SDK 加载失败，启用本地兜底。");
             fallBackPoem();
         };
         document.head.appendChild(script);
     }
 
-    // 🚀 将卡片无损注入到主页
+    // 🚀 将卡片注入到主页的逻辑
     function injectPoemCard() {
         const recentPosts = document.getElementById('recent-posts');
         
-        if (recentPosts && !document.getElementById('custom-poem-card')) {
-            const card = document.createElement('div');
-            card.id = 'custom-poem-card';
-            card.innerHTML = createPoemHTML();
-            
-            recentPosts.insertBefore(card, recentPosts.firstChild);
-
-            // 先拉取/激活官方库，成功后再执行每日一诗的加载与锁定
-            initJinrishiciSDK(loadDailyPoem);
+        if (recentPosts) {
+            // 如果卡片不存在，则创建并注入
+            if (!document.getElementById('custom-poem-card')) {
+                const card = document.createElement('div');
+                card.id = 'custom-poem-card';
+                card.innerHTML = createPoemHTML();
+                
+                recentPosts.insertBefore(card, recentPosts.firstChild);
+                initJinrishiciSDK(window.refreshPoem);
+            } else {
+                // 如果卡片已存在（例如从其他页面通过 PJAX 局域切回主页），强制更新一次诗词
+                window.refreshPoem();
+            }
         }
     }
 
